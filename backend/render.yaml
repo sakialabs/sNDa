@@ -7,6 +7,7 @@ services:
     name: snda-backend
     runtime: python
     plan: free
+    pythonVersion: "3.11"
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
@@ -16,8 +17,6 @@ services:
     healthCheckPath: /api/health/
     autoDeploy: true
     envVars:
-      - key: PYTHON_VERSION
-        value: "3.11.9"
       - key: DATABASE_URL
         fromDatabase:
           name: snda-db
@@ -54,6 +53,7 @@ services:
     name: snda-celery-worker
     runtime: python
     plan: free
+    pythonVersion: "3.11"
     buildCommand: pip install -r requirements.txt
     startCommand: celery -A config worker -l info --concurrency=1 --max-tasks-per-child=1000
     envVars:
@@ -76,6 +76,7 @@ services:
     name: snda-celery-beat
     runtime: python
     plan: free
+    pythonVersion: "3.11"
     buildCommand: pip install -r requirements.txt
     startCommand: celery -A config beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     envVars:
