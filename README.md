@@ -49,6 +49,16 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 - 📸 **Media Upload:** Support for photos, videos, and external links with drag-and-drop interface
 - 🏷️ **Tagging System:** Organize stories with custom tags and categories
 - ❤️ **Community Interaction:** Like, comment, and share volunteer experiences
+- 🏆 **Gamification System:** Badges, streaks, and points to motivate volunteers
+- 📈 **Personal Dashboard:** Track cases completed, current streaks, and earned badges
+
+### 🌟 Community & Engagement
+
+- 🏠 **Community Page:** Wall of Love showcasing volunteer stories and impact
+- 🎯 **Community Goals:** Shared milestones for collective motivation
+- 🏆 **Leaderboards:** Top contributors and recent achievements
+- 🤖 **Chuma AI Assistant:** Personalized recommendations and motivational notifications
+- 📧 **Smart Email System:** 3-step onboarding sequence and engagement emails
 
 ### 💰 Donor Platform
 
@@ -68,6 +78,7 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 
 - 🧠 **Urgency Scoring:** ML-powered case prioritization
 - 🤝 **Volunteer Matching:** Smart assignment based on skills and availability
+- 🤖 **Chuma AI Bot:** Intelligent recommendations and personalized notifications
 - 📈 **Predictive Analytics:** Future potential for detecting patterns and predicting needs
 
 ## 🧱 Architecture
@@ -131,6 +142,9 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 - **JWT Authentication** – Secure token-based authentication system
 - **File Upload Support** – Media handling for volunteer story sharing
 - **RESTful API Design** – Clean, consistent API endpoints
+- **Django Signals** – Automated badge awarding and streak tracking
+- **Email System** – Transactional emails with HTML templates
+- **Gamification Engine** – Points, badges, and community goals
 
 ### Infrastructure / Hosting
 
@@ -157,17 +171,25 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 sNDa/
 ├── backend/                  # Django API (DRF), models, auth, ML endpoints
 │   ├── api/                  # Case management models and views
+│   │   ├── chuma_ai.py       # AI recommendation engine
+│   │   ├── email_system.py   # Email service and templates
+│   │   ├── signals.py        # Gamification automation
+│   │   └── management/       # Django commands for scheduled tasks
 │   ├── users/                # User authentication and profiles
-│   └── config/               # Django settings and configuration
+│   ├── config/               # Django settings and configuration
+│   └── templates/            # Email HTML templates
+│       └── emails/           # Onboarding and notification emails
 ├── frontend/                 # Next.js application
 │   ├── src/app/              # App Router pages
 │   │   ├── coordinator/      # Coordinator dashboard
 │   │   ├── volunteer/        # Volunteer hub with story sharing
+│   │   ├── community/        # Community page with Wall of Love
 │   │   └── donate/           # Donor platform with Stripe
 │   ├── src/components/       # Reusable UI components
 │   │   ├── ui/               # Enhanced Shadcn components
 │   │   ├── coordinator/      # Dashboard-specific components
 │   │   ├── volunteer/        # Story sharing components
+│   │   ├── community/        # Community engagement components
 │   │   └── donor/            # Donation platform components
 │   └── src/contexts/         # React contexts (Auth, etc.)
 ├── ml/                       # ML notebooks, experiments, saved models
@@ -175,7 +197,9 @@ sNDa/
 ├── comms/                    # Consent forms, templates, campaigns
 ├── infra/                    # Docker, configs, CI/CD
 └── docs/                     # Research, SOPs, legal, outreach
-    └── TESTING.md            # Comprehensive testing guide
+    ├── TESTING.md            # Comprehensive testing guide
+    ├── DEPLOYMENT_GUIDE.md   # Production deployment guide
+    └── TODO.md               # Development roadmap
 ```
 
 ## 🚀 Quick Start
@@ -202,6 +226,7 @@ npm run dev
 - 🏠 **Homepage:** http://localhost:3000
 - 🧭 **Coordinator Dashboard:** http://localhost:3000/coordinator
 - 👥 **Volunteer Hub:** http://localhost:3000/volunteer
+- 🌟 **Community Page:** http://localhost:3000/community
 - 💰 **Donation Platform:** http://localhost:3000/donate
 
 ## 🧪 Testing & Quality
@@ -259,6 +284,17 @@ npm run build        # Production build test
 Together, we build **impactful, inclusive, and sustainable solutions** for communities everywhere.
 
 ## 🌟 Recent Updates
+
+### v0.3.0 - Magnetic Community Platform
+
+- 🏆 **Complete Gamification System:** Badges, streaks, points, and community goals
+- 🌟 **Community Page:** Wall of Love showcasing volunteer stories and collective impact
+- 📊 **Enhanced Volunteer Dashboard:** Personal stats, badges, and streak tracking
+- 🤖 **Chuma AI Assistant:** Smart recommendations and personalized notifications
+- 📧 **Email Onboarding System:** 3-step sequence with beautiful HTML templates
+- 🎯 **Community Goals:** Shared milestones for collective motivation
+- 🏅 **Achievement System:** Automatic badge awarding via Django signals
+- 📈 **Impact Tracking:** Comprehensive activity logging and analytics
 
 ### v0.2.0 - Enhanced UX & Community Features
 

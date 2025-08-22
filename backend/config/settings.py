@@ -24,15 +24,7 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 # Load allowed hosts from the .env file as a comma-separated list.
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="*", cast=Csv())
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]  # Adjust this for production use
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1", cast=Csv())
 
 
 # Application definition
@@ -160,3 +152,35 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
+
+# Production Security Settings
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
+
+# CORS Configuration
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", default="http://localhost:3000", cast=Csv())
+CORS_ALLOW_CREDENTIALS = True
+
+# Celery Configuration
+CELERY_BROKER_URL = config("CELERY_BROKER_URL", default="redis://localhost:6379")
+CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND", default="redis://localhost:6379")
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# Email Configuration
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+SENDGRID_API_KEY = config("SENDGRID_API_KEY", default="")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="noreply@snda.org")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="sNDa Platform <noreply@snda.org>")
+
+# Frontend URL
+FRONTEND_URL = config("FRONTEND_URL", default="http://localhost:3000")

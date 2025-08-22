@@ -1,0 +1,60 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}💌 Thank You for Your Generosity, {{ donor_name }}!{% endblock %}
+
+{% block content %}
+<h1>💌 Thank You for Your Generosity, {{ donor_name }}!</h1>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma here</strong> — your support just added a nourishing layer to our community sandwich 🥪.</p>
+</div>
+
+<div class="highlight-box">
+    <h2 style="color: #f5a623; margin-bottom: 15px;">🎉 Donation Confirmed!</h2>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">${{ amount }}</div>
+            <div class="stat-label"><strong>Amount</strong><br>Your generous contribution</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">🎯</div>
+            <div class="stat-label"><strong>Campaign</strong><br>{{ campaign_name }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">📅</div>
+            <div class="stat-label"><strong>Date</strong><br>{{ date }}</div>
+        </div>
+    </div>
+    
+    {% if transaction_id %}
+    <p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 15px;">
+        <strong>Transaction ID:</strong> {{ transaction_id }}
+    </p>
+    {% endif %}
+</div>
+
+<div class="highlight-box">
+    <p><strong>🌟 Your Impact:</strong></p>
+    <ul>
+        <li>Your donation directly supports vulnerable children and families</li>
+        <li>You're helping us provide essential resources and care</li>
+        <li>You've joined a community of changemakers making real difference</li>
+        <li>Every dollar creates ripples of positive impact</li>
+    </ul>
+</div>
+
+<p>Want to see how your contribution is making a difference? Check out our impact dashboard and community stories!</p>
+
+<a href="{{ impact_url }}" class="button">See Impact Dashboard</a>
+<a href="{{ share_url }}" class="button button-secondary">Share Your Support</a>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma celebrates:</strong> "Your generosity is the special sauce that makes our community sandwich extra delicious! Thank you for believing in our mission and supporting those who need it most. 🥪💝"</p>
+</div>
+
+<p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 30px;">
+    <em>This email serves as your donation receipt. Please keep it for your records.</em>
+</p>
+
+{% endblock %}

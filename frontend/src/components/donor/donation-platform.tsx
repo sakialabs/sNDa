@@ -81,7 +81,7 @@ export function DonationPlatform() {
       donors: 156,
       daysLeft: 8,
       category: 'Support',
-      featured: true
+      featured: false
     }
   ]);
 
@@ -200,9 +200,9 @@ export function DonationPlatform() {
             <Card 
               key={campaign.id} 
               className={`cursor-pointer transition-all hover:shadow-lg ${
-                selectedCampaign === campaign.id ? 'ring-2 ring-primary' : ''
+                selectedCampaign === campaign.id ? 'ring-2 ring-primary shadow-lg' : 'hover:shadow-md'
               } ${campaign.featured ? 'border-primary' : ''}`}
-              onClick={() => setSelectedCampaign(campaign.id)}
+              onClick={() => setSelectedCampaign(selectedCampaign === campaign.id ? null : campaign.id)}
             >
               <CardHeader>
                 <div className="flex items-center justify-between">

@@ -1,0 +1,51 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Your First Bite of Action 🍽️{% endblock %}
+
+{% block content %}
+<h1>Your First Bite of Action 🍽️</h1>
+
+<p>Hey {{ user_name }},</p>
+
+<p>Ready to take your first bite? Pick one small action this week:</p>
+
+<div class="highlight-box">
+    <h3>🎯 Choose Your First Action:</h3>
+    <ul>
+        <li><span class="emoji-large">🤝</span><strong>Message another member</strong> - Connect with someone in your area</li>
+        <li><span class="emoji-large">📣</span><strong>Join a group chat</strong> - Participate in community discussions</li>
+        <li><span class="emoji-large">🛠️</span><strong>Share an idea, resource, or skill</strong> - Contribute to a project</li>
+        <li><span class="emoji-large">📖</span><strong>Share your story</strong> - Inspire others on our Wall of Love</li>
+    </ul>
+</div>
+
+<p>Small layers add up to a big meal. Every action counts.</p>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-number">{{ community_stats.active_volunteers|default:0 }}</div>
+        <div class="stat-label">Active Volunteers</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ community_stats.cases_resolved|default:0 }}</div>
+        <div class="stat-label">Cases Resolved</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ community_stats.stories_shared|default:0 }}</div>
+        <div class="stat-label">Stories Shared</div>
+    </div>
+</div>
+
+<a href="{{ first_action_url }}" class="button">Take Your First Action</a>
+<a href="{{ community_url }}" class="button button-secondary">Explore Community</a>
+
+<div class="progress-bar">
+    <div class="progress-fill" style="width: 100%;"></div>
+</div>
+<p style="text-align: center; color: #27ae60; font-weight: bold;">🎉 Completed your first stack!</p>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma celebrates:</strong> "Look at you go! You've built your foundation, added your filling, and now you're ready to share your unique flavor with the world. Welcome to the sNDa family! 🥪✨"</p>
+</div>
+
+{% endblock %}

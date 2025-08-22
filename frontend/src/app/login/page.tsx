@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/auth-context'
 import { LoginForm } from '@/components/login-form'
 
-export default function LoginPage() {
+function LoginContent() {
   const { isAuthenticated } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -21,5 +21,13 @@ export default function LoginPage() {
     <div className="container mx-auto flex items-center justify-center min-h-screen">
       <LoginForm isOpen={true} onOpenChange={() => {}} />
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   )
 }

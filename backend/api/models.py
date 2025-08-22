@@ -2,6 +2,8 @@ import uuid
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+from datetime import timedelta
 
 
 class Case(models.Model):
@@ -10,6 +12,10 @@ class Case(models.Model):
     description = models.TextField(_("Detailed Description"))
     status = models.CharField(_("Status"), max_length=20, default="NEW", db_index=True)
     urgency_score = models.IntegerField(_("Urgency Score"), null=True, blank=True)
+    
+    # Gamification fields
+    success_story = models.TextField(_("Success Story"), null=True, blank=True)
+    is_public = models.BooleanField(_("Public Story"), default=False)
     primary_subject = models.ForeignKey(
         "Person", on_delete=models.PROTECT, related_name="primary_cases"
     )
@@ -89,6 +95,13 @@ class VolunteerProfile(models.Model):
     skills = models.TextField(_("Skills & Experience"), blank=True)
     availability = models.CharField(_("Availability"), max_length=100, blank=True)
     is_onboarded = models.BooleanField(_("Onboarding Complete"), default=False)
+    
+    # Gamification fields
+    cases_completed = models.IntegerField(_("Cases Completed"), default=0)
+    current_streak = models.IntegerField(_("Current Streak"), default=0)
+    longest_streak = models.IntegerField(_("Longest Streak"), default=0)
+    last_activity = models.DateTimeField(_("Last Activity"), null=True, blank=True)
+    total_points = models.IntegerField(_("Total Points"), default=0)
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
@@ -354,3 +367,221 @@ class Notification(models.Model):
     
     def __str__(self):
         return f"{self.title} → {self.recipient.get_full_name()}"
+
+
+class Badge(models.Model):
+    """Achievement badges for gamification"""
+    BADGE_CATEGORIES = [
+        ('MILESTONE', _('Milestone')),
+        ('STREAK', _('Streak')),
+        ('COMMUNITY', _('Community')),
+        ('SPECIAL', _('Special Achievement')),
+    ]
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(_("Badge Name"), max_length=100)
+    description = models.TextField(_("Description"))
+    icon = models.CharField(_("Icon"), max_length=50)  # Emoji or icon class
+    category = models.CharField(_("Category"), max_length=20, choices=BADGE_CATEGORIES)
+    points_value = models.IntegerField(_("Points Value"), default=10)
+    
+    # Requirements
+    required_cases = models.IntegerField(_("Required Cases"), null=True, blank=True)
+    required_streak = models.IntegerField(_("Required Streak"), null=True, blank=True)
+    required_stories = models.IntegerField(_("Required Stories"), null=True, blank=True)
+    
+    # Display
+    color = models.CharField(_("Badge Color"), max_length=20, default="blue")
+    is_active = models.BooleanField(_("Active"), default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['category', 'required_cases']
+    
+    def __str__(self):
+        return f"{self.icon} {self.name}"
+
+
+class UserBadge(models.Model):
+    """Track badges earned by users"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="badges")
+    badge = models.ForeignKey(Badge, on_delete=models.CASCADE)
+    earned_at = models.DateTimeField(auto_now_add=True)
+    
+    # Context when earned
+    earned_for_case = models.ForeignKey(Case, on_delete=models.SET_NULL, null=True, blank=True)
+    earned_for_story = models.ForeignKey(VolunteerStory, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    class Meta:
+        unique_together = ['user', 'badge']
+        ordering = ['-earned_at']
+    
+    def __str__(self):
+        return f"{self.user.username} earned {self.badge.name}"
+
+
+class CommunityGoal(models.Model):
+    """Shared community goals for collective motivation"""
+    GOAL_TYPES = [
+        ('CASES', _('Cases Resolved')),
+        ('STORIES', _('Stories Shared')),
+        ('VOLUNTEERS', _('Active Volunteers')),
+        ('DONATIONS', _('Donations Raised')),
+    ]
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(_("Goal Title"), max_length=200)
+    description = models.TextField(_("Description"))
+    goal_type = models.CharField(_("Goal Type"), max_length=20, choices=GOAL_TYPES)
+    target_value = models.IntegerField(_("Target Value"))
+    current_value = models.IntegerField(_("Current Value"), default=0)
+    
+    # Timeline
+    start_date = models.DateField(_("Start Date"))
+    end_date = models.DateField(_("End Date"))
+    
+    # Display
+    icon = models.CharField(_("Icon"), max_length=50, default="🎯")
+    is_active = models.BooleanField(_("Active"), default=True)
+    is_featured = models.BooleanField(_("Featured"), default=False)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    @property
+    def progress_percentage(self):
+        if self.target_value == 0:
+            return 0
+        return min(100, (self.current_value / self.target_value) * 100)
+    
+    @property
+    def is_completed(self):
+        return self.current_value >= self.target_value
+    
+    class Meta:
+        ordering = ['-is_featured', '-created_at']
+    
+    def __str__(self):
+        return f"{self.icon} {self.title} ({self.current_value}/{self.target_value})"
+
+
+class ActivityLog(models.Model):
+    """Track user activities for gamification"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    activity_type = models.CharField(max_length=50, choices=[
+        ('case_completed', 'Case Completed'),
+        ('story_published', 'Story Published'),
+        ('badge_earned', 'Badge Earned'),
+        ('streak_milestone', 'Streak Milestone'),
+        ('login', 'User Login'),
+        ('profile_updated', 'Profile Updated'),
+    ])
+    description = models.TextField()
+    points_earned = models.IntegerField(default=0)
+    metadata = models.JSONField(default=dict, blank=True)  # Store additional context
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.activity_type} ({self.created_at.strftime('%Y-%m-%d')})"
+
+
+class EmailSchedule(models.Model):
+    """Track scheduled emails for onboarding sequence"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email_type = models.CharField(max_length=50)
+    scheduled_for = models.DateTimeField()
+    sent = models.BooleanField(default=False)
+    sent_at = models.DateTimeField(null=True, blank=True)
+    failed = models.BooleanField(default=False)
+    error_message = models.TextField(blank=True)
+    is_volunteer = models.BooleanField(default=True)
+    metadata = models.JSONField(default=dict, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['scheduled_for']
+        indexes = [
+            models.Index(fields=['scheduled_for', 'sent']),
+            models.Index(fields=['email_type']),
+        ]
+    
+    def __str__(self):
+        return f"{self.email_type} to {self.user.email} at {self.scheduled_for}"
+
+
+class EmailAnalytics(models.Model):
+    """Track email engagement and analytics"""
+    email_schedule = models.OneToOneField(EmailSchedule, on_delete=models.CASCADE, null=True, blank=True)
+    email_type = models.CharField(max_length=50)
+    recipient_email = models.EmailField()
+    subject = models.CharField(max_length=255)
+    
+    # Delivery tracking
+    delivered_at = models.DateTimeField(null=True, blank=True)
+    delivery_status = models.CharField(max_length=20, choices=[
+        ('sent', 'Sent'),
+        ('delivered', 'Delivered'),
+        ('bounced', 'Bounced'),
+        ('failed', 'Failed'),
+    ], default='sent')
+    
+    # Engagement tracking
+    opened_at = models.DateTimeField(null=True, blank=True)
+    clicked_at = models.DateTimeField(null=True, blank=True)
+    unsubscribed_at = models.DateTimeField(null=True, blank=True)
+    
+    # Metrics
+    open_count = models.PositiveIntegerField(default=0)
+    click_count = models.PositiveIntegerField(default=0)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['email_type', 'delivery_status']),
+            models.Index(fields=['recipient_email']),
+            models.Index(fields=['created_at']),
+        ]
+    
+    def __str__(self):
+        return f"{self.email_type} analytics for {self.recipient_email}"
+    
+    @property
+    def is_opened(self):
+        return self.opened_at is not None
+    
+    @property
+    def is_clicked(self):
+        return self.clicked_at is not None
+
+
+class Notification(models.Model):
+    """User notifications system"""
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    title = models.CharField(max_length=200)
+    message = models.TextField()
+    notification_type = models.CharField(max_length=50, choices=[
+        ('assignment', 'New Assignment'),
+        ('case_update', 'Case Update'),
+        ('badge_earned', 'Badge Earned'),
+        ('story_published', 'Story Published'),
+        ('streak_milestone', 'Streak Milestone'),
+        ('community_goal', 'Community Goal'),
+        ('system', 'System Notification'),
+    ])
+    is_read = models.BooleanField(default=False)
+    action_url = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    read_at = models.DateTimeField(blank=True, null=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.recipient.username} - {self.title}"

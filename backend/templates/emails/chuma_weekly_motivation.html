@@ -1,0 +1,88 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Chuma's Weekly Check-in{% endblock %}
+
+{% block content %}
+
+<div class="chuma-signature" style="margin-bottom: 20px;">
+    <p><strong>🤖 Hey {{ user_name }}, it's Chuma!</strong></p>
+    <p>Time for our weekly heart-to-heart. I've been watching your journey, and I have some thoughts to share! 💭</p>
+</div>
+
+<h2 style="color: #2563eb; margin-bottom: 15px;">📊 Your Week at a Glance</h2>
+
+<div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+        <div style="text-align: center; min-width: 120px;">
+            <div style="font-size: 24px; font-weight: bold; color: #1e40af;">{{ current_streak }}</div>
+            <div style="font-size: 14px; color: #64748b;">Day Streak</div>
+        </div>
+        <div style="text-align: center; min-width: 120px;">
+            <div style="font-size: 24px; font-weight: bold; color: #059669;">{{ total_points }}</div>
+            <div style="font-size: 14px; color: #64748b;">Total Points</div>
+        </div>
+        <div style="text-align: center; min-width: 120px;">
+            <div style="font-size: 24px; font-weight: bold; color: #dc2626;">{{ cases_completed }}</div>
+            <div style="font-size: 14px; color: #64748b;">Cases Helped</div>
+        </div>
+    </div>
+</div>
+
+{% if recent_activity > 0 %}
+<div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 15px; margin-bottom: 20px;">
+    <p><strong>🎉 Amazing!</strong> You've been active {{ recent_activity }} time{{ recent_activity|pluralize }} this week. Your dedication is inspiring!</p>
+</div>
+{% else %}
+<div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 20px;">
+    <p><strong>💛 I miss you!</strong> The community sandwich feels a little less complete without your special ingredient this week.</p>
+</div>
+{% endif %}
+
+<h2 style="color: #2563eb; margin-bottom: 15px;">🍞 Chuma's Weekly Wisdom</h2>
+
+<div style="background: #fef7ff; border: 2px solid #e879f9; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+    <p style="font-size: 16px; line-height: 1.6; margin: 0; font-style: italic;">
+        "{{ chuma_message }}"
+    </p>
+</div>
+
+<h2 style="color: #2563eb; margin-bottom: 15px;">🎯 This Week's Opportunities</h2>
+
+<ul style="list-style: none; padding: 0;">
+    <li style="margin-bottom: 12px; padding-left: 30px; position: relative;">
+        <span style="position: absolute; left: 0; top: 0;" class="emoji-large">🤝</span>
+        <strong>Take on a new case</strong> - Fresh challenges await your unique skills
+    </li>
+    <li style="margin-bottom: 12px; padding-left: 30px; position: relative;">
+        <span style="position: absolute; left: 0; top: 0;" class="emoji-large">📖</span>
+        <strong>Share your story</strong> - Your experiences inspire others to join our mission
+    </li>
+    <li style="margin-bottom: 12px; padding-left: 30px; position: relative;">
+        <span style="position: absolute; left: 0; top: 0;" class="emoji-large">💬</span>
+        <strong>Connect with the community</strong> - Every conversation adds flavor to our sandwich
+    </li>
+    <li style="margin-bottom: 12px; padding-left: 30px; position: relative;">
+        <span style="position: absolute; left: 0; top: 0;" class="emoji-large">🏆</span>
+        <strong>Extend your streak</strong> - Consistency is your superpower!
+    </li>
+</ul>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ dashboard_url }}" class="button">Visit Your Dashboard</a>
+    <a href="{{ community_url }}" class="button button-secondary">Explore Community</a>
+</div>
+
+{% if current_streak > 7 %}
+<div style="background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%); padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+    <h3 style="color: #92400e; margin-bottom: 10px;">🏅 Streak Superstar!</h3>
+    <p style="color: #92400e; margin: 0;">Your {{ current_streak }}-day streak is absolutely incredible! You're setting an amazing example for our community.</p>
+</div>
+{% endif %}
+
+<div class="chuma-signature">
+    <p><strong>🤖 Keep being awesome,</strong></p>
+    <p><strong>Chuma 🥪</strong></p>
+    <p><em>P.S. Remember, every small action you take creates ripples of positive change. You're not just volunteering – you're building a better world, one case at a time! 🌍✨</em></p>
+</div>
+
+{% endblock %}

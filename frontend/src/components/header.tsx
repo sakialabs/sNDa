@@ -54,6 +54,9 @@ export function Header() {
             sNDa 🥪
           </Link>
           <nav className="hidden md:flex items-center space-x-6">
+            <Link href="/community" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
+              Community
+            </Link>
             <Link href="/donate" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">
               Donate
             </Link>

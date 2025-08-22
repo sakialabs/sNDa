@@ -1,0 +1,51 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Layer Up — Let's Build Your Sandwich 🥗{% endblock %}
+
+{% block content %}
+<h1>Layer Up — Let's Build Your Sandwich 🥗</h1>
+
+<p>Hey {{ user_name }},</p>
+
+<p>At sNDa, no one stands alone. We thrive when we layer up:</p>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-number">🥖</div>
+        <div class="stat-label"><strong>Bread (Foundation)</strong><br>Your skills, experiences, and values</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">🥗</div>
+        <div class="stat-label"><strong>Filling (Action)</strong><br>The projects and causes you join</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">🍯</div>
+        <div class="stat-label"><strong>Sauce (Spirit)</strong><br>The love, care, and creativity you bring</div>
+    </div>
+</div>
+
+<div class="highlight-box">
+    <p><strong>🌟 Your Next Steps:</strong></p>
+    <ul>
+        <li>Complete your volunteer profile with skills and interests</li>
+        <li>Browse available cases and projects</li>
+        <li>Join our community discussions</li>
+        <li>Share your first story or experience</li>
+    </ul>
+</div>
+
+<p>Start where you feel most called. Every layer counts!</p>
+
+<a href="{{ explore_projects_url }}" class="button">Explore Projects</a>
+<a href="{{ profile_url }}" class="button button-secondary">Complete Profile</a>
+
+<div class="progress-bar">
+    <div class="progress-fill" style="width: 33%;"></div>
+</div>
+<p style="text-align: center; color: #666;"><small>🥪 Progress: 1/3 - Foundation Layer Complete!</small></p>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma says:</strong> "Every great sandwich starts with good bread. You're building something amazing, one layer at a time!"</p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}🎉 Your Story is Live on the Wall of Love!{% endblock %}
+
+{% block content %}
+<h1>🎉 Your Story is Live on the Wall of Love!</h1>
+
+<p>Hey {{ author_name }},</p>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma says:</strong> "You're helping others layer up their community experience." 🌍✨</p>
+</div>
+
+<div class="highlight-box">
+    <h2 style="color: #f5a623; margin-bottom: 15px;">"📖 {{ story_title }}"</h2>
+    
+    {% if case_title %}
+    <p><strong>📋 Related to case:</strong> {{ case_title }}</p>
+    {% endif %}
+    
+    <p>Your authentic experience is now part of our Wall of Love, showing the world the real impact of volunteer work and inspiring others to join our mission!</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-number">👥</div>
+        <div class="stat-label"><strong>Inspire</strong><br>New volunteers to join</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">💰</div>
+        <div class="stat-label"><strong>Show Impact</strong><br>To generous donors</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">🌟</div>
+        <div class="stat-label"><strong>Build Trust</strong><br>In our community</div>
+    </div>
+</div>
+
+<p>Thank you for taking the time to share your experience. Your story matters, and it's already making a difference!</p>
+
+<a href="{{ story_url }}" class="button">View My Published Story</a>
+<a href="{{ share_url }}" class="button button-secondary">Share with Friends</a>
+
+<div class="highlight-box">
+    <p><strong>📝 Ready to share another story?</strong></p>
+    <p>Every experience you document helps build our community's impact narrative. Your voice is powerful!</p>
+    <ul>
+        <li>Share a recent case success</li>
+        <li>Tell us about a meaningful connection</li>
+        <li>Describe a challenge you overcame</li>
+        <li>Celebrate a milestone achievement</li>
+    </ul>
+</div>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma celebrates:</strong> "Your story is now a delicious layer in our community sandwich! It's adding flavor and inspiration for everyone who reads it. Thank you for being a voice for positive change! 🥪✨"</p>
+</div>
+
+{% endblock %}

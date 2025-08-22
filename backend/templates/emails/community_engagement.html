@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Community</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+        .title {
+            color: #1e40af;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #92400e;
+        }
+        .stat-label {
+            color: #78350f;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        .community-highlight {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 15px 10px 15px 0;
+            text-align: center;
+        }
+        .secondary-button {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .impact-quote {
+            background: #f8fafc;
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 8px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">sNDa</div>
+            <h1 class="title">💝 You're Part of Something Beautiful</h1>
+        </div>
+
+        <p>Hi {{ user_name }}! A week ago, you joined sNDa. Today, you're part of a thriving community creating real change. Let's celebrate your journey so far!</p>
+
+        {% if is_volunteer and stats %}
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.cases_completed }}</div>
+                <div class="stat-label">Cases Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.current_streak }}</div>
+                <div class="stat-label">Day Streak</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.stories_count }}</div>
+                <div class="stat-label">Stories Shared</div>
+            </div>
+        </div>
+
+        {% if stats.cases_completed > 0 %}
+        <div class="impact-quote">
+            "Every case you complete creates ripples of positive change. You're not just helping one person – you're strengthening entire communities."
+        </div>
+        {% endif %}
+        {% endif %}
+
+        <div class="community-highlight">
+            <h3>🌟 Join the Wall of Love</h3>
+            <p>Our Community page showcases the incredible stories from volunteers like you. When you share your experience, you inspire others to take action and show the world what's possible when we come together.</p>
+            
+            {% if is_volunteer %}
+            <p><strong>Your story matters!</strong> Whether it's a small win, a learning moment, or a major breakthrough – your experience can motivate someone else to make their first contribution.</p>
+            {% else %}
+            <p><strong>Showcase your impact!</strong> Share how coordination and teamwork are creating meaningful change in your community.</p>
+            {% endif %}
+        </div>
+
+        <a href="{{ community_url }}" class="cta-button">🏆 Explore Community</a>
+        <a href="{{ dashboard_url }}" class="cta-button secondary-button">📊 View My Dashboard</a>
+
+        <div class="community-highlight">
+            <h3>🎯 Community Goals</h3>
+            <p>We're working together toward shared milestones! Check out our collective progress and see how your contributions are part of something bigger.</p>
+            <ul style="margin: 15px 0; padding-left: 20px;">
+                <li>📋 <strong>Cases Resolved:</strong> Every completion brings us closer to our monthly target</li>
+                <li>📖 <strong>Stories Shared:</strong> Building a library of inspiration and impact</li>
+                <li>👥 <strong>Active Community:</strong> Growing our network of changemakers</li>
+            </ul>
+        </div>
+
+        {% if is_volunteer %}
+        <p>Ready to share your impact story? The community is waiting to celebrate your contributions and learn from your experience!</p>
+        <a href="{{ dashboard_url }}/stories/new" class="cta-button">📝 Share My Story</a>
+        {% else %}
+        <p>Ready to showcase your coordination success? Share how you're building effective volunteer teams and creating lasting impact!</p>
+        <a href="{{ dashboard_url }}/stories/new" class="cta-button">📝 Share Success Story</a>
+        {% endif %}
+
+        <div class="footer">
+            <p><strong>Thank you</strong> for being part of our community. Together, we're proving that small actions create big changes.</p>
+            <p>With deep appreciation,<br>The sNDa Team</p>
+        </div>
+    </div>
+</body>
+</html>

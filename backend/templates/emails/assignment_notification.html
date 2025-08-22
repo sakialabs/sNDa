@@ -1,0 +1,60 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}🌟 A New Case Needs Your Touch, {{ volunteer_name }}!{% endblock %}
+
+{% block content %}
+<h1>🌟 A New Case Needs Your Touch, {{ volunteer_name }}!</h1>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma here!</strong> You've been assigned a new case. Every case you take is a layer in our community sandwich 🥪.</p>
+</div>
+
+<p>This case has been carefully selected for you based on your profile and previous contributions. Your unique skills make you the perfect person to help!</p>
+
+<div class="highlight-box">
+    <div class="urgency-badge urgency-{% if urgency_score >= 8 %}high{% elif urgency_score >= 5 %}medium{% else %}low{% endif %}" style="display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.9em; font-weight: 600; margin-bottom: 15px;">
+        {% if urgency_score >= 8 %}🔴 High Priority
+        {% elif urgency_score >= 5 %}🟡 Medium Priority
+        {% else %}🟢 Standard Priority{% endif %}
+    </div>
+    
+    <h2 style="color: #f5a623; margin-bottom: 15px;">{{ case_title }}</h2>
+    
+    <p><strong>📋 Case Overview:</strong></p>
+    <p>{{ case_description }}</p>
+    
+    {% if assignment_note %}
+    <p><strong>📝 Coordinator's Note:</strong></p>
+    <p style="font-style: italic; color: #666; background: #f8f9fa; padding: 10px; border-radius: 6px;">{{ assignment_note }}</p>
+    {% endif %}
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-number">👤</div>
+        <div class="stat-label"><strong>Your Coordinator</strong><br>{{ coordinator_name }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">📅</div>
+        <div class="stat-label"><strong>Due Date</strong><br>{{ due_date|default:"Flexible" }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">📍</div>
+        <div class="stat-label"><strong>Location</strong><br>{{ location|default:"Remote" }}</div>
+    </div>
+</div>
+
+<a href="{{ case_url }}" class="button">View Case & Take Action</a>
+
+<div class="highlight-box">
+    <p><strong>🚀 Next Steps:</strong></p>
+    <ol>
+        <li>Review the full case details</li>
+        <li>Accept the assignment if you're available</li>
+        <li>Coordinate with {{ coordinator_name }}</li>
+        <li>Track your progress and share updates</li>
+        <li>Celebrate your impact when complete! 🎉</li>
+    </ol>
+</div>
+
+{% endblock %}

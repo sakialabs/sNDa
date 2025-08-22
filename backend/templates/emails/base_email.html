@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}sNDa - Solidarity Network{% endblock %}</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            color: #333; 
+            background: #fff8e7; 
+            margin: 0; 
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #fff8e7;
+            padding-bottom: 20px;
+        }
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #f5a623;
+            margin-bottom: 5px;
+        }
+        .tagline {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        h1 { 
+            color: #f5a623; 
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #e67e22;
+            font-size: 1.3em;
+        }
+        .button { 
+            display: inline-block; 
+            padding: 12px 24px; 
+            background: #f5a623; 
+            color: white !important; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background: #e67e22;
+        }
+        .button-secondary {
+            background: #3498db;
+        }
+        .button-secondary:hover {
+            background: #2980b9;
+        }
+        .progress-bar {
+            background: #ecf0f1;
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #f5a623, #e67e22);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #fff8e7 0%, #fef3c7 100%);
+            border-left: 4px solid #f5a623;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #fff8e7;
+        }
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #f5a623;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .footer { 
+            font-size: 12px; 
+            color: #888; 
+            margin-top: 30px; 
+            text-align: center;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 20px;
+        }
+        .chuma-signature {
+            background: #e8f5e8;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #27ae60;
+        }
+        .chuma-signature strong {
+            color: #27ae60;
+        }
+        .urgency-high {
+            background: #ef4444 !important;
+            color: white !important;
+        }
+        .urgency-medium {
+            background: #f59e0b !important;
+            color: white !important;
+        }
+        .urgency-low {
+            background: #22c55e !important;
+            color: white !important;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .emoji-large {
+            font-size: 1.5em;
+            margin-right: 8px;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .button {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🥪 sNDa</div>
+            <div class="tagline">Solidarity Network for Development & Action</div>
+        </div>
+        
+        {% block content %}
+        {% endblock %}
+        
+        <div class="footer">
+            <p><strong>🍞❤️🌍</strong></p>
+            <p>sNDa - Every layer counts, every action matters</p>
+            <p>Questions? Just reply to this email - we're here to help!</p>
+            <p><small>You're receiving this because you're part of our sNDa community. 
+            <a href="{{ unsubscribe_url }}" style="color: #888;">Unsubscribe</a></small></p>
+        </div>
+    </div>
+</body>
+</html>

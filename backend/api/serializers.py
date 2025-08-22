@@ -1,8 +1,10 @@
 from rest_framework import serializers
-from .models import Case, Person, ReferralMedia
+from .models import (
+    Case, Person, VolunteerProfile, ReferralMedia, Badge, UserBadge,
+    CommunityGoal, ActivityLog, VolunteerStory, EmailSchedule, StoryMedia, Assignment
+)
 from users.models import CustomUser
 from users.serializers import CustomUserSerializer
-from .models import VolunteerProfile
 
 
 # This serializer translates Person data into JSON
@@ -53,6 +55,8 @@ class CaseSerializer(serializers.ModelSerializer):
             "assigned_volunteer_id",
             "primary_subject_id",
             "thumbnail_url",
+            "success_story",
+            "is_public",
         ]
         read_only_fields = ["id", "created_at"]
 
@@ -73,11 +77,19 @@ class CaseSerializer(serializers.ModelSerializer):
 class VolunteerSerializer(serializers.ModelSerializer):
     # Nested serializer to include user details
     user = CustomUserSerializer(read_only=True)
-
-    # Meta class defines the model and fields to be serialized
+    recent_badges = serializers.SerializerMethodField()
+    
     class Meta:
         model = VolunteerProfile
-        fields = ["user", "phone_number", "skills", "availability", "is_onboarded"]
+        fields = [
+            "user", "phone_number", "skills", "availability", "is_onboarded",
+            "cases_completed", "current_streak", "longest_streak", "total_points",
+            "last_activity", "recent_badges"
+        ]
+    
+    def get_recent_badges(self, obj):
+        recent_badges = UserBadge.objects.filter(user=obj.user).order_by('-earned_at')[:3]
+        return BadgeSerializer([badge.badge for badge in recent_badges], many=True).data
 
 
 class ReferralMediaSerializer(serializers.ModelSerializer):
@@ -95,3 +107,124 @@ class ReferralMediaSerializer(serializers.ModelSerializer):
             "uploaded_by",
         ]
         read_only_fields = ["id", "uploaded_at", "uploaded_by"]
+
+
+class BadgeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Badge
+        fields = [
+            "id", "name", "description", "icon", "category", "points_value",
+            "required_cases", "required_streak", "required_stories", "color", "created_at"
+        ]
+
+
+class UserBadgeSerializer(serializers.ModelSerializer):
+    badge = BadgeSerializer(read_only=True)
+    
+    class Meta:
+        model = UserBadge
+        fields = ["badge", "earned_at", "earned_for_case", "earned_for_story"]
+
+
+class CommunityGoalSerializer(serializers.ModelSerializer):
+    progress_percentage = serializers.ReadOnlyField()
+    is_completed = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = CommunityGoal
+        fields = [
+            "id", "title", "description", "goal_type", "target_value", "current_value",
+            "start_date", "end_date", "icon", "is_active", "is_featured",
+            "progress_percentage", "is_completed", "created_at"
+        ]
+
+
+class ActivityLogSerializer(serializers.ModelSerializer):
+    user = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = ActivityLog
+        fields = [
+            "activity_type", "points_earned", "created_at", "user",
+            "related_case", "related_story", "related_assignment"
+        ]
+
+
+class StoryMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryMedia
+        fields = [
+            "id", "media_type", "file", "url", "title", "description", 
+            "thumbnail", "created_at"
+        ]
+
+
+class VolunteerStorySerializer(serializers.ModelSerializer):
+    author = CustomUserSerializer(read_only=True)
+    media = StoryMediaSerializer(many=True, read_only=True)
+    related_case_title = serializers.CharField(source='related_case.title', read_only=True)
+    
+    class Meta:
+        model = VolunteerStory
+        fields = [
+            "id", "title", "content", "author", "related_case", "related_case_title",
+            "related_assignment", "story_type", "status", "tags", "likes_count",
+            "comments_count", "shares_count", "created_at", "updated_at",
+            "published_at", "media"
+        ]
+        read_only_fields = ["id", "author", "likes_count", "comments_count", "shares_count"]
+
+
+class PublicStorySerializer(serializers.ModelSerializer):
+    """Simplified serializer for public Wall of Love"""
+    author_name = serializers.CharField(source='author.get_full_name', read_only=True)
+    case_title = serializers.CharField(source='related_case.title', read_only=True)
+    media = StoryMediaSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = VolunteerStory
+        fields = [
+            "id", "title", "content", "author_name", "case_title", "story_type",
+            "tags", "likes_count", "published_at", "media"
+        ]
+
+
+class AssignmentSerializer(serializers.ModelSerializer):
+    volunteer = CustomUserSerializer(read_only=True)
+    coordinator = CustomUserSerializer(read_only=True)
+    case = CaseSerializer(read_only=True)
+    
+    class Meta:
+        model = Assignment
+        fields = [
+            "id", "case", "volunteer", "coordinator", "status", "assignment_note",
+            "volunteer_response", "estimated_hours", "actual_hours", "scheduled_start",
+            "scheduled_end", "created_at", "accepted_at", "started_at", "completed_at"
+        ]
+
+
+class EmailScheduleSerializer(serializers.ModelSerializer):
+    """Serializer for email scheduling"""
+    user_email = serializers.CharField(source='user.email', read_only=True)
+    user_name = serializers.CharField(source='user.get_full_name', read_only=True)
+    
+    class Meta:
+        model = EmailSchedule
+        fields = [
+            'id', 'user', 'user_email', 'user_name', 'email_type', 
+            'scheduled_for', 'sent', 'sent_at', 'failed', 'error_message',
+            'is_volunteer', 'metadata', 'created_at'
+        ]
+        read_only_fields = ['id', 'user_email', 'user_name', 'sent_at', 'created_at']
+
+
+class DashboardStatsSerializer(serializers.Serializer):
+    """Serializer for volunteer dashboard statistics"""
+    cases_completed = serializers.IntegerField()
+    current_streak = serializers.IntegerField()
+    total_points = serializers.IntegerField()
+    recent_badges = BadgeSerializer(many=True)
+    active_assignments = serializers.IntegerField()
+    recent_activities = ActivityLogSerializer(many=True)
+    community_rank = serializers.IntegerField()
+    impact_summary = serializers.DictField()

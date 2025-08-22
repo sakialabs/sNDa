@@ -1,0 +1,59 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}🥪 Welcome to sNDa - Your First Bite of Solidarity{% endblock %}
+
+{% block content %}
+<h1>🥪 Welcome to sNDa — Your First Bite of Solidarity</h1>
+
+<p>Hey {{ user_name }},</p>
+
+<p>Welcome to sNDa (Solidarity Network for Development & Action)! Think of us like a sandwich — every person, project, and act of care is an ingredient that makes the whole thing nourishing 🌍✨.</p>
+
+<div class="highlight-box">
+    <p><strong>🥪 What makes sNDa special?</strong></p>
+    <p>Just like a good sandwich, we layer up solidarity, one ingredient at a time. Every volunteer, every case, every story adds flavor to our community meal!</p>
+</div>
+
+<p><strong>Here's how to start stacking your layers:</strong></p>
+<ul>
+    <li><span class="emoji-large">🥖</span><strong>Fill out your profile</strong> – tell us about your skills, passions, and availability</li>
+    <li><span class="emoji-large">🥗</span><strong>Join a project</strong> – explore community initiatives and get involved</li>
+    <li><span class="emoji-large">💌</span><strong>Meet your crew</strong> – connect with others who share your passion</li>
+</ul>
+
+{% if is_volunteer %}
+<div class="highlight-box">
+    <h3>🚀 Your Volunteer Journey Starts Here:</h3>
+    <ul>
+        <li><strong>Meaningful Assignments:</strong> Get matched with cases that align with your skills and passion</li>
+        <li><strong>Share Your Story:</strong> Document your impact and inspire others on our Wall of Love</li>
+        <li><strong>Earn Recognition:</strong> Build streaks, earn badges, and track your growing impact</li>
+        <li><strong>Join the Community:</strong> Connect with fellow volunteers and celebrate collective wins</li>
+    </ul>
+</div>
+
+<p>Ready to make your first impact? Your volunteer dashboard is waiting for you!</p>
+<a href="{{ platform_url }}{{ dashboard_url }}" class="button">Complete Your Profile</a>
+{% else %}
+<div class="highlight-box">
+    <h3>🎯 Your Coordinator Tools:</h3>
+    <ul>
+        <li><strong>Case Management:</strong> Create and track cases efficiently</li>
+        <li><strong>Volunteer Matching:</strong> Assign the right volunteers to each case</li>
+        <li><strong>Impact Tracking:</strong> Monitor progress and celebrate successes</li>
+        <li><strong>Community Building:</strong> Foster engagement and recognition</li>
+    </ul>
+</div>
+
+<p>Ready to coordinate meaningful change? Your coordinator dashboard awaits!</p>
+<a href="{{ platform_url }}{{ dashboard_url }}" class="button">Go to Coordinator Dashboard</a>
+{% endif %}
+
+<div class="chuma-signature">
+    <p><strong>🤖 Meet Chuma, your AI companion!</strong></p>
+    <p>I'll be here to guide you, suggest meaningful projects, and celebrate your wins. Think of me as the secret sauce that makes everything taste better! 🌟</p>
+</div>
+
+<p>Over the next week, we'll share tips and features to help you maximize your impact. Together, we're building something beautiful!</p>
+
+{% endblock %}

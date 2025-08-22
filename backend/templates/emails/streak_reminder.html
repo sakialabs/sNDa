@@ -1,0 +1,49 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}🔔 Keep Your Streak Going, {{ user_name }}!{% endblock %}
+
+{% block content %}
+<h1>🔔 Keep Your Streak Going, {{ user_name }}!</h1>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma here!</strong> Your volunteer streak is at <strong>{{ streak_days }} days</strong> — amazing work! 🥳</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-number">🔥</div>
+        <div class="stat-label"><strong>Current Streak</strong><br>{{ streak_days }} days</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">🏆</div>
+        <div class="stat-label"><strong>Longest Streak</strong><br>{{ longest_streak|default:streak_days }} days</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">⭐</div>
+        <div class="stat-label"><strong>Total Points</strong><br>{{ total_points|default:0 }}</div>
+    </div>
+</div>
+
+<div class="highlight-box">
+    <p><strong>🎯 Keep the momentum going! Here's what you can do:</strong></p>
+    <ul>
+        <li><span class="emoji-large">🎯</span><strong>Check out new community goals</strong> - Help us reach our collective targets</li>
+        <li><span class="emoji-large">🏅</span><strong>Earn badges for your dedication</strong> - You're close to unlocking new achievements</li>
+        <li><span class="emoji-large">📖</span><strong>Share your stories on the Wall of Love</strong> - Inspire others with your journey</li>
+        <li><span class="emoji-large">🤝</span><strong>Take on a new case</strong> - Your skills are needed in the community</li>
+    </ul>
+</div>
+
+<a href="{{ dashboard_url }}" class="button">Visit Dashboard</a>
+<a href="{{ community_url }}" class="button button-secondary">Explore Community</a>
+
+<div class="progress-bar">
+    <div class="progress-fill" style="width: 75%;"></div>
+</div>
+<p style="text-align: center; color: #666;"><small>🔥 Streak Progress: {{ streak_days }} days and counting!</small></p>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma motivates:</strong> "Every day you show up, you add another delicious layer to our community sandwich. Your consistency is the secret sauce that makes everything better! 🥪🌟"</p>
+</div>
+
+{% endblock %}

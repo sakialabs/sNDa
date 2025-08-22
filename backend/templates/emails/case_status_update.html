@@ -1,0 +1,47 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}📝 Your Case {{ case_title }} Status Has Changed{% endblock %}
+
+{% block content %}
+<h1>📝 Your Case Status Update</h1>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma here!</strong> Quick update: your case is now <strong>{{ new_status }}</strong>.</p>
+</div>
+
+<div class="highlight-box">
+    <h2 style="color: #f5a623; margin-bottom: 15px;">{{ case_title }}</h2>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">📋</div>
+            <div class="stat-label"><strong>Previous Status</strong><br>{{ old_status }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">✨</div>
+            <div class="stat-label"><strong>New Status</strong><br>{{ new_status }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">📅</div>
+            <div class="stat-label"><strong>Updated</strong><br>{{ updated_date }}</div>
+        </div>
+    </div>
+    
+    {% if success_story %}
+    <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #22c55e;">
+        <p><strong>🎉 Success Story:</strong></p>
+        <p>{{ success_story }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<p>Keep stacking up your impact — every resolved case adds to your streak and badges!</p>
+
+<a href="{{ case_progress_url }}" class="button">View Case Progress</a>
+<a href="{{ dashboard_url }}" class="button button-secondary">Go to Dashboard</a>
+
+<div class="chuma-signature">
+    <p><strong>🤖 Chuma celebrates:</strong> "Another layer added to our community sandwich! Your dedication is making a real difference. 🥪✨"</p>
+</div>
+
+{% endblock %}

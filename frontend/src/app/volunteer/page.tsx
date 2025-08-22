@@ -1,279 +1,251 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/auth-context";
-import { StorySharing } from "@/components/volunteer/story-sharing";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 import { 
-  Calendar, 
-  Clock, 
-  MapPin, 
+  Heart, 
   Users, 
   Award,
-  TrendingUp
+  Target,
+  BookOpen,
+  Sparkles
 } from "lucide-react";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
-interface Assignment {
-  id: string;
-  caseTitle: string;
-  clientName: string;
-  status: 'active' | 'completed' | 'pending';
-  location: string;
-  nextAppointment?: string;
-  urgency: number;
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
 }
 
-interface VolunteerStats {
-  totalCases: number;
-  activeCases: number;
-  completedCases: number;
-  hoursVolunteered: number;
-  impactScore: number;
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
+    }
+  }
 }
 
-export default function VolunteerDashboard() {
-  const { isAuthenticated, user } = useAuth();
-  const router = useRouter();
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const [stats, setStats] = useState<VolunteerStats | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/");
-      return;
-    }
-
-    const loadVolunteerData = async () => {
-      try {
-        // Simulate API calls
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        setStats({
-          totalCases: 12,
-          activeCases: 3,
-          completedCases: 9,
-          hoursVolunteered: 48,
-          impactScore: 85
-        });
-
-        setAssignments([
-          {
-            id: '1',
-            caseTitle: 'Medical Support for Sarah',
-            clientName: 'Sarah Johnson',
-            status: 'active',
-            location: 'Downtown Medical Center',
-            nextAppointment: '2024-01-25T10:00:00Z',
-            urgency: 7
-          },
-          {
-            id: '2',
-            caseTitle: 'Transportation Assistance',
-            clientName: 'Michael Chen',
-            status: 'pending',
-            location: 'Westside Community',
-            urgency: 5
-          },
-          {
-            id: '3',
-            caseTitle: 'Family Support Services',
-            clientName: 'Maria Rodriguez',
-            status: 'completed',
-            location: 'Community Center',
-            urgency: 6
-          }
-        ]);
-      } catch (error) {
-        console.error('Failed to load volunteer data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadVolunteerData();
-  }, [isAuthenticated, router]);
-
-  if (!isAuthenticated) return null;
-
-  const getStatusColor = (status: Assignment['status']) => {
-    switch (status) {
-      case 'active': return 'default';
-      case 'completed': return 'secondary';
-      case 'pending': return 'outline';
-      default: return 'outline';
-    }
-  };
-
-  const getUrgencyColor = (urgency: number) => {
-    if (urgency >= 8) return 'destructive';
-    if (urgency >= 6) return 'default';
-    return 'secondary';
-  };
-
+export default function VolunteerPage() {
   return (
-    <div className="space-y-6">
-      <div className="animate-fade-in">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Welcome back, {user?.first_name || 'Volunteer'}!
-        </h1>
-        <p className="text-muted-foreground">
-          Your impact dashboard and story sharing hub
-        </p>
-      </div>
+    <div className="min-h-screen">
+      <div className="container mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-4xl font-bold text-foreground mb-4">
+            🤝 Volunteer Hub
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Join our community of volunteers making a real difference in the lives of displaced families and children.
+          </p>
+        </motion.div>
 
-      {/* Stats Overview */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5 animate-fade-in">
-        {loading ? (
-          Array.from({ length: 5 }).map((_, i) => (
-            <Card key={i}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <Skeleton className="h-4 w-20" />
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-8 w-12 mb-2" />
-                <Skeleton className="h-3 w-24" />
+        {/* Quick Stats */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+        >
+          <motion.div variants={itemVariants}>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <div className="text-3xl font-bold text-primary">250+</div>
+                <p className="text-sm text-muted-foreground">Active Volunteers</p>
               </CardContent>
             </Card>
-          ))
-        ) : (
-          <>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <div className="text-3xl font-bold text-primary">1,200+</div>
+                <p className="text-sm text-muted-foreground">Cases Resolved</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <div className="text-3xl font-bold text-primary">50+</div>
+                <p className="text-sm text-muted-foreground">Cities Covered</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <div className="text-3xl font-bold text-primary">98%</div>
+                <p className="text-sm text-muted-foreground">Success Rate</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+        >
+          {/* How It Works */}
+          <motion.div variants={itemVariants}>
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Cases</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Target className="h-5 w-5 text-primary" />
+                  How Volunteering Works
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats?.totalCases}</div>
-                <p className="text-xs text-muted-foreground">All time</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Active Cases</CardTitle>
-                <Clock className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats?.activeCases}</div>
-                <p className="text-xs text-muted-foreground">Currently assigned</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Completed</CardTitle>
-                <Award className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats?.completedCases}</div>
-                <p className="text-xs text-muted-foreground">Successfully closed</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Hours</CardTitle>
-                <Calendar className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats?.hoursVolunteered}</div>
-                <p className="text-xs text-muted-foreground">Volunteered</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Impact Score</CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats?.impactScore}%</div>
-                <p className="text-xs text-muted-foreground">Community impact</p>
-              </CardContent>
-            </Card>
-          </>
-        )}
-      </div>
-
-      {/* Current Assignments */}
-      <Card className="animate-fade-in">
-        <CardHeader>
-          <CardTitle>Your Assignments</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {loading ? (
-            <div className="space-y-4">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="flex items-center space-x-4 p-4 border rounded-lg">
-                  <Skeleton className="h-12 w-12 rounded" />
-                  <div className="flex-1 space-y-2">
-                    <Skeleton className="h-4 w-48" />
-                    <Skeleton className="h-3 w-32" />
-                    <Skeleton className="h-3 w-24" />
+              <CardContent className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">1</div>
+                  <div>
+                    <h3 className="font-semibold">Sign Up & Get Matched</h3>
+                    <p className="text-sm text-muted-foreground">Create your profile and we'll match you with cases that fit your skills and availability.</p>
                   </div>
-                  <Skeleton className="h-8 w-20" />
                 </div>
-              ))}
-            </div>
-          ) : assignments.length === 0 ? (
-            <div className="text-center py-8">
-              <Users className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-              <h3 className="text-lg font-semibold mb-2">No assignments yet</h3>
-              <p className="text-muted-foreground">
-                Check back soon for new volunteer opportunities!
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">2</div>
+                  <div>
+                    <h3 className="font-semibold">Take Action</h3>
+                    <p className="text-sm text-muted-foreground">Work directly with families to provide support, guidance, and resources they need.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">3</div>
+                  <div>
+                    <h3 className="font-semibold">Share Your Impact</h3>
+                    <p className="text-sm text-muted-foreground">Document your journey and inspire others by sharing stories of the lives you've touched.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Volunteer Types */}
+          <motion.div variants={itemVariants}>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5 text-primary" />
+                  Ways to Help
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                    <div>
+                      <h3 className="font-semibold">Case Worker</h3>
+                      <p className="text-sm text-muted-foreground">Direct family support and advocacy</p>
+                    </div>
+                    <Badge variant="secondary">High Impact</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                    <div>
+                      <h3 className="font-semibold">Translator</h3>
+                      <p className="text-sm text-muted-foreground">Language support and communication</p>
+                    </div>
+                    <Badge variant="secondary">Flexible</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                    <div>
+                      <h3 className="font-semibold">Mentor</h3>
+                      <p className="text-sm text-muted-foreground">Long-term guidance and friendship</p>
+                    </div>
+                    <Badge variant="secondary">Ongoing</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                    <div>
+                      <h3 className="font-semibold">Emergency Response</h3>
+                      <p className="text-sm text-muted-foreground">Urgent case assistance</p>
+                    </div>
+                    <Badge variant="secondary">On-Call</Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </motion.div>
+
+        {/* Volunteer Benefits */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <Card className="mt-8">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Award className="h-5 w-5 text-primary" />
+                Why Volunteers Love sNDa
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <Sparkles className="h-12 w-12 mx-auto mb-3 text-primary" />
+                  <h3 className="font-semibold mb-2">Gamified Experience</h3>
+                  <p className="text-sm text-muted-foreground">Earn badges, track streaks, and see your impact grow with our engaging reward system.</p>
+                </div>
+                <div className="text-center">
+                  <Heart className="h-12 w-12 mx-auto mb-3 text-primary" />
+                  <h3 className="font-semibold mb-2">Real Impact</h3>
+                  <p className="text-sm text-muted-foreground">Every case you complete directly changes a family's life and helps them build a better future.</p>
+                </div>
+                <div className="text-center">
+                  <BookOpen className="h-12 w-12 mx-auto mb-3 text-primary" />
+                  <h3 className="font-semibold mb-2">Continuous Learning</h3>
+                  <p className="text-sm text-muted-foreground">Develop new skills, gain cultural awareness, and grow personally through meaningful work.</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <Card className="mt-8">
+            <CardContent className="text-center py-8">
+              <h2 className="text-2xl font-bold mb-4 text-foreground">Ready to Make a Difference?</h2>
+              <p className="text-lg mb-6 text-muted-foreground">
+                Join hundreds of volunteers who are already changing lives in their communities.
               </p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {assignments.map((assignment) => (
-                <div
-                  key={assignment.id}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
-                >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-semibold">{assignment.caseTitle}</h3>
-                      <Badge variant={getStatusColor(assignment.status)}>
-                        {assignment.status}
-                      </Badge>
-                      <Badge variant={getUrgencyColor(assignment.urgency)}>
-                        Urgency: {assignment.urgency}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-1">
-                      Client: {assignment.clientName}
-                    </p>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {assignment.location}
-                      </div>
-                      {assignment.nextAppointment && (
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          {new Date(assignment.nextAppointment).toLocaleDateString()}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    View Details
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link href="/login">
+                  <Button size="lg" className="w-full sm:w-auto">
+                    Get Started Today
                   </Button>
-                </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Story Sharing Section */}
-      <div className="animate-fade-in">
-        <StorySharing />
+                </Link>
+                <Link href="/community">
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                    See Our Impact
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </div>
   );

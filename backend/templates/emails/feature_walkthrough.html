@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover sNDa Features</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+        .title {
+            color: #1e40af;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .feature-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .feature-title {
+            color: #1e40af;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .feature-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 10px 10px 10px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .secondary-button {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .tip-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">sNDa</div>
+            <h1 class="title">🚀 Discover Your Impact Tools</h1>
+        </div>
+
+        <p>Hi {{ user_name }}! Ready to explore what makes sNDa special? Let's take a quick tour of the features that will amplify your impact:</p>
+
+        {% if is_volunteer %}
+        <div class="feature-card">
+            <div class="feature-title">
+                <span class="feature-icon">🎯</span>
+                Smart Assignment Matching
+            </div>
+            <p>Our system matches you with cases based on your skills, availability, and interests. No more scrolling through irrelevant opportunities!</p>
+            <a href="{{ assignments_url }}" class="cta-button">View Available Cases</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-title">
+                <span class="feature-icon">📖</span>
+                Impact Storytelling
+            </div>
+            <p>Share your volunteer journey! Your stories inspire others and create a powerful narrative of collective change.</p>
+            <a href="{{ stories_url }}" class="cta-button">Share Your Story</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-title">
+                <span class="feature-icon">🏆</span>
+                Gamified Recognition
+            </div>
+            <p>Build streaks, earn badges, and track your growing impact. Every action counts toward your volunteer journey!</p>
+            <a href="{{ assignments_url }}/dashboard" class="cta-button">Check My Progress</a>
+        </div>
+        {% else %}
+        <div class="feature-card">
+            <div class="feature-title">
+                <span class="feature-icon">📋</span>
+                Streamlined Case Management
+            </div>
+            <p>Create, track, and manage cases with ease. Our intuitive interface helps you focus on what matters most.</p>
+            <a href="{{ assignments_url }}" class="cta-button">Manage Cases</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-title">
+                <span class="feature-icon">👥</span>
+                Volunteer Coordination
+            </div>
+            <p>Match volunteers to cases efficiently and track their progress. Build a motivated, engaged team.</p>
+            <a href="{{ assignments_url }}/volunteers" class="cta-button">View Volunteers</a>
+        </div>
+        {% endif %}
+
+        <div class="tip-box">
+            <strong>💡 Pro Tip:</strong> The Community page showcases everyone's impact stories and collective goals. It's a great place to find inspiration and celebrate wins together!
+            <br><br>
+            <a href="{{ assignments_url }}/community" class="cta-button secondary-button">Explore Community</a>
+        </div>
+
+        <p>Want to amplify your impact even further? Consider supporting our mission with a donation – every contribution helps us reach more people in need.</p>
+        <a href="{{ donate_url }}" class="cta-button secondary-button">💝 Support Our Mission</a>
+
+        <div class="footer">
+            <p>Questions about any feature? Just reply to this email!</p>
+            <p>Building impact together,<br>The sNDa Team</p>
+        </div>
+    </div>
+</body>
+</html>
