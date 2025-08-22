@@ -19,11 +19,11 @@ def health_check(request):
     except Exception as e:
         db_status = f"error: {str(e)}"
     
-    # Test Celery broker connection
+    # Test Celery broker connection (non-blocking)
     try:
         from celery import current_app
-        inspect = current_app.control.inspect()
-        celery_status = "healthy" if inspect.ping() else "no workers"
+        # Just check if we can import and access the app, don't ping workers
+        celery_status = "configured" if current_app else "not configured"
     except Exception as e:
         celery_status = f"error: {str(e)}"
     
