@@ -10,6 +10,7 @@ services:
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
+      python manage.py migrate
       python manage.py collectstatic --noinput
     startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     healthCheckPath: /api/health/
@@ -28,6 +29,8 @@ services:
           property: connectionString
       - key: DJANGO_SETTINGS_MODULE
         value: config.settings
+      - key: SECRET_KEY
+        generateValue: true
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
@@ -65,6 +68,8 @@ services:
           property: connectionString
       - key: DJANGO_SETTINGS_MODULE
         value: config.settings
+      - key: SECRET_KEY
+        sync: false
 
   # ⏰ Celery Beat Scheduler
   - type: worker
@@ -85,6 +90,8 @@ services:
           property: connectionString
       - key: DJANGO_SETTINGS_MODULE
         value: config.settings
+      - key: SECRET_KEY
+        sync: false
 
 # 🗄️ Database Configuration
 databases:
