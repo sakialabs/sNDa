@@ -7,5 +7,4 @@ class ApiConfig(AppConfig):
     
     def ready(self):
         import api.signals  # Import signals to register them
-        from api.signals import create_default_badges
-        create_default_badges()  # Create default badges on startup
+        # Don't create default badges during startup - let migrations handle this
