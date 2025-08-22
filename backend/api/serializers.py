@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Case, Person
+from .models import Case, Person, ReferralMedia
 from users.models import CustomUser
 from users.serializers import CustomUserSerializer
 from .models import VolunteerProfile
@@ -25,6 +25,7 @@ class CaseSerializer(serializers.ModelSerializer):
     # These fields are for reading data (GET requests)
     primary_subject = PersonSerializer(read_only=True)
     assigned_volunteer = CustomUserSerializer(read_only=True)
+    thumbnail_url = serializers.SerializerMethodField(read_only=True)
 
     # These fields are for writing data (POST/PUT requests)
     primary_subject_id = serializers.PrimaryKeyRelatedField(
@@ -51,8 +52,22 @@ class CaseSerializer(serializers.ModelSerializer):
             "assigned_volunteer",
             "assigned_volunteer_id",
             "primary_subject_id",
+            "thumbnail_url",
         ]
         read_only_fields = ["id", "created_at"]
+
+    def get_thumbnail_url(self, obj: Case) -> str | None:
+        media = (
+            ReferralMedia.objects.filter(case=obj, consent_given=True)
+            .order_by("uploaded_at")
+            .first()
+        )
+        if media and media.file:
+            try:
+                return media.file.url
+            except Exception:
+                return None
+        return None
 
 
 class VolunteerSerializer(serializers.ModelSerializer):
@@ -63,3 +78,20 @@ class VolunteerSerializer(serializers.ModelSerializer):
     class Meta:
         model = VolunteerProfile
         fields = ["user", "phone_number", "skills", "availability", "is_onboarded"]
+
+
+class ReferralMediaSerializer(serializers.ModelSerializer):
+    uploaded_by = CustomUserSerializer(read_only=True)
+
+    class Meta:
+        model = ReferralMedia
+        fields = [
+            "id",
+            "case",
+            "file",
+            "description",
+            "consent_given",
+            "uploaded_at",
+            "uploaded_by",
+        ]
+        read_only_fields = ["id", "uploaded_at", "uploaded_by"]

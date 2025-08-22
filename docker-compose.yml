@@ -14,13 +14,20 @@ services:
 
   web:
     build: ./backend
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/app
     ports:
       - "8000:8000"
     environment:
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=snda_db
+      - DB_USER=snda_user
       - DB_PASSWORD=snda
+      - DB_HOST=db
+      - DB_PORT=5432
     depends_on:
       - db
 
