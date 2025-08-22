@@ -1,10 +1,28 @@
 # 🥪 sNDa 🥪
 
-A solidarity platform wrapping support around people, starting with kids in Sudan, built for the world
+**sNDa** stands for **Solidarity Network for Development & Action**. 
 
-## 📖 About sNDa
+> Pronounced **sun-dah (سندة)**, the name layers meaning on meaning:
+> - **Sudanese slang:** a snack or sandwich that packs a little boost, just like the support we serve to communities  
+> - **Arabic:** support, symbolizing care, solidarity, and having each other’s back
 
-> Pronounced **sun-dah (سندة)**, the name comes from Sudanese slang for sandwich, a metaphor for support, care, and community. Like a sandwich, it layers health, education, nutrition, and shelter to wrap children in the care they need. The platform combines human solidarity with smart technology using Django, React, and PyTorch. Starting with Sudanese children in urgent medical need, it will expand into education, food, shelter, fitness, and digital access. Built to empower communities and foster meaningful connections, it is open-source, community-powered and resilient, designed to work even in low-bandwidth, offline-first, and crisis conditions.
+It’s a platform built to **wrap children and communities in care**, blending **grassroots warmth** with a **global vision**. By combining human solidarity with smart technology (Django, React, PyTorch), it supports kids in Sudan today and vulnerable communities worldwide tomorrow.
+
+## 📚 Table of Contents
+- [Mission and Vision](#-mission-and-vision)  
+- [Core Features](#-core-features)  
+- [Architecture](#-architecture)  
+- [Tech Stack](#-tech-stack)  
+- [System Map](#-system-map)  
+- [Inclusivity & i18n](#-inclusivity--i18n)  
+- [Repo Structure](#-repo-structure)  
+- [Quick Start](#-quick-start)  
+- [Testing & Quality](#-testing--quality)  
+- [Design System](#-design-system)  
+- [Contributing](#-contributing)  
+- [Recent Updates](#-recent-updates)  
+- [License](#-license)
+- [Credits](#-credits)
 
 ## 🎯 Mission and Vision
 
@@ -177,7 +195,7 @@ python manage.py runserver
 ```bash
 cd frontend
 npm install
-npm run dev  # Runs on http://localhost:3000
+npm run dev
 ```
 
 **Access the Application:**
@@ -195,7 +213,7 @@ We maintain high code quality with comprehensive testing:
 - **UX Validation:** Responsive design, loading states, and accessibility checks
 - **API Integration:** Backend connectivity and error handling verification
 
-See [TESTING.md](./TESTING.md) for detailed testing procedures.
+See [TESTING.md](./docs/TESTING.md) for detailed testing procedures.
 
 ## 🎨 Design System
 
@@ -235,7 +253,7 @@ npm run lint         # Code linting
 npm run build        # Production build test
 
 # 3. Test features manually
-# Follow TESTING.md checklist
+# Follow docs/TESTING.md checklist
 ```
 
 Together, we build **impactful, inclusive, and sustainable solutions** for communities everywhere.
@@ -253,8 +271,8 @@ Together, we build **impactful, inclusive, and sustainable solutions** for commu
 
 ## 📜 License
 
-MIT — use it, remix it, spread the love!
+MIT — use it, remix it, and spread the love!
 
----
+## 📝 Credits
 
-**Built with ❤️ for children everywhere. Starting with Sudan, growing globally.**
+Built with 💖 for children everywhere.

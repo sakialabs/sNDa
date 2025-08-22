@@ -1,4 +1,4 @@
-# 🧪 sNDa Testing Guide
+# 🧪 sNDa Testing & Development Guide
 
 ## Pre-GitHub Push Checklist
 
@@ -155,6 +155,107 @@ npm run dev
 - Responsive design works on all screen sizes
 - No console errors in browser
 - Documentation is up to date
+
+## 🐳 Docker Backend Setup
+
+### Quick Start with Docker
+
+**Prerequisites:**
+- Docker & Docker Compose installed
+- Conda environment `snda_env` activated (optional)
+
+**1. Environment Setup**
+```bash
+# Create .env file in backend directory
+cd backend
+cp .env.example .env  # Create from template
+
+# Required environment variables:
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+DATABASE_URL=postgresql://snda_user:snda_pass@db:5432/snda_db
+ALLOWED_HOSTS=localhost,127.0.0.1
+```
+
+**2. Build & Run**
+```bash
+# From project root
+docker-compose up --build
+
+# Or run in background
+docker-compose up -d --build
+```
+
+**3. Database Setup**
+```bash
+# Run migrations
+docker-compose exec backend python manage.py migrate
+
+# Create superuser
+docker-compose exec backend python manage.py createsuperuser
+
+# Load sample data (optional)
+docker-compose exec backend python manage.py loaddata fixtures/sample_data.json
+```
+
+**4. Access Points**
+- Backend API: `http://localhost:8000`
+- Admin Panel: `http://localhost:8000/admin`
+- Database: `localhost:5432` (external access)
+
+### Development with Conda
+
+**Alternative: Local Development**
+```bash
+# Activate conda environment
+conda activate snda_env
+
+# Install dependencies
+cd backend
+pip install -r requirements.txt
+
+# Run migrations
+python manage.py migrate
+
+# Start development server
+python manage.py runserver
+```
+
+### Docker Commands Reference
+
+```bash
+# View logs
+docker-compose logs backend
+docker-compose logs db
+
+# Stop services
+docker-compose down
+
+# Rebuild after code changes
+docker-compose up --build
+
+# Access backend shell
+docker-compose exec backend python manage.py shell
+
+# Database backup
+docker-compose exec db pg_dump -U snda_user snda_db > backup.sql
+```
+
+### Troubleshooting
+
+**Port Conflicts:**
+- Backend: Change `8000:8000` to `8001:8000` in docker-compose.yml
+- Database: Change `5432:5432` to `5433:5432` in docker-compose.yml
+
+**Permission Issues:**
+```bash
+# Fix file permissions
+sudo chown -R $USER:$USER .
+```
+
+**Database Connection:**
+- Ensure PostgreSQL container is running: `docker-compose ps`
+- Check database logs: `docker-compose logs db`
 
 ## Post-Push Verification
 
