@@ -1,6 +1,6 @@
 [build]
   publish = "frontend/.next"
-  command = "cd frontend && npm run build"
+  command = "cd frontend && npm ci && npm run build"
 
 [functions]
   external_node_modules = ["next"]
