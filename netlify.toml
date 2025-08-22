@@ -26,7 +26,7 @@
 
 [context.production.environment]
   NEXT_PUBLIC_API_URL = "https://snda-backend.onrender.com"
-  NEXT_PUBLIC_FRONTEND_URL = "https://snda-platform.netlify.app"
+  NEXT_PUBLIC_FRONTEND_URL = "https://snda.netlify.app"
 
 [context.deploy-preview.environment]
   NEXT_PUBLIC_API_URL = "https://snda-backend.onrender.com"
