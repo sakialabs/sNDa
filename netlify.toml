@@ -19,11 +19,6 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
 [context.production.environment]
   NEXT_PUBLIC_API_URL = "https://snda-backend.onrender.com"
   NEXT_PUBLIC_FRONTEND_URL = "https://snda.netlify.app"
