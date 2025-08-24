@@ -13,6 +13,7 @@ import { jwtDecode } from "jwt-decode";
 import { API_CONFIG } from "@/lib/api/config";
 import { toast } from "sonner";
 import type { User } from "@/lib/types";
+import { useLocale } from "next-intl";
 
 // Type for the decoded JWT payload
 interface DecodedToken {
@@ -34,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const locale = useLocale();
 
   async function readErrorMessage(response: Response): Promise<string> {
     try {
@@ -61,8 +63,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     document.cookie = `${API_CONFIG.STORAGE_KEYS.ACCESS_TOKEN}=; Max-Age=0; path=/`;
     document.cookie = `${API_CONFIG.STORAGE_KEYS.REFRESH_TOKEN}=; Max-Age=0; path=/`;
     setUser(null);
-    router.push("/");
-  }, [router]);
+    router.push(`/${locale}`);
+  }, [router, locale]);
 
   useEffect(() => {
     const initAuth = async () => {
@@ -140,7 +142,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       JSON.stringify(userData)
     );
 
-    router.push("/dashboard");
+    router.push(`/${locale}/dashboard`);
     toast.success("Logged in successfully");
   };
 

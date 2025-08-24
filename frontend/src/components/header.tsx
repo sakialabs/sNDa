@@ -12,6 +12,9 @@ import type { User } from "../lib/types";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
+import { LanguageSwitcher } from "./language-switcher";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,6 +33,8 @@ function getFullName(user: User | null) {
 }
 
 export function Header() {
+  const t = useTranslations();
+  const locale = useLocale();
   const { user, isAuthenticated, logout } = useAuth();
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
@@ -40,7 +45,7 @@ export function Header() {
   const handleLogout = () => {
     logout();
     setShowLoginForm(false); // Reset login form state
-    router.push("/");
+    router.push(`/${locale}/`);
   };
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -58,14 +63,17 @@ export function Header() {
   }, []);
 
   const links = [
-    { href: "/about", label: "About" },
-    { href: "/community", label: "Community" },
-    { href: "/contact", label: "Contact" },
-    { href: "/donate", label: "Donate" },
-    { href: "/volunteer", label: "Volunteer" },
-    { href: "/wall-of-love", label: "Wall of Love" },
+    { href: "/about", label: t("nav.about") },
+    { href: "/community", label: t("nav.community") },
+    { href: "/contact", label: t("nav.contact") },
+    { href: "/donate", label: t("nav.donate") },
+    { href: "/volunteer", label: t("nav.volunteer") },
+    { href: "/wall-of-love", label: t("nav.wallOfLove") },
   ];
 
+  const normalize = (p: string) => p.replace(/^\/(en|ar)(?=\/|$)/, "");
+
+  const localePrefix = `/${locale}`;
   return (
     <header className="sticky top-0 z-50">
       <div className="w-full px-4 py-2">
@@ -78,10 +86,18 @@ export function Header() {
             transition={{ duration: 0.4 }}
           >
             <Link
-              href="/"
-              className="px-3 py-2 rounded-xl bg-card/80 border border-border backdrop-blur-sm shadow-sm text-card-foreground text-lg font-semibold"
+              href={`${localePrefix}/`}
+              className="px-3 py-2 rounded-xl bg-card/80 border border-border backdrop-blur-sm shadow-sm text-card-foreground font-semibold inline-flex items-center gap-2"
             >
-              sNDa 🥪
+              <Image
+                src="/logo.png"
+                alt="sNDa logo"
+                width={24}
+                height={24}
+                className="h-6 w-6 object-contain"
+                priority
+              />
+              <span className="text-base leading-none">sNDa</span>
             </Link>
           </motion.div>
 
@@ -93,11 +109,12 @@ export function Header() {
             transition={{ duration: 0.4, delay: 0.05 }}
           >
             {links.map((l) => {
-              const active = mounted && (pathname === l.href || pathname.startsWith(`${l.href}/`));
+              const current = normalize(pathname || "");
+              const active = mounted && (current === l.href || current.startsWith(`${l.href}/`));
               return (
                 <Link
                   key={l.href}
-                  href={l.href}
+                  href={`${localePrefix}${l.href}`}
                   className={`relative isolate text-sm font-medium transition-colors px-3 py-2 rounded-md ${
                     active ? "text-card-foreground" : "text-card-foreground/80 hover:text-card-foreground"
                   }`}
@@ -107,7 +124,7 @@ export function Header() {
                       className="absolute inset-0 z-[1] rounded-md bg-accent pointer-events-none"
                     />
                   )}
-                  <span className="relative z-[2]">{l.label}</span>
+                  <span className="relative z-[2] whitespace-nowrap">{l.label}</span>
                 </Link>
               );
             })}
@@ -155,11 +172,11 @@ export function Header() {
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => router.push("/dashboard")}>My Cases</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push("/volunteer")}>Volunteer Hub</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push("/coordinator")}>Manage Cases</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push("/donate")}>Support Families</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push("/profile")}>Profile</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push(`/${locale}/dashboard`)}>My Cases</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push(`/${locale}/volunteer`)}>Volunteer Hub</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push(`/${locale}/coordinator`)}>Manage Cases</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push(`/${locale}/donate`)}>Support Families</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push(`/${locale}/profile`)}>Profile</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
                   </DropdownMenuContent>
@@ -167,7 +184,7 @@ export function Header() {
               ) : (
                 <div className="hidden sm:flex items-center gap-2">
                   <Button variant="ghost" onClick={() => setShowLoginForm(true)} data-login size="sm">
-                    Login
+                    {t("auth.login")}
                   </Button>
                   <Button
                     variant="ghost"
@@ -176,10 +193,11 @@ export function Header() {
                     className="hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     onClick={() => setShowSignupForm(true)}
                   >
-                    Join Us
+                    {t("auth.joinUs")}
                   </Button>
                 </div>
               )}
+              <LanguageSwitcher />
               <DarkModeToggle />
             </div>
           </motion.div>
@@ -191,7 +209,7 @@ export function Header() {
               {links.map((l) => (
                 <Link
                   key={l.href}
-                  href={l.href}
+                  href={`${localePrefix}${l.href}`}
                   className="px-3 py-2 rounded-lg text-card-foreground/90 hover:bg-accent"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -209,7 +227,7 @@ export function Header() {
                       setMobileOpen(false);
                     }}
                   >
-                    Login
+                    {t("auth.login")}
                   </Button>
                   <Button
                     size="sm"
@@ -219,7 +237,7 @@ export function Header() {
                       setMobileOpen(false);
                     }}
                   >
-                    Join Us
+                    {t("auth.joinUs")}
                   </Button>
                 </div>
               )}

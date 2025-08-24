@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "about": "About",
+    "community": "Community",
+    "contact": "Contact",
+    "donate": "Donate",
+    "volunteer": "Volunteer",
+    "wallOfLove": "Wall of Love"
+  },
+  "auth": {
+    "login": "Login",
+    "joinUs": "Join Us"
+  },
+  "about": {
+    "title": "About sNDa",
+    "subtitle": "🥪 a Sandwich of Support 🥪",
+    "whoWeAre": {
+      "title": "Who we are",
+      "intro": "At sDNa, we <strong>blend grassroots warmth</strong> with a <strong>global vision</strong>. By combining human solidarity with smart technology, it supports kids in Sudan today and vulnerable communities worldwide tomorrow."
+    }
+  }
+}

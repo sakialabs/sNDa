@@ -173,7 +173,17 @@ npm run dev
 
 ## Common Issues & Solutions
 
-**TypeScript Errors**
+### Editor Diagnostics
+
+- **TS2307: Cannot find module './client' in `[locale]` routes**
+  - Cause: Editor/TypeScript server quirk on Windows with bracket routes
+  - Fixes: Restart TS server, ensure workspace root is `frontend/`, clear `.next`/ts caches, optionally import with explicit `.tsx`
+
+- **"Extension ID not available" console error**
+  - Cause: VS Code Browser Preview extension (not app-related)
+  - Fix: Disable/avoid the extension during development
+
+### **TypeScript Errors**
 - Ensure all imports use consistent paths
 - Check Case interface matches across files
 - Verify null vs undefined handling

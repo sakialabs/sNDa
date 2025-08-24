@@ -2,6 +2,20 @@
 
 **Goal**: Launch a warm, community-driven platform that motivates volunteers, showcases impact, and scales smartly.
 
+## ✅ Status Snapshot (Now)
+
+- **MVP Core Loop:** Completed — volunteer dashboard, community features, donor platform with Stripe
+- **Email System:** Completed — onboarding, transactional, motivation (Boba AI), Celery + Redis
+- **Gamification:** Completed — badges, streaks, points, community goals
+- **Frontend Deployment:** Netlify live at `https://snda.netlify.app`
+- **Docs:** Updated README, Testing, Deployment, Email System
+
+### 🎯 Next Priorities
+
+- **i18n (Arabic/EN):** `next-intl` routing, RTL utilities, translations
+- **ML Suggestions:** Assignment suggestions + Boba UI surfacing in dashboard
+- **Backend Deployment:** Render/Railway with env vars (SendGrid, Redis, Celery workers)
+
 ## 🎯 Phase 1: MVP Launch — Core Loop (Week 1)
 
 **Goal**: Launch the smallest set of features that creates a motivating feedback loop.

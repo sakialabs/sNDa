@@ -19,6 +19,7 @@ import {
   Star
 } from "lucide-react";
 import { toast } from "sonner";
+import { useFormatter, useLocale } from "next-intl";
 
 interface Campaign {
   id: string;
@@ -35,20 +36,22 @@ interface Campaign {
 
 interface DonationAmount {
   value: number;
-  label: string;
   impact: string;
 }
 
 const DONATION_AMOUNTS: DonationAmount[] = [
-  { value: 25, label: "$25", impact: "Provides basic medical supplies" },
-  { value: 50, label: "$50", impact: "Covers transportation for one family" },
-  { value: 100, label: "$100", impact: "Funds emergency assistance package" },
-  { value: 250, label: "$250", impact: "Supports a family for one month" },
-  { value: 500, label: "$500", impact: "Provides comprehensive care support" },
-  { value: 1000, label: "$1000", impact: "Sponsors multiple families in need" }
+  { value: 25, impact: "Provides basic medical supplies" },
+  { value: 50, impact: "Covers transportation for one family" },
+  { value: 100, impact: "Funds emergency assistance package" },
+  { value: 250, impact: "Supports a family for one month" },
+  { value: 500, impact: "Provides comprehensive care support" },
+  { value: 1000, impact: "Sponsors multiple families in need" }
 ];
 
 export function DonationPlatform() {
+  const locale = useLocale();
+  const f = useFormatter();
+  const isAR = locale === "ar";
   const [campaigns, setCampaigns] = useState<Campaign[]>([
     {
       id: '1',
@@ -140,12 +143,13 @@ export function DonationPlatform() {
     return Math.min((raised / goal) * 100, 100);
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+  const formatCurrency = (amount: number, opts?: Intl.NumberFormatOptions) => {
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
+      ...opts
     }).format(amount);
   };
 
@@ -165,21 +169,21 @@ export function DonationPlatform() {
         <Card>
           <CardContent className="p-6 text-center">
             <Heart className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <div className="text-2xl font-bold">2,847</div>
+            <div className="text-2xl font-bold">{f.number(2847)}</div>
             <p className="text-sm text-muted-foreground">Families Helped</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
             <DollarSign className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <div className="text-2xl font-bold">$485K</div>
+            <div className="text-2xl font-bold">{formatCurrency(485000, { notation: 'compact', maximumFractionDigits: 1 })}</div>
             <p className="text-sm text-muted-foreground">Total Raised</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
             <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <div className="text-2xl font-bold">1,234</div>
+            <div className="text-2xl font-bold">{f.number(1234)}</div>
             <p className="text-sm text-muted-foreground">Active Donors</p>
           </CardContent>
         </Card>
@@ -221,7 +225,7 @@ export function DonationPlatform() {
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-sm">
                     <span>Progress</span>
-                    <span>{Math.round(getProgressPercentage(campaign.raised, campaign.goal))}%</span>
+                    <span>{f.number(Math.round(getProgressPercentage(campaign.raised, campaign.goal)))}%</span>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2">
                     <div 
@@ -238,11 +242,11 @@ export function DonationPlatform() {
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Users className="w-3 h-3" />
-                    {campaign.donors} donors
+                    {f.number(campaign.donors)} donors
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
-                    {campaign.daysLeft} days left
+                    {f.number(campaign.daysLeft)} days left
                   </div>
                 </div>
               </CardContent>
@@ -275,7 +279,7 @@ export function DonationPlatform() {
                       setCustomAmount('');
                     }}
                   >
-                    <span className="text-lg font-bold">{amount.label}</span>
+                    <span className="text-lg font-bold">{formatCurrency(amount.value)}</span>
                     <span className="text-xs text-center mt-1 opacity-75">
                       {amount.impact}
                     </span>
@@ -288,7 +292,7 @@ export function DonationPlatform() {
             <div>
               <Label htmlFor="custom-amount">Or Enter Custom Amount</Label>
               <div className="relative mt-2">
-                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <DollarSign className={`absolute ${isAR ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground`} />
                 <Input
                   id="custom-amount"
                   type="number"
@@ -298,7 +302,7 @@ export function DonationPlatform() {
                     setCustomAmount(e.target.value);
                     setSelectedAmount(null);
                   }}
-                  className="pl-10"
+                  className={isAR ? 'pr-10' : 'pl-10'}
                   min="5"
                   step="0.01"
                 />
@@ -332,7 +336,7 @@ export function DonationPlatform() {
               ) : (
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-5 h-5" />
-                  Donate {selectedAmount ? formatCurrency(selectedAmount) : customAmount ? `$${customAmount}` : ''}
+                  Donate {selectedAmount ? formatCurrency(selectedAmount) : customAmount ? formatCurrency(parseFloat(customAmount)) : ''}
                   {recurringDonation && ' Monthly'}
                 </div>
               )}

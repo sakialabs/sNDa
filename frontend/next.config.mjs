@@ -1,3 +1,5 @@
+import createNextIntlPlugin from 'next-intl/plugin';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
@@ -16,4 +18,7 @@ const nextConfig = {
   }
 }
 
-export default nextConfig
+// Tell next-intl where the config lives (relative to this file)
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
+
+export default withNextIntl(nextConfig)

@@ -127,7 +127,7 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 
 ### Frontend
 
-- **Next.js 14** – React framework with App Router, SSR & optimized routing
+- **Next.js 15** – React framework with App Router, SSR & optimized routing
 - **TypeScript** – Strongly typed development with enhanced type safety
 - **Tailwind CSS** – Utility-first styling with custom animations and themes
 - **Shadcn/UI** – Accessible component library with enhanced skeleton components
@@ -149,7 +149,7 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 ### Infrastructure / Hosting
 
 - **Render** – Backend hosting with PostgreSQL database
-- **Vercel** – Frontend hosting with automatic deployments
+- **Netlify** – Frontend hosting with automatic deployments
 - **Stripe** – Secure payment processing for donations
 - **Docker** – Local development environment and containerization
 - **GitHub Actions** – Automated testing, CI/CD, and deployment workflows
@@ -285,25 +285,16 @@ Together, we build **impactful, inclusive, and sustainable solutions** for commu
 
 ## 🌟 Recent Updates
 
-### v0.3.0 - Magnetic Community Platform
+### v0.3.1 - Deployments, i18n, Boba, and UX
 
-- 🏆 **Complete Gamification System:** Badges, streaks, points, and community goals
-- 🌟 **Community Page:** Wall of Love showcasing volunteer stories and collective impact
-- 📊 **Enhanced Volunteer Dashboard:** Personal stats, badges, and streak tracking
-- 🤖 **Boba AI Assistant:** Smart recommendations and personalized notifications
-- 📧 **Email Onboarding System:** 3-step sequence with beautiful HTML templates
-- 🎯 **Community Goals:** Shared milestones for collective motivation
-- 🏅 **Achievement System:** Automatic badge awarding via Django signals
-- 📈 **Impact Tracking:** Comprehensive activity logging and analytics
+- 🚀 **Full-Stack Deployment:** Frontend on Netlify (https://snda.netlify.app). Backend API deployed with environment configuration (SendGrid, Redis, Celery workers) and production hardening
+- 🔔 **Boba Notifications:** Streak reminders, badge celebrations, and gentle assignment nudges across email and in-app surfaces
+- 🌍 **Arabic i18n:** App-wide Arabic version with RTL support, localized routes (`/[locale]/*`), and translated UI strings (`frontend/messages/ar.json`)
+- 📄 **New Pages & Sections:** Added public pages and dashboard sections to improve discoverability and impact storytelling
+- ✨ **UI Enhancements:** Navigation polish, consistent animations, improved readability and contrast, better empty/loading states, and accessibility tweaks
+- 🧪 **Stability:** Type safety, lint/build checks green; smoke tests for donation flow, stories, and dashboards
 
-### v0.2.0 - Enhanced UX & Community Features
-
-- ✨ **Unified Loading Experience:** Beautiful skeleton components with shimmer animations
-- 🎯 **Improved Toast Notifications:** Top-center positioning for better visibility
-- 📖 **Volunteer Story Sharing:** Rich media upload, link sharing, and community engagement
-- 💰 **Comprehensive Donor Platform:** Stripe integration with campaign management
-- 🎨 **Enhanced Design System:** Smooth animations and responsive layouts
-- 🧭 **Advanced Coordinator Tools:** Real-time filtering and enhanced case management
+See full history in [CHANGELOG.md](./docs/CHANGELOG.md).
 
 ## 📜 License
 

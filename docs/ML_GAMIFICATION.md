@@ -1,10 +1,10 @@
-# 🥪 sNDa Gamification & Boba ML Plan
+# 🤖 sNDa Gamification & Boba ML Plan
 
 ## 1️⃣ Overview
 **Goal:** Make volunteer engagement fun, motivating, and community-driven with streaks, badges, highlights, mini challenges, and friendly notifications powered by Boba AI.
 
 **Core Components:**  
-- **Boba Bot:** "Food for the Soul" assistant delivering streak updates, badge awards, and personalized suggestions.  
+- **Boba Bot:** "Small sips of support" assistant delivering streak updates, badge awards, and personalized suggestions.  
 - **VolunteerProfile & Case Models:** Track activity, streaks, and completed cases.  
 - **Badge / UserBadge Models:** Store volunteer achievements.  
 - **Frontend Dashboard & Wall of Love:** Display streaks, badges, mini challenges, and community recognition.  
