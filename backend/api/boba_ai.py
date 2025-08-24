@@ -1,6 +1,6 @@
 """
-Chuma AI Bot - Smart recommendations and notifications for sNDa platform
-Chuma (Sudanese Arabic Slang for food) - small nudges that make a big difference
+Boba AI Bot - Smart recommendations and notifications for sNDa platform
+Boba (friendly AI companion) - small nudges that make a big difference
 """
 
 from django.utils import timezone
@@ -13,7 +13,7 @@ from .models import (
 from users.models import CustomUser
 
 
-class ChumaAI:
+class BobaAI:
     """AI-powered recommendation and notification system"""
     
     def __init__(self):
@@ -288,8 +288,8 @@ class ChumaAI:
         
         return goals
     
-    def get_chuma_greeting(self, user: CustomUser) -> str:
-        """Get a personalized greeting from Chuma"""
+    def get_boba_greeting(self, user: CustomUser) -> str:
+        """Get a personalized greeting from Boba"""
         profile, _ = VolunteerProfile.objects.get_or_create(user=user)
         
         greetings = [
@@ -311,4 +311,4 @@ class ChumaAI:
 
 
 # Singleton instance
-chuma = ChumaAI()
+boba = BobaAI()

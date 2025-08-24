@@ -10,7 +10,7 @@ from .models import (
     Case, Person, VolunteerProfile, ReferralMedia, Badge, UserBadge,
     CommunityGoal, ActivityLog, VolunteerStory, Assignment
 )
-from .chuma_ai import chuma
+from .boba_ai import boba
 from .serializers import (
     CaseSerializer, PersonSerializer, VolunteerSerializer, ReferralMediaSerializer,
     BadgeSerializer, UserBadgeSerializer, CommunityGoalSerializer, ActivityLogSerializer,
@@ -265,13 +265,13 @@ class CommunityStatsView(APIView):
         } for badge in recent_badges]
 
 
-class ChumaRecommendationsView(APIView):
-    """Chuma AI recommendations for volunteers"""
+class BobaRecommendationsView(APIView):
+    """Boba AI recommendations for volunteers"""
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        recommendations = chuma.get_volunteer_recommendations(request.user)
-        greeting = chuma.get_chuma_greeting(request.user)
+        recommendations = boba.get_volunteer_recommendations(request.user)
+        greeting = boba.get_boba_greeting(request.user)
         
         return Response({
             'greeting': greeting,
@@ -280,13 +280,13 @@ class ChumaRecommendationsView(APIView):
         })
 
 
-class ChumaNotificationsView(APIView):
-    """Generate daily notifications from Chuma"""
+class BobaNotificationsView(APIView):
+    """Generate daily notifications from Boba"""
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
         # Get user-specific notifications
-        daily_notifications = chuma.generate_daily_notifications()
+        daily_notifications = boba.generate_daily_notifications()
         user_notifications = [
             notif for notif in daily_notifications 
             if notif['user_id'] == request.user.id

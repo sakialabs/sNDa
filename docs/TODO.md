@@ -58,13 +58,13 @@
 
 **Outcome**: Volunteers collaborate toward goals, users are engaged outside the app, platform feels professional and responsive
 
-## 🤖 Phase 3: Intelligence, Chuma, & Deployment (Week 3)
+## 🤖 Phase 3: Intelligence, Boba, & Deployment (Week 3)
 
 **Goal**: Introduce smart features, polish UX, finalize documentation, and deploy.
 
-### AI + Chuma Bot
+### AI + Boba Bot
 - [ ] **Backend**: `/api/recommendations/` endpoint for rule-based suggestions
-- [ ] **Backend**: Scheduled Django task for Chuma notifications (streak reminders, new challenges)
+- [ ] **Backend**: Scheduled Django task for Boba notifications (streak reminders, new challenges)
 - [ ] **Frontend**: Dashboard "Recommended For You" section + notification indicator
 
 ### Final Polish
@@ -73,7 +73,7 @@
 - [ ] UI/UX tweaks: toast notifications for streaks, badges, and community highlights
 
 ### Documentation & GitHub
-- [ ] Update README.md with new features, gamification, Chuma, and community page
+- [ ] Update README.md with new features, gamification, Boba, and community page
 - [ ] Commit & push final code
 
 ### Production Deployment
@@ -130,7 +130,7 @@
 
 ## ✅ Feature Flow Summary
 
-**Community Page → Gamification → Stories/Rings/Badges/Streaks → AI + Chuma → Email System → Localization → README update → Deploy**
+**Community Page → Gamification → Stories/Rings/Badges/Streaks → AI + Boba → Email System → Localization → README update → Deploy**
 
 This keeps it practical, team-ready, and inclusive, with all your MVP, gamification, AI, email, localization, metrics, and deployment needs in one clear roadmap.
 - **Backup & Recovery**: Automated database backups & disaster recovery

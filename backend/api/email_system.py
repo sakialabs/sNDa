@@ -228,8 +228,8 @@ class EmailService:
             recipient_list=[user.email]
         )
     
-    def send_chuma_weekly_motivation(self, user):
-        """Chuma's Weekly Personalized Motivational Email 🤖"""
+    def send_boba_weekly_motivation(self, user):
+        """Boba's Weekly Personalized Motivational Email 🤖"""
         from .models import VolunteerProfile, Assignment, VolunteerStory
         
         # Get personalized data
@@ -245,11 +245,11 @@ class EmailService:
         
         # Personalized subject lines based on activity
         if recent_assignments > 0:
-            subject = f"🤖 Chuma's Weekly Check-in: You're on Fire, {user.get_full_name()}!"
+            subject = f"🤖 Boba's Weekly Check-in: You're on Fire, {user.get_full_name()}!"
         elif profile.current_streak > 0:
-            subject = f"🤖 Chuma's Weekly Boost: Your {profile.current_streak}-Day Streak is Amazing!"
+            subject = f"🤖 Boba's Weekly Boost: Your {profile.current_streak}-Day Streak is Amazing!"
         else:
-            subject = f"🤖 Chuma Misses You: Ready for Your Next Adventure?"
+            subject = f"🤖 Boba Misses You: Ready for Your Next Adventure?"
         
         # Generate personalized motivational message
         motivational_messages = [
@@ -261,7 +261,7 @@ class EmailService:
         ]
         
         import random
-        chuma_message = random.choice(motivational_messages)
+        boba_message = random.choice(motivational_messages)
         
         context = {
             'user_name': user.get_full_name(),
@@ -269,13 +269,13 @@ class EmailService:
             'total_points': profile.total_points,
             'cases_completed': profile.cases_completed,
             'recent_activity': recent_assignments + recent_stories,
-            'chuma_message': chuma_message,
+            'boba_message': boba_message,
             'dashboard_url': f"{settings.FRONTEND_URL if hasattr(settings, 'FRONTEND_URL') else 'http://localhost:3000'}/volunteer/dashboard",
             'community_url': f"{settings.FRONTEND_URL if hasattr(settings, 'FRONTEND_URL') else 'http://localhost:3000'}/community",
             'unsubscribe_url': '#',
         }
         
-        html_message = render_to_string('emails/chuma_weekly_motivation.html', context)
+        html_message = render_to_string('emails/boba_weekly_motivation.html', context)
         plain_message = strip_tags(html_message)
         
         return self._send_email(
@@ -340,10 +340,10 @@ def schedule_onboarding_emails(user_id, is_volunteer=True):
             metadata={'sequence_step': 3}
         )
         
-        # Schedule first Chuma weekly motivation for day 14
+        # Schedule first Boba weekly motivation for day 14
         EmailSchedule.objects.create(
             user=user,
-            email_type='chuma_weekly_motivation',
+            email_type='boba_weekly_motivation',
             scheduled_for=timezone.now() + timedelta(days=14),
             is_volunteer=is_volunteer,
             metadata={'recurring': True, 'interval_days': 7}
@@ -356,7 +356,7 @@ def schedule_onboarding_emails(user_id, is_volunteer=True):
 
 
 def schedule_weekly_motivation_emails():
-    """Schedule weekly Chuma motivation emails for all active volunteers"""
+    """Schedule weekly Boba motivation emails for all active volunteers"""
     from django.contrib.auth.models import User
     from .models import VolunteerProfile, EmailSchedule
     from django.utils import timezone
@@ -372,7 +372,7 @@ def schedule_weekly_motivation_emails():
         # Check if they already have a pending weekly motivation email
         existing_schedule = EmailSchedule.objects.filter(
             user=profile.user,
-            email_type='chuma_weekly_motivation',
+            email_type='boba_weekly_motivation',
             sent=False,
             failed=False
         ).exists()
@@ -381,7 +381,7 @@ def schedule_weekly_motivation_emails():
             # Schedule next weekly motivation
             EmailSchedule.objects.create(
                 user=profile.user,
-                email_type='chuma_weekly_motivation',
+                email_type='boba_weekly_motivation',
                 scheduled_for=timezone.now() + timedelta(days=7),
                 is_volunteer=True,
                 metadata={'recurring': True, 'interval_days': 7}
@@ -456,15 +456,15 @@ def send_scheduled_emails():
                     email_schedule.user,
                     profile.current_streak
                 )
-            elif email_schedule.email_type == 'chuma_weekly_motivation':
-                email_service.send_chuma_weekly_motivation(email_schedule.user)
+            elif email_schedule.email_type == 'boba_weekly_motivation':
+                email_service.send_boba_weekly_motivation(email_schedule.user)
                 
                 # If this is a recurring email, schedule the next one
                 if email_schedule.metadata and email_schedule.metadata.get('recurring'):
                     interval_days = email_schedule.metadata.get('interval_days', 7)
                     EmailSchedule.objects.create(
                         user=email_schedule.user,
-                        email_type='chuma_weekly_motivation',
+                        email_type='boba_weekly_motivation',
                         scheduled_for=timezone.now() + timedelta(days=interval_days),
                         is_volunteer=email_schedule.is_volunteer,
                         metadata=email_schedule.metadata

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The sNDa platform features a comprehensive, automated email system designed to create warm, engaging, and personalized communication with volunteers and donors. The system includes onboarding sequences, transactional emails, and motivational content powered by Chuma AI.
+The sNDa platform features a comprehensive, automated email system designed to create warm, engaging, and personalized communication with volunteers and donors. The system includes onboarding sequences, transactional emails, and motivational content powered by Boba AI.
 
 ## Architecture
 
@@ -29,7 +29,7 @@ The sNDa platform features a comprehensive, automated email system designed to c
 
 #### Motivational Emails
 - **Streak Reminder** (`streak_reminder.html`) - Activity streak maintenance
-- **Chuma Weekly Motivation** (`chuma_weekly_motivation.html`) - Personalized weekly check-ins
+- **Boba Weekly Motivation** (`boba_weekly_motivation.html`) - Personalized weekly check-ins
 
 ## Email Templates
 
@@ -39,7 +39,7 @@ All emails extend `base_email.html` which provides:
 - Responsive design for mobile/desktop
 - Header with logo and navigation
 - Footer with unsubscribe links
-- Chuma AI signature styling
+- Boba AI signature styling
 
 ### Template Features
 - **Inline CSS** for email client compatibility
@@ -174,7 +174,7 @@ celery -A config beat -l info
 
 ## Email Content Guidelines
 
-### Chuma AI Personality
+### Boba AI Personality
 - **Friendly and warm** - Use conversational tone
 - **Sandwich metaphor** - Layer building, ingredients, flavors
 - **Motivational** - Encourage and celebrate achievements
@@ -185,14 +185,14 @@ celery -A config beat -l info
 - Welcome: "🥪 Welcome to sNDa - Your First Bite of Solidarity"
 - Assignment: "🌟 A New Case Needs Your Touch, [Name]!"
 - Story: "🎉 Your Story is Live on the Wall of Love!"
-- Motivation: "🤖 Chuma's Weekly Check-in: You're on Fire, [Name]!"
+- Motivation: "🤖 Boba's Weekly Check-in: You're on Fire, [Name]!"
 
 ### Content Structure
-1. **Chuma Introduction** - Personal greeting from AI assistant
+1. **Boba Introduction** - Personal greeting from AI assistant
 2. **Main Content** - Key information or call-to-action
 3. **Visual Elements** - Progress bars, stats, emojis
 4. **Action Buttons** - Clear next steps
-5. **Chuma Signature** - Motivational closing message
+5. **Boba Signature** - Motivational closing message
 
 ## Monitoring and Analytics
 
@@ -281,7 +281,7 @@ POST /api/emails/send/
 # Schedule email
 POST /api/emails/schedule/
 {
-    "email_type": "chuma_weekly_motivation",
+    "email_type": "boba_weekly_motivation",
     "user_id": 123,
     "scheduled_for": "2024-01-15T10:00:00Z"
 }

@@ -9,7 +9,9 @@ import {
   Award,
   Target,
   BookOpen,
-  Sparkles
+  Sparkles,
+  MapPin,
+  TrendingUp
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -67,7 +69,8 @@ export default function VolunteerPage() {
           <motion.div variants={itemVariants}>
             <Card className="text-center">
               <CardContent className="pt-6">
-                <div className="text-3xl font-bold text-primary">250+</div>
+                <Users className="h-6 w-6 mx-auto mb-2 text-primary" />
+                <div className="text-3xl font-bold text-primary">89</div>
                 <p className="text-sm text-muted-foreground">Active Volunteers</p>
               </CardContent>
             </Card>
@@ -75,7 +78,8 @@ export default function VolunteerPage() {
           <motion.div variants={itemVariants}>
             <Card className="text-center">
               <CardContent className="pt-6">
-                <div className="text-3xl font-bold text-primary">1,200+</div>
+                <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
+                <div className="text-3xl font-bold text-primary">1,247</div>
                 <p className="text-sm text-muted-foreground">Cases Resolved</p>
               </CardContent>
             </Card>
@@ -83,6 +87,7 @@ export default function VolunteerPage() {
           <motion.div variants={itemVariants}>
             <Card className="text-center">
               <CardContent className="pt-6">
+                <MapPin className="h-6 w-6 mx-auto mb-2 text-primary" />
                 <div className="text-3xl font-bold text-primary">50+</div>
                 <p className="text-sm text-muted-foreground">Cities Covered</p>
               </CardContent>
@@ -91,6 +96,7 @@ export default function VolunteerPage() {
           <motion.div variants={itemVariants}>
             <Card className="text-center">
               <CardContent className="pt-6">
+                <TrendingUp className="h-6 w-6 mx-auto mb-2 text-primary" />
                 <div className="text-3xl font-bold text-primary">98%</div>
                 <p className="text-sm text-muted-foreground">Success Rate</p>
               </CardContent>
@@ -106,14 +112,14 @@ export default function VolunteerPage() {
         >
           {/* How It Works */}
           <motion.div variants={itemVariants}>
-            <Card>
+            <Card className="h-full flex flex-col">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Target className="h-5 w-5 text-primary" />
                   How Volunteering Works
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 flex-1">
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">1</div>
                   <div>
@@ -141,14 +147,14 @@ export default function VolunteerPage() {
 
           {/* Volunteer Types */}
           <motion.div variants={itemVariants}>
-            <Card>
+            <Card className="h-full flex flex-col">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="h-5 w-5 text-primary" />
                   Ways to Help
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 flex-1">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                     <div>

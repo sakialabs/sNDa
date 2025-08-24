@@ -164,28 +164,28 @@ export function DonationPlatform() {
       <div className="grid gap-4 md:grid-cols-4 animate-fade-in">
         <Card>
           <CardContent className="p-6 text-center">
-            <Heart className="w-8 h-8 mx-auto mb-2 text-red-500" />
+            <Heart className="w-8 h-8 mx-auto mb-2 text-primary" />
             <div className="text-2xl font-bold">2,847</div>
             <p className="text-sm text-muted-foreground">Families Helped</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <DollarSign className="w-8 h-8 mx-auto mb-2 text-green-500" />
+            <DollarSign className="w-8 h-8 mx-auto mb-2 text-primary" />
             <div className="text-2xl font-bold">$485K</div>
             <p className="text-sm text-muted-foreground">Total Raised</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <Users className="w-8 h-8 mx-auto mb-2 text-blue-500" />
+            <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
             <div className="text-2xl font-bold">1,234</div>
             <p className="text-sm text-muted-foreground">Active Donors</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <TrendingUp className="w-8 h-8 mx-auto mb-2 text-purple-500" />
+            <TrendingUp className="w-8 h-8 mx-auto mb-2 text-primary" />
             <div className="text-2xl font-bold">94%</div>
             <p className="text-sm text-muted-foreground">Success Rate</p>
           </CardContent>
@@ -209,7 +209,7 @@ export function DonationPlatform() {
                   <Badge variant={campaign.featured ? "default" : "secondary"}>
                     {campaign.category}
                   </Badge>
-                  {campaign.featured && <Star className="w-4 h-4 text-yellow-500" />}
+                  {campaign.featured && <Star className="w-4 h-4 text-primary" />}
                 </div>
                 <CardTitle className="text-lg">{campaign.title}</CardTitle>
               </CardHeader>

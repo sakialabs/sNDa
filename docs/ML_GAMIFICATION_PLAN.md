@@ -1,10 +1,10 @@
-# 🥪 sNDa Gamification & Chuma ML Plan
+# 🥪 sNDa Gamification & Boba ML Plan
 
 ## 1️⃣ Overview
-**Goal:** Make volunteer engagement fun, motivating, and community-driven with streaks, badges, highlights, mini challenges, and friendly notifications powered by Chuma AI.
+**Goal:** Make volunteer engagement fun, motivating, and community-driven with streaks, badges, highlights, mini challenges, and friendly notifications powered by Boba AI.
 
 **Core Components:**  
-- **Chuma Bot:** "Food for the Soul" assistant delivering streak updates, badge awards, and personalized suggestions.  
+- **Boba Bot:** "Food for the Soul" assistant delivering streak updates, badge awards, and personalized suggestions.  
 - **VolunteerProfile & Case Models:** Track activity, streaks, and completed cases.  
 - **Badge / UserBadge Models:** Store volunteer achievements.  
 - **Frontend Dashboard & Wall of Love:** Display streaks, badges, mini challenges, and community recognition.  
@@ -14,7 +14,7 @@
 ## 2️⃣ Current Implementation Status
 
 ### ✅ **Backend - Fully Implemented**
-- **Chuma AI System** (`backend/api/chuma_ai.py`):
+- **Boba AI System** (`backend/api/boba_ai.py`):
   - Rule-based recommendation engine
   - Personality traits and sandwich metaphors
   - Email content generation with warm tone
@@ -27,7 +27,7 @@
   - `Case` completion tracking
 
 - **Email Integration** (`backend/api/email_system.py`):
-  - Automated Chuma emails (weekly motivation)
+  - Automated Boba emails (weekly motivation)
   - Streak reminders with personalization
   - Badge award notifications
   - Story publication confirmations
@@ -45,11 +45,11 @@
   - Community goals and progress
   - Recent achievements showcase
 
-### ❌ **Missing Chuma UI Integration**
-- No direct Chuma chat interface in frontend
-- No real-time Chuma notifications
-- No personalized Chuma suggestions display
-- No interactive Chuma assistant widget
+### ❌ **Missing Boba UI Integration**
+- No direct Boba chat interface in frontend
+- No real-time Boba notifications
+- No personalized Boba suggestions display
+- No interactive Boba assistant widget
 
 ---
 
@@ -73,24 +73,24 @@
 
 ---
 
-## 4️⃣ Chuma ML Enhancement Plan
+## 4️⃣ Boba ML Enhancement Plan
 
 ### **Phase 1: UI Integration (High Priority)**
-- [ ] **Chuma Chat Widget**
+- [ ] **Boba Chat Widget**
   - Floating chat bubble in bottom-right corner
   - Real-time suggestions based on user activity
   - Sandwich emoji personality and warm tone
-  - Integration with existing Chuma AI backend
+  - Integration with existing Boba AI backend
 
 - [ ] **Personalized Dashboard Cards**
-  - "Chuma's Suggestions" section on volunteer dashboard
+  - "Boba's Suggestions" section on volunteer dashboard
   - Dynamic recommendations based on user profile
   - Next milestone predictions and encouragement
   - Contextual tips and motivation
 
 - [ ] **Smart Notifications**
   - Browser notifications for streak reminders
-  - Badge award celebrations with Chuma messages
+  - Badge award celebrations with Boba messages
   - Case assignment suggestions
   - Weekly check-ins and motivation
 
@@ -130,10 +130,10 @@
 
 ## 5️⃣ Technical Implementation
 
-### **Frontend Chuma Integration**
+### **Frontend Boba Integration**
 ```typescript
-// Chuma Chat Component
-interface ChumaMessage {
+// Boba Chat Component
+interface BobaMessage {
   id: string;
   content: string;
   type: 'suggestion' | 'encouragement' | 'milestone' | 'reminder';
@@ -141,18 +141,18 @@ interface ChumaMessage {
   actionable?: boolean;
 }
 
-// Chuma API Service
-class ChumaService {
-  async getPersonalizedSuggestions(userId: string): Promise<ChumaMessage[]>
-  async sendChatMessage(message: string): Promise<ChumaMessage>
+// Boba API Service
+class BobaService {
+  async getPersonalizedSuggestions(userId: string): Promise<BobaMessage[]>
+  async sendChatMessage(message: string): Promise<BobaMessage>
   async markSuggestionActioned(messageId: string): Promise<void>
 }
 ```
 
 ### **Backend ML Pipeline**
 ```python
-# Enhanced Chuma AI with ML
-class ChumaMLEngine:
+# Enhanced Boba AI with ML
+class BobaMLEngine:
     def __init__(self):
         self.recommendation_model = load_model('volunteer_recommendations')
         self.engagement_model = load_model('engagement_prediction')
@@ -172,7 +172,7 @@ class ChumaMLEngine:
 ```
 
 ### **Real-time Features**
-- WebSocket integration for live Chuma interactions
+- WebSocket integration for live Boba interactions
 - Server-sent events for notifications
 - Redis caching for ML model predictions
 - Celery tasks for background ML processing
@@ -182,14 +182,14 @@ class ChumaMLEngine:
 ## 6️⃣ Quick Wins Implementation
 
 ### **Immediate (Next Session)**
-1. **Chuma Chat Widget**
+1. **Boba Chat Widget**
    - Add floating chat component to volunteer dashboard
-   - Connect to existing Chuma AI backend endpoints
+   - Connect to existing Boba AI backend endpoints
    - Display personalized suggestions and encouragement
 
 2. **Enhanced Dashboard Cards**
-   - "Chuma's Corner" section with daily tips
-   - Next milestone countdown with Chuma motivation
+   - "Boba's Corner" section with daily tips
+   - Next milestone countdown with Boba motivation
    - Recent badge celebrations with sandwich emojis
 
 3. **Smart Notifications**
@@ -253,11 +253,11 @@ class ChumaMLEngine:
 
 | Phase | Duration | Key Deliverables | Priority |
 |-------|----------|------------------|----------|
-| **UI Integration** | 1-2 weeks | Chuma chat widget, dashboard cards, notifications | 🔴 High |
+| **UI Integration** | 1-2 weeks | Boba chat widget, dashboard cards, notifications | 🔴 High |
 | **ML Foundation** | 2-4 weeks | Basic ML models, recommendation engine | 🟡 Medium |
 | **Advanced Features** | 4-8 weeks | NLP, predictive analytics, optimization | 🟢 Low |
 | **Community Intelligence** | 8-12 weeks | Social analysis, impact measurement | 🔵 Future |
 
 ---
 
-**🎯 Next Immediate Action: Implement Chuma Chat Widget in Frontend Dashboard**
+**🎯 Next Immediate Action: Implement Boba Chat Widget in Frontend Dashboard**

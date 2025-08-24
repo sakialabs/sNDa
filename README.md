@@ -57,7 +57,7 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 - 🏠 **Community Page:** Wall of Love showcasing volunteer stories and impact
 - 🎯 **Community Goals:** Shared milestones for collective motivation
 - 🏆 **Leaderboards:** Top contributors and recent achievements
-- 🤖 **Chuma AI Assistant:** Personalized recommendations and motivational notifications
+- 🤖 **Boba AI Assistant:** Personalized recommendations and motivational notifications
 - 📧 **Smart Email System:** 3-step onboarding sequence and engagement emails
 
 ### 💰 Donor Platform
@@ -78,7 +78,7 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 
 - 🧠 **Urgency Scoring:** ML-powered case prioritization
 - 🤝 **Volunteer Matching:** Smart assignment based on skills and availability
-- 🤖 **Chuma AI Bot:** Intelligent recommendations and personalized notifications
+- 🤖 **Boba AI Bot:** Intelligent recommendations and personalized notifications
 - 📈 **Predictive Analytics:** Future potential for detecting patterns and predicting needs
 
 ## 🧱 Architecture
@@ -171,7 +171,7 @@ Every child deserves dignity, care, and opportunity. While the initial focus is 
 sNDa/
 ├── backend/                  # Django API (DRF), models, auth, ML endpoints
 │   ├── api/                  # Case management models and views
-│   │   ├── chuma_ai.py       # AI recommendation engine
+│   │   ├── boba_ai.py        # Boba AI recommendation engine
 │   │   ├── email_system.py   # Email service and templates
 │   │   ├── signals.py        # Gamification automation
 │   │   └── management/       # Django commands for scheduled tasks
@@ -290,7 +290,7 @@ Together, we build **impactful, inclusive, and sustainable solutions** for commu
 - 🏆 **Complete Gamification System:** Badges, streaks, points, and community goals
 - 🌟 **Community Page:** Wall of Love showcasing volunteer stories and collective impact
 - 📊 **Enhanced Volunteer Dashboard:** Personal stats, badges, and streak tracking
-- 🤖 **Chuma AI Assistant:** Smart recommendations and personalized notifications
+- 🤖 **Boba AI Assistant:** Smart recommendations and personalized notifications
 - 📧 **Email Onboarding System:** 3-step sequence with beautiful HTML templates
 - 🎯 **Community Goals:** Shared milestones for collective motivation
 - 🏅 **Achievement System:** Automatic badge awarding via Django signals

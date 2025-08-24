@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { connectWS } from '@/lib/ws'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -86,6 +87,17 @@ export default function CommunityPage() {
 
   useEffect(() => {
     fetchCommunityData()
+  }, [])
+
+  // Live updates via WebSocket
+  useEffect(() => {
+    // Connect once component is mounted
+    const disconnect = connectWS<any>("/ws/stories/", (msg) => {
+      const story: PublicStory | undefined = msg?.story ?? msg
+      if (!story || !story.id || !story.title) return
+      setStories((prev) => [story, ...prev])
+    })
+    return () => disconnect()
   }, [])
 
   const fetchCommunityData = async () => {
@@ -242,6 +254,7 @@ export default function CommunityPage() {
             <motion.div variants={itemVariants}>
               <Card className="text-center">
                 <CardContent className="pt-6">
+                  <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <div className="text-3xl font-bold text-primary">{stats.total_cases_resolved}</div>
                   <p className="text-sm text-muted-foreground">Cases Resolved</p>
                 </CardContent>
@@ -251,6 +264,7 @@ export default function CommunityPage() {
             <motion.div variants={itemVariants}>
               <Card className="text-center">
                 <CardContent className="pt-6">
+                  <Users className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <div className="text-3xl font-bold text-primary">{stats.total_volunteers}</div>
                   <p className="text-sm text-muted-foreground">Active Volunteers</p>
                 </CardContent>
@@ -260,6 +274,7 @@ export default function CommunityPage() {
             <motion.div variants={itemVariants}>
               <Card className="text-center">
                 <CardContent className="pt-6">
+                  <BookOpen className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <div className="text-3xl font-bold text-primary">{stats.total_stories}</div>
                   <p className="text-sm text-muted-foreground">Stories Shared</p>
                 </CardContent>
@@ -269,6 +284,7 @@ export default function CommunityPage() {
             <motion.div variants={itemVariants}>
               <Card className="text-center">
                 <CardContent className="pt-6">
+                  <Trophy className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <div className="text-3xl font-bold text-primary">{stats.active_goals}</div>
                   <p className="text-sm text-muted-foreground">Active Goals</p>
                 </CardContent>
@@ -353,8 +369,15 @@ export default function CommunityPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
-                  {stories.map((story) => (
-                    <div key={story.id} className="border-l-4 border-primary/20 pl-4 py-2">
+                  {stories.map((story, idx) => (
+                    <motion.div
+                      key={story.id}
+                      initial={{ opacity: 0, y: 12, backgroundColor: 'rgba(var(--primary), 0.04)' as any }}
+                      animate={{ opacity: 1, y: 0, backgroundColor: 'rgba(0,0,0,0)' as any }}
+                      transition={{ duration: 0.5, delay: Math.min(idx * 0.02, 0.2) }}
+                      className="border-l-4 border-primary/20 pl-4 py-2 rounded"
+                      layout
+                    >
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h3 className="font-semibold text-foreground">{story.title}</h3>
@@ -382,7 +405,7 @@ export default function CommunityPage() {
                           {new Date(story.published_at).toLocaleDateString()}
                         </span>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </CardContent>

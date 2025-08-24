@@ -27,7 +27,7 @@ export function Footer() {
               Privacy Policy
             </Link>
             <a
-              href="mailto:contact@snda.org"
+              href="mailto:snda@hey.com"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Contact

@@ -5,7 +5,7 @@ from django.utils import timezone
 from datetime import timedelta, date
 from .models import (
     Assignment, VolunteerProfile, VolunteerStory, Badge, UserBadge, 
-    CommunityGoal, ActivityLog, EmailSchedule
+    CommunityGoal, ActivityLog, EmailSchedule, StoryMedia
 )
 from .email_system import email_service
 from .tasks import (
@@ -13,6 +13,8 @@ from .tasks import (
     send_assignment_notification_task,
     send_story_published_notification_task
 )
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 @receiver(post_save, sender=User)
@@ -131,6 +133,39 @@ def story_published(sender, instance, created, **kwargs):
         # Send story published notification using Celery
         send_story_published_notification_task.delay(instance.id)
         
+        # Broadcast to WebSocket subscribers (Wall of Love)
+        try:
+            channel_layer = get_channel_layer()
+            media_items = []
+            for m in instance.media.all():
+                url = m.url if m.url else (m.file.url if m.file else None)
+                if url:
+                    media_items.append({
+                        'url': url,
+                        'type': m.media_type,
+                        'title': m.title,
+                        'description': m.description,
+                        'thumbnail': m.thumbnail.url if m.thumbnail else None,
+                    })
+            payload = {
+                'id': str(instance.id),
+                'title': instance.title,
+                'content': instance.content,
+                'author_name': instance.author.get_full_name() or instance.author.username,
+                'case_title': instance.related_case.title if instance.related_case else None,
+                'likes_count': instance.likes_count,
+                'published_at': instance.published_at.isoformat() if instance.published_at else None,
+                'tags': instance.tags,
+                'media': media_items,
+            }
+            async_to_sync(channel_layer.group_send)(
+                'stories',
+                {'type': 'story.event', 'data': payload}
+            )
+        except Exception:
+            # Avoid interrupting save pipeline if WS is unavailable
+            pass
+
         profile.save()
 
 

@@ -4,7 +4,7 @@ from .views import (
     CaseViewSet, PersonViewSet, VolunteerViewSet, ReferralMediaViewSet, IntakeView,
     BadgeViewSet, UserBadgeViewSet, CommunityGoalViewSet, VolunteerStoryViewSet,
     PublicStoriesView, VolunteerDashboardView, CommunityStatsView,
-    ChumaRecommendationsView, ChumaNotificationsView
+    BobaRecommendationsView, BobaNotificationsView
 )
 
 # Create a router and register our viewset with it.
@@ -30,7 +30,7 @@ urlpatterns = [
     path("dashboard/", VolunteerDashboardView.as_view(), name="volunteer-dashboard"),
     path("community/stats/", CommunityStatsView.as_view(), name="community-stats"),
     
-    # Chuma AI endpoints
-    path("chuma/recommendations/", ChumaRecommendationsView.as_view(), name="chuma-recommendations"),
-    path("chuma/notifications/", ChumaNotificationsView.as_view(), name="chuma-notifications"),
+    # Boba AI endpoints
+    path("boba/recommendations/", BobaRecommendationsView.as_view(), name="boba-recommendations"),
+    path("boba/notifications/", BobaNotificationsView.as_view(), name="boba-notifications"),
 ]
