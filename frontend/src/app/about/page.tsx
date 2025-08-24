@@ -44,8 +44,8 @@ export default function AboutPage() {
             <h2 className="text-base font-medium text-foreground text-center mb-3">Who we are</h2>
             <Card>
               <CardContent className="space-y-3">
-                <p className="text-foreground"><strong>sNDa</strong> = <strong>Solidarity Network for Development & Action</strong>.</p>
-                <p className="text-muted-foreground">Pronounced <strong>sun-dah (سندة)</strong>; in Sudanese slang, <em>sanda</em> is a light snack; in Arabic, <strong>سندة</strong> means support. We bring both: warmth and practical help.</p>
+                <p className="text-foreground"><strong>sNDa</strong> stands for <strong>Solidarity Network for Development & Action</strong>.</p>
+                <p className="text-muted-foreground">Pronounced <strong>sun-dah (سندة)</strong>; in Sudanese slang, it means a light snack. In Arabic, it means support. We bring both: warmth and practical help.</p>
               </CardContent>
             </Card>
           </motion.div>
