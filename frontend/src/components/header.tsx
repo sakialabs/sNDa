@@ -35,6 +35,7 @@ export function Header() {
   const [showSignupForm, setShowSignupForm] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -50,6 +51,10 @@ export function Header() {
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
   }, []);
 
   const links = [
@@ -88,23 +93,21 @@ export function Header() {
             transition={{ duration: 0.4, delay: 0.05 }}
           >
             {links.map((l) => {
-              const active = pathname === l.href;
+              const active = mounted && (pathname === l.href || pathname.startsWith(`${l.href}/`));
               return (
                 <Link
                   key={l.href}
                   href={l.href}
-                  className={`relative text-sm font-medium transition-colors px-3 py-2 rounded-full ${
+                  className={`relative isolate text-sm font-medium transition-colors px-3 py-2 rounded-md ${
                     active ? "text-card-foreground" : "text-card-foreground/80 hover:text-card-foreground"
                   }`}
                 >
                   {active && (
-                    <motion.span
-                      layoutId="nav-active-pill"
-                      className="absolute inset-0 -z-10 rounded-full bg-accent"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    <span
+                      className="absolute inset-0 z-[1] rounded-md bg-accent pointer-events-none"
                     />
                   )}
-                  {l.label}
+                  <span className="relative z-[2]">{l.label}</span>
                 </Link>
               );
             })}
@@ -166,7 +169,13 @@ export function Header() {
                   <Button variant="ghost" onClick={() => setShowLoginForm(true)} data-login size="sm">
                     Login
                   </Button>
-                  <Button onClick={() => setShowSignupForm(true)} data-join-us size="sm">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    data-join-us
+                    className="hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    onClick={() => setShowSignupForm(true)}
+                  >
                     Join Us
                   </Button>
                 </div>

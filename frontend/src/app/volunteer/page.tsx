@@ -70,7 +70,7 @@ export default function VolunteerPage() {
             <Card className="text-center">
               <CardContent className="pt-6">
                 <Users className="h-6 w-6 mx-auto mb-2 text-primary" />
-                <div className="text-3xl font-bold text-primary">89</div>
+                <div className="text-3xl font-bold text-foreground">89</div>
                 <p className="text-sm text-muted-foreground">Active Volunteers</p>
               </CardContent>
             </Card>
@@ -79,7 +79,7 @@ export default function VolunteerPage() {
             <Card className="text-center">
               <CardContent className="pt-6">
                 <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
-                <div className="text-3xl font-bold text-primary">1,247</div>
+                <div className="text-3xl font-bold text-foreground">1,247</div>
                 <p className="text-sm text-muted-foreground">Cases Resolved</p>
               </CardContent>
             </Card>
@@ -88,7 +88,7 @@ export default function VolunteerPage() {
             <Card className="text-center">
               <CardContent className="pt-6">
                 <MapPin className="h-6 w-6 mx-auto mb-2 text-primary" />
-                <div className="text-3xl font-bold text-primary">50+</div>
+                <div className="text-3xl font-bold text-foreground">50+</div>
                 <p className="text-sm text-muted-foreground">Cities Covered</p>
               </CardContent>
             </Card>
@@ -97,7 +97,7 @@ export default function VolunteerPage() {
             <Card className="text-center">
               <CardContent className="pt-6">
                 <TrendingUp className="h-6 w-6 mx-auto mb-2 text-primary" />
-                <div className="text-3xl font-bold text-primary">98%</div>
+                <div className="text-3xl font-bold text-foreground">98%</div>
                 <p className="text-sm text-muted-foreground">Success Rate</p>
               </CardContent>
             </Card>

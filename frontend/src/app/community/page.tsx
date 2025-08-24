@@ -255,7 +255,7 @@ export default function CommunityPage() {
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
-                  <div className="text-3xl font-bold text-primary">{stats.total_cases_resolved}</div>
+                  <div className="text-3xl font-bold text-foreground">{stats.total_cases_resolved}</div>
                   <p className="text-sm text-muted-foreground">Cases Resolved</p>
                 </CardContent>
               </Card>
@@ -265,7 +265,7 @@ export default function CommunityPage() {
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <Users className="h-6 w-6 mx-auto mb-2 text-primary" />
-                  <div className="text-3xl font-bold text-primary">{stats.total_volunteers}</div>
+                  <div className="text-3xl font-bold text-foreground">{stats.total_volunteers}</div>
                   <p className="text-sm text-muted-foreground">Active Volunteers</p>
                 </CardContent>
               </Card>
@@ -275,7 +275,7 @@ export default function CommunityPage() {
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <BookOpen className="h-6 w-6 mx-auto mb-2 text-primary" />
-                  <div className="text-3xl font-bold text-primary">{stats.total_stories}</div>
+                  <div className="text-3xl font-bold text-foreground">{stats.total_stories}</div>
                   <p className="text-sm text-muted-foreground">Stories Shared</p>
                 </CardContent>
               </Card>
@@ -285,7 +285,7 @@ export default function CommunityPage() {
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <Trophy className="h-6 w-6 mx-auto mb-2 text-primary" />
-                  <div className="text-3xl font-bold text-primary">{stats.active_goals}</div>
+                  <div className="text-3xl font-bold text-foreground">{stats.active_goals}</div>
                   <p className="text-sm text-muted-foreground">Active Goals</p>
                 </CardContent>
               </Card>
