@@ -50,7 +50,8 @@ export default function AboutClient() {
               <CardContent className="space-y-3">
                 {/* Intro copy */}
                 <p className="text-center">{t.rich("about.whoWeAre.intro", { strong: (chunk) => <strong>{chunk}</strong> })}</p>
-                <p className="text-muted-foreground">Pronounced <strong>sun-dah (سندة)</strong>; in Sudanese slang, it means a light snack. In Arabic, it means support. We bring both: warmth and practical help.</p>
+                <p className="text-muted-foreground">Pronounced <em>sun-dah</em> (سندة); in Sudanese slang it means a light snack, and in Arabic it means support. We bring both warmth and practical help.</p>
+                <p className="text-foreground text-center">We’re a solidarity platform that blends grassroots care with a global vision. By combining human connection with smart technology, sNDa supports children in Sudan today and vulnerable communities worldwide tomorrow.</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -60,7 +61,7 @@ export default function AboutClient() {
             <h2 className="text-base font-medium text-foreground text-center mb-3">What we do</h2>
             <Card>
               <CardContent className="space-y-5">
-                <p className="text-foreground text-center max-w-3xl mx-auto">We’re a solidarity platform that wraps children and communities in care, starting with kids in Sudan, built for the world. sNDa connects <strong>families, volunteers, coordinators, donors, and hospitals</strong> so help arrives faster and outcomes are transparent.</p>
+                <p className="text-foreground text-center max-w-3xl mx-auto">sNDa connects families, volunteers, coordinators, donors, and hospitals so help arrives faster and outcomes remain transparent. The platform focuses on fast referrals, coordinated triage, secure case tracking, and clear donor impact.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                   <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
                     <Heart className="h-5 w-5 text-primary" />
