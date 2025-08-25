@@ -5,7 +5,11 @@ from django.db import migrations
 
 def create_default_badges(apps, schema_editor):
     """Create default badge set if none exist"""
-    Badge = apps.get_model('api', 'Badge')
+    try:
+        Badge = apps.get_model('api', 'Badge')
+    except LookupError:
+        # Badge model not yet available (schema migration missing); skip gracefully
+        return
     
     if not Badge.objects.exists():
         default_badges = [
@@ -38,29 +42,32 @@ def create_default_badges(apps, schema_editor):
             ("🎊", "Weekend Warrior", "Completed case on weekend", "SPECIAL", None, None, None, "purple"),
         ]
         
-        for emoji, name, description, badge_type, cases_required, streak_required, posts_required, color in default_badges:
+        for icon, name, description, category, required_cases, required_streak, required_stories, color in default_badges:
             Badge.objects.create(
-                emoji=emoji,
+                icon=icon,
                 name=name,
                 description=description,
-                badge_type=badge_type,
-                cases_required=cases_required,
-                streak_required=streak_required,
-                posts_required=posts_required,
+                category=category,
+                required_cases=required_cases,
+                required_streak=required_streak,
+                required_stories=required_stories,
                 color=color
             )
 
 
 def reverse_default_badges(apps, schema_editor):
     """Remove default badges"""
-    Badge = apps.get_model('api', 'Badge')
+    try:
+        Badge = apps.get_model('api', 'Badge')
+    except LookupError:
+        return
     Badge.objects.all().delete()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0002_initial'),
+        ('api', '0004_assignment_badge_communitygoal_and_more'),
     ]
 
     operations = [

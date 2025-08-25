@@ -192,6 +192,8 @@ class Assignment(models.Model):
     class Meta:
         unique_together = ['case', 'volunteer']  # One assignment per volunteer per case
         ordering = ['-created_at']
+        verbose_name = "Assignment"
+        verbose_name_plural = "Assignments"
     
     def __str__(self):
         return f"Assignment: {self.volunteer.get_full_name()} → {self.case.title}"
@@ -264,6 +266,8 @@ class VolunteerStory(models.Model):
     
     class Meta:
         ordering = ['-created_at']
+        verbose_name = "Volunteer Story"
+        verbose_name_plural = "Volunteer Stories"
         indexes = [
             models.Index(fields=['status', 'story_type']),
             models.Index(fields=['author', 'created_at']),
@@ -301,6 +305,10 @@ class StoryMedia(models.Model):
     
     def __str__(self):
         return f"{self.media_type} for {self.story.title}"
+    
+    class Meta:
+        verbose_name = "Story Media"
+        verbose_name_plural = "Story Media"
 
 
 class StoryLike(models.Model):
@@ -311,6 +319,8 @@ class StoryLike(models.Model):
     
     class Meta:
         unique_together = ['story', 'user']
+        verbose_name = "Story Like"
+        verbose_name_plural = "Story Likes"
 
 
 class StoryComment(models.Model):
@@ -322,6 +332,8 @@ class StoryComment(models.Model):
     
     class Meta:
         ordering = ['created_at']
+        verbose_name = "Story Comment"
+        verbose_name_plural = "Story Comments"
 
 
 class Notification(models.Model):
@@ -363,6 +375,8 @@ class Notification(models.Model):
     
     class Meta:
         ordering = ['-created_at']
+        verbose_name = "Notification"
+        verbose_name_plural = "Notifications"
         indexes = [
             models.Index(fields=['recipient', 'is_read']),
             models.Index(fields=['notification_type', 'created_at']),
@@ -400,6 +414,8 @@ class Badge(models.Model):
     
     class Meta:
         ordering = ['category', 'required_cases']
+        verbose_name = "Badge"
+        verbose_name_plural = "Badges"
     
     def __str__(self):
         return f"{self.icon} {self.name}"
@@ -418,6 +434,8 @@ class UserBadge(models.Model):
     class Meta:
         unique_together = ['user', 'badge']
         ordering = ['-earned_at']
+        verbose_name = "User Badge"
+        verbose_name_plural = "User Badges"
     
     def __str__(self):
         return f"{self.user.username} earned {self.badge.name}"
@@ -462,6 +480,8 @@ class CommunityGoal(models.Model):
     
     class Meta:
         ordering = ['-is_featured', '-created_at']
+        verbose_name = "Community Goal"
+        verbose_name_plural = "Community Goals"
     
     def __str__(self):
         return f"{self.icon} {self.title} ({self.current_value}/{self.target_value})"
@@ -507,6 +527,8 @@ class EmailSchedule(models.Model):
     
     class Meta:
         ordering = ['scheduled_for']
+        verbose_name = "Email Schedule"
+        verbose_name_plural = "Email Schedules"
         indexes = [
             models.Index(fields=['scheduled_for', 'sent']),
             models.Index(fields=['email_type']),
@@ -546,6 +568,8 @@ class EmailAnalytics(models.Model):
     
     class Meta:
         ordering = ['-created_at']
+        verbose_name = "Email Analytics"
+        verbose_name_plural = "Email Analytics"
         indexes = [
             models.Index(fields=['email_type', 'delivery_status']),
             models.Index(fields=['recipient_email']),
@@ -564,27 +588,3 @@ class EmailAnalytics(models.Model):
         return self.clicked_at is not None
 
 
-class Notification(models.Model):
-    """User notifications system"""
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
-    title = models.CharField(max_length=200)
-    message = models.TextField()
-    notification_type = models.CharField(max_length=50, choices=[
-        ('assignment', 'New Assignment'),
-        ('case_update', 'Case Update'),
-        ('badge_earned', 'Badge Earned'),
-        ('story_published', 'Story Published'),
-        ('streak_milestone', 'Streak Milestone'),
-        ('community_goal', 'Community Goal'),
-        ('system', 'System Notification'),
-    ])
-    is_read = models.BooleanField(default=False)
-    action_url = models.URLField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    read_at = models.DateTimeField(blank=True, null=True)
-    
-    class Meta:
-        ordering = ['-created_at']
-    
-    def __str__(self):
-        return f"{self.recipient.username} - {self.title}"

@@ -12,20 +12,46 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
-from decouple import config, Csv
+from decouple import Csv, Config, RepositoryEnv, config as decouple_config
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+"""Environment loading
+
+Prefer local overrides from a .env.local file (gitignored) when present.
+Falls back to OS environment and the default .env otherwise.
+"""
+
+ENV_LOCAL_PATH = (Path(__file__).resolve().parent.parent.parent / ".env.local")
+_local_config = Config(RepositoryEnv(str(ENV_LOCAL_PATH))) if ENV_LOCAL_PATH.exists() else None
+
+
+def env(key, default=None, cast=None):
+    """Read from .env.local first when available, else fallback to decouple config.
+
+    decouple precedence is OS env > .env. This helper inserts .env.local with
+    highest priority for local development without touching the live .env.
+    """
+    # Ensure cast is always a callable; python-decouple defaults to str when omitted
+    _cast = cast if cast is not None else str
+    if _local_config is not None:
+        try:
+            return _local_config(key, default=default, cast=_cast)
+        except Exception:
+            pass
+    return decouple_config(key, default=default, cast=_cast)
+
+
 # Load the secret key from environment variables
-SECRET_KEY = config("SECRET_KEY", default="django-insecure-fallback-key-for-render")
+SECRET_KEY = env("SECRET_KEY", default="django-insecure-fallback-key-for-render")
 
 # Load the debug setting from the .env file. Defaults to False if not found.
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = env("DEBUG", default=False, cast=bool)
 
 # Load allowed hosts from the .env file as a comma-separated list.
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1,snda-backend.onrender.com", cast=Csv())
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="localhost,127.0.0.1,snda-backend.onrender.com", cast=Csv())
 
 
 # Application definition
@@ -84,7 +110,7 @@ ASGI_APPLICATION = "config.asgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # Use DATABASE_URL if available (Render), otherwise fall back to individual settings
-DATABASE_URL = config("DATABASE_URL", default="")
+DATABASE_URL = env("DATABASE_URL", default="")
 if DATABASE_URL:
     DATABASES = {
         "default": dj_database_url.parse(DATABASE_URL)
@@ -92,12 +118,12 @@ if DATABASE_URL:
 else:
     DATABASES = {
         "default": {
-            "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
-            "NAME": config("DB_NAME", default="snda_db"),
-            "USER": config("DB_USER", default="snda_user"),
-            "PASSWORD": config("DB_PASSWORD", default="snda"),
-            "HOST": config("DB_HOST", default="localhost"),
-            "PORT": config("DB_PORT", default=5432, cast=int),
+            "ENGINE": env("DB_ENGINE", default="django.db.backends.postgresql"),
+            "NAME": env("DB_NAME", default="snda_db"),
+            "USER": env("DB_USER", default="snda_user"),
+            "PASSWORD": env("DB_PASSWORD", default="snda"),
+            "HOST": env("DB_HOST", default="localhost"),
+            "PORT": env("DB_PORT", default=5432, cast=int),
         }
     }
 
@@ -106,7 +132,7 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 # CSRF trusted origins (domains/bases that can POST to this backend)
 # Note: must include scheme. Extend via env when deploying.
-CSRF_TRUSTED_ORIGINS = config(
+CSRF_TRUSTED_ORIGINS = env(
     "CSRF_TRUSTED_ORIGINS",
     default="http://localhost:3000,https://snda.netlify.app",
     cast=Csv(),
@@ -191,7 +217,7 @@ if not DEBUG:
     SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = config(
+CORS_ALLOWED_ORIGINS = env(
     "CORS_ALLOWED_ORIGINS",
     default="http://localhost:3000,https://snda.netlify.app",
     cast=Csv(),
@@ -199,9 +225,9 @@ CORS_ALLOWED_ORIGINS = config(
 CORS_ALLOW_CREDENTIALS = True
 
 # Celery Configuration
-REDIS_URL = config("REDIS_URL", default="redis://localhost:6379")
-CELERY_BROKER_URL = config("CELERY_BROKER_URL", default=REDIS_URL)
-CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND", default=REDIS_URL)
+REDIS_URL = env("REDIS_URL", default="redis://localhost:6379")
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", default=REDIS_URL)
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default=REDIS_URL)
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -218,10 +244,10 @@ CHANNEL_LAYERS = {
 }
 
 # Email Configuration
-EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
-SENDGRID_API_KEY = config("SENDGRID_API_KEY", default="")
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="noreply@snda.org")
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="sNDa Platform <noreply@snda.org>")
+EMAIL_BACKEND = env("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+SENDGRID_API_KEY = env("SENDGRID_API_KEY", default="")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="noreply@snda.org")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="sNDa Platform <noreply@snda.org>")
 
 # Frontend URL
-FRONTEND_URL = config("FRONTEND_URL", default="http://localhost:3000")
+FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:3000")

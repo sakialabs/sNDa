@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta, date
+import os
 from .models import (
     Assignment, VolunteerProfile, VolunteerStory, Badge, UserBadge, 
     CommunityGoal, ActivityLog, EmailSchedule, StoryMedia
@@ -17,18 +18,51 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 
+def _celery_enabled():
+    """Return False when running in demo/seed mode without Celery/Redis.
+
+    Honors common env toggles to avoid task dispatch during local seeding:
+    - CELERY_DISABLED=true
+    - CELERY_TASK_ALWAYS_EAGER=true (treat as no external broker requirement)
+    - CELERY_BROKER_URL=memory:// (safe) and CELERY_RESULT_BACKEND=cache+memory://
+    """
+    if os.environ.get("CELERY_DISABLED", "").lower() == "true":
+        return False
+    if os.environ.get("CELERY_TASK_ALWAYS_EAGER", "").lower() == "true":
+        return False
+    # If explicitly using in-memory broker/backends, treat as enabled but safe
+    return True
+
+
+def _maybe_delay(task, *args, **kwargs):
+    """Safely dispatch Celery task only when enabled; otherwise no-op."""
+    if not _celery_enabled():
+        return None
+    try:
+        return task.delay(*args, **kwargs)
+    except Exception:
+        # Do not interrupt main flow if broker/backend is unavailable in local/demo
+        return None
+
+
 @receiver(post_save, sender=User)
 def send_onboarding_email(sender, instance, created, **kwargs):
     """Schedule onboarding email sequence using Celery"""
-    if created and hasattr(instance, 'volunteerprofile'):
-        onboarding_email_sequence_task.delay(instance.id, is_volunteer=True)
+    # Skip during loaddata/fixture imports
+    if kwargs.get('raw'):
+        return
+    if created and hasattr(instance, 'volunteer_profile'):
+        _maybe_delay(onboarding_email_sequence_task, instance.id, is_volunteer=True)
     elif created:
-        onboarding_email_sequence_task.delay(instance.id, is_volunteer=False)
+        _maybe_delay(onboarding_email_sequence_task, instance.id, is_volunteer=False)
 
 
 @receiver(post_save, sender=Assignment)
 def assignment_created(sender, instance, created, **kwargs):
     """Handle new assignment creation"""
+    # Skip during loaddata/fixture imports
+    if kwargs.get('raw'):
+        return
     if created:
         # Log activity
         ActivityLog.objects.create(
@@ -40,11 +74,11 @@ def assignment_created(sender, instance, created, **kwargs):
         )
         
         # Send assignment notification email using Celery
-        send_assignment_notification_task.delay(instance.id)
+        _maybe_delay(send_assignment_notification_task, instance.id)
         
         # Update volunteer profile
         profile, created = VolunteerProfile.objects.get_or_create(user=instance.volunteer)
-        profile.cases_accepted += 1
+        # No 'cases_accepted' field on VolunteerProfile; keep last activity fresh
         profile.last_activity = timezone.now()
         profile.save()
 
@@ -52,6 +86,9 @@ def assignment_created(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Assignment)
 def handle_assignment_completion(sender, instance, created, **kwargs):
     """Award points and badges when assignments are completed"""
+    # Skip during loaddata/fixture imports
+    if kwargs.get('raw'):
+        return
     if instance.status == 'COMPLETED' and instance.completed_at:
         volunteer = instance.volunteer
         
@@ -85,6 +122,9 @@ def handle_assignment_completion(sender, instance, created, **kwargs):
 @receiver(post_save, sender=VolunteerStory)
 def story_published(sender, instance, created, **kwargs):
     """Handle story publication"""
+    # Skip during loaddata/fixture imports
+    if kwargs.get('raw'):
+        return
     old_status = VolunteerStory.objects.get(id=instance.id).status if not created else None
     if instance.status == 'PUBLISHED' and instance.published_at and old_status != 'PUBLISHED':
         # Award story badge if this is their first published story
@@ -130,8 +170,8 @@ def story_published(sender, instance, created, **kwargs):
         # Update community goals
         update_community_goal('STORIES', 1)
         
-        # Send story published notification using Celery
-        send_story_published_notification_task.delay(instance.id)
+        # Send story published notification using Celery (guarded)
+        _maybe_delay(send_story_published_notification_task, instance.id)
         
         # Broadcast to WebSocket subscribers (Wall of Love)
         try:

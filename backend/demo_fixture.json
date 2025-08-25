@@ -1,0 +1,963 @@
+[
+{
+  "model": "api.person",
+  "pk": "17066f23-0c2e-4ff0-bcf8-e048dd480758",
+  "fields": {
+    "first_name": "Omar",
+    "last_name": "Saleh",
+    "date_of_birth": "2002-01-06",
+    "gender": "other",
+    "location_details": "Cairo",
+    "created_at": "2025-08-25T02:48:53.873Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "2b899360-7f32-424e-8aa0-5ce2265858b8",
+  "fields": {
+    "first_name": "Mariam",
+    "last_name": "Farouk",
+    "date_of_birth": "1992-03-17",
+    "gender": "male",
+    "location_details": "Aswan",
+    "created_at": "2025-08-25T02:48:53.976Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "2cea7f31-1479-4d7e-a993-3e45ba101e2f",
+  "fields": {
+    "first_name": "Mariam",
+    "last_name": "Youssef",
+    "date_of_birth": "1999-03-15",
+    "gender": "other",
+    "location_details": "Giza",
+    "created_at": "2025-08-25T02:48:53.988Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "4ae26d22-4636-47df-b06c-83c9c6e51f73",
+  "fields": {
+    "first_name": "Layla",
+    "last_name": "Fahmy",
+    "date_of_birth": "1994-08-08",
+    "gender": "male",
+    "location_details": "Cairo",
+    "created_at": "2025-08-25T02:48:53.913Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "4afc2ec9-1c77-455b-b475-295d8a2b0bcf",
+  "fields": {
+    "first_name": "Hassan",
+    "last_name": "Youssef",
+    "date_of_birth": "2008-04-23",
+    "gender": "other",
+    "location_details": "Alexandria",
+    "created_at": "2025-08-25T02:48:53.885Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "5a24fd51-266d-4638-b61a-be245698fd80",
+  "fields": {
+    "first_name": "Hassan",
+    "last_name": "Mahmoud",
+    "date_of_birth": "1990-01-12",
+    "gender": "male",
+    "location_details": "Cairo",
+    "created_at": "2025-08-25T02:48:53.926Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "84bedae0-5716-44cc-a82b-b68169bb321f",
+  "fields": {
+    "first_name": "Noura",
+    "last_name": "Hassan",
+    "date_of_birth": "1991-02-04",
+    "gender": "other",
+    "location_details": "Aswan",
+    "created_at": "2025-08-25T02:48:53.940Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "d8ccbd26-2657-40f4-adfd-3b336fb55565",
+  "fields": {
+    "first_name": "Omar",
+    "last_name": "Hassan",
+    "date_of_birth": "1993-12-07",
+    "gender": "male",
+    "location_details": "Aswan",
+    "created_at": "2025-08-25T02:48:53.898Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "d9e69ba6-7555-45ce-976d-24df3f90dc7b",
+  "fields": {
+    "first_name": "Layla",
+    "last_name": "Saleh",
+    "date_of_birth": "1996-02-01",
+    "gender": "female",
+    "location_details": "Aswan",
+    "created_at": "2025-08-25T02:48:53.965Z"
+  }
+},
+{
+  "model": "api.person",
+  "pk": "e900e78b-004f-4437-b1e2-d7508732667c",
+  "fields": {
+    "first_name": "Layla",
+    "last_name": "Mahmoud",
+    "date_of_birth": "1994-10-01",
+    "gender": "other",
+    "location_details": "Giza",
+    "created_at": "2025-08-25T02:48:53.953Z"
+  }
+},
+{
+  "model": "api.badge",
+  "pk": "75ecf2c1-f024-4fc1-ab20-c7d7ad7a7517",
+  "fields": {
+    "name": "Community Helper",
+    "description": "5 helpful comments",
+    "icon": "🤝",
+    "category": "COMMUNITY",
+    "points_value": 30,
+    "required_cases": null,
+    "required_streak": null,
+    "required_stories": null,
+    "color": "blue",
+    "is_active": true,
+    "created_at": "2025-08-25T02:48:54.385Z"
+  }
+},
+{
+  "model": "api.badge",
+  "pk": "b2d4af19-ffe4-48d4-a9ef-1b6924becfc3",
+  "fields": {
+    "name": "Storyteller",
+    "description": "Published a story",
+    "icon": "📝",
+    "category": "MILESTONE",
+    "points_value": 20,
+    "required_cases": null,
+    "required_streak": null,
+    "required_stories": null,
+    "color": "blue",
+    "is_active": true,
+    "created_at": "2025-08-25T02:48:54.395Z"
+  }
+},
+{
+  "model": "api.badge",
+  "pk": "e6818390-35c3-422e-9a27-7d40c07a19ec",
+  "fields": {
+    "name": "First Case",
+    "description": "Completed the first case",
+    "icon": "🥇",
+    "category": "MILESTONE",
+    "points_value": 50,
+    "required_cases": 1,
+    "required_streak": null,
+    "required_stories": null,
+    "color": "blue",
+    "is_active": true,
+    "created_at": "2025-08-25T02:48:54.375Z"
+  }
+},
+{
+  "model": "api.communitygoal",
+  "pk": "82a5bf90-1c5b-42d9-b077-dfd4001ab90e",
+  "fields": {
+    "title": "Resolve 25 Cases this Month",
+    "description": "Let’s rally to resolve cases together!",
+    "goal_type": "CASES",
+    "target_value": 25,
+    "current_value": 12,
+    "start_date": "2025-08-17",
+    "end_date": "2025-09-14",
+    "icon": "🎯",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2025-08-25T02:48:54.435Z"
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$2WOWFH2TPVL3ovdkZAPJ9z$0qIL2hjYf+jPk42Y8OKAaqOQT0Xq3KHTfUGqE2H3d98=",
+    "last_login": "2025-08-25T02:15:53.725Z",
+    "is_superuser": true,
+    "username": "salih",
+    "first_name": "",
+    "last_name": "",
+    "email": "salih@email.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-08-25T02:15:41.256Z",
+    "is_coordinator": false,
+    "is_volunteer": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$Oei1lRcNnPRMDYpaO9o13p$/QPuinotphLRvEH6Nv4R9rsT0TPQvzrSF53r4zIyy3k=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "coordinator",
+    "first_name": "Team",
+    "last_name": "Coordinator",
+    "email": "coordinator@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-08-25T02:48:49.141Z",
+    "is_coordinator": false,
+    "is_volunteer": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$lqCp0Khe6fojhaCYBDfrr5$EWi+yNDrcgSHKbYi3d2fq3z5cudctaMaxyHxRosxigw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vol1",
+    "first_name": "Aisha",
+    "last_name": "Youssef",
+    "email": "vol1@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-08-25T02:48:49.747Z",
+    "is_coordinator": false,
+    "is_volunteer": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$G1qW7bE9N9XLhYqF5CpSP1$EXrTwqSJPmmesDzGqY4Inp2KSkgCJLM5Ni+b/jfY7AI=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vol2",
+    "first_name": "Hassan",
+    "last_name": "Saleh",
+    "email": "vol2@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-08-25T02:48:50.288Z",
+    "is_coordinator": false,
+    "is_volunteer": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$u49ofNXrO0Nm9xMoKVN4pD$rP3N7RKMeTrfC9DpoQJkjey077A69xUM3X73juuYf+s=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vol3",
+    "first_name": "Kareem",
+    "last_name": "Farouk",
+    "email": "vol3@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-08-25T02:48:50.793Z",
+    "is_coordinator": false,
+    "is_volunteer": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$eyibyYZ8wMZuc9dT6FkhXp$C83JwDBSTTHkecXAH3oYE8QOPQsoI2U3/3IZeoaQin4=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vol4",
+    "first_name": "Ahmed",
+    "last_name": "Farouk",
+    "email": "vol4@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-08-25T02:48:51.939Z",
+    "is_coordinator": false,
+    "is_volunteer": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$kxVPhoqwynoW5WfFrfN25m$LFsrqPJTRKVIjJrvoBT7OfCD31G2aMRDv1dW7Rli4fE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "vol5",
+    "first_name": "Omar",
+    "last_name": "Fahmy",
+    "email": "vol5@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-08-25T02:48:52.771Z",
+    "is_coordinator": false,
+    "is_volunteer": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "api.emailschedule",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "vol1"
+    ],
+    "email_type": "onboarding_day0",
+    "scheduled_for": "2025-08-25T02:48:54.486Z",
+    "sent": false,
+    "sent_at": null,
+    "failed": false,
+    "error_message": "",
+    "is_volunteer": true,
+    "metadata": {},
+    "created_at": "2025-08-25T02:48:54.491Z",
+    "updated_at": "2025-08-25T02:48:54.491Z"
+  }
+},
+{
+  "model": "api.emailschedule",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "vol1"
+    ],
+    "email_type": "onboarding_day3",
+    "scheduled_for": "2025-08-28T02:48:54.486Z",
+    "sent": false,
+    "sent_at": null,
+    "failed": false,
+    "error_message": "",
+    "is_volunteer": true,
+    "metadata": {},
+    "created_at": "2025-08-25T02:48:54.504Z",
+    "updated_at": "2025-08-25T02:48:54.504Z"
+  }
+},
+{
+  "model": "api.emailschedule",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "vol1"
+    ],
+    "email_type": "onboarding_day7",
+    "scheduled_for": "2025-08-31T02:48:54.486Z",
+    "sent": false,
+    "sent_at": null,
+    "failed": false,
+    "error_message": "",
+    "is_volunteer": true,
+    "metadata": {},
+    "created_at": "2025-08-25T02:48:54.515Z",
+    "updated_at": "2025-08-25T02:48:54.515Z"
+  }
+},
+{
+  "model": "api.emailschedule",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "vol2"
+    ],
+    "email_type": "onboarding_day0",
+    "scheduled_for": "2025-08-25T02:48:54.486Z",
+    "sent": false,
+    "sent_at": null,
+    "failed": false,
+    "error_message": "",
+    "is_volunteer": true,
+    "metadata": {},
+    "created_at": "2025-08-25T02:48:54.527Z",
+    "updated_at": "2025-08-25T02:48:54.527Z"
+  }
+},
+{
+  "model": "api.emailschedule",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "vol2"
+    ],
+    "email_type": "onboarding_day3",
+    "scheduled_for": "2025-08-28T02:48:54.486Z",
+    "sent": false,
+    "sent_at": null,
+    "failed": false,
+    "error_message": "",
+    "is_volunteer": true,
+    "metadata": {},
+    "created_at": "2025-08-25T02:48:54.539Z",
+    "updated_at": "2025-08-25T02:48:54.539Z"
+  }
+},
+{
+  "model": "api.emailschedule",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "vol2"
+    ],
+    "email_type": "onboarding_day7",
+    "scheduled_for": "2025-08-31T02:48:54.486Z",
+    "sent": false,
+    "sent_at": null,
+    "failed": false,
+    "error_message": "",
+    "is_volunteer": true,
+    "metadata": {},
+    "created_at": "2025-08-25T02:48:54.551Z",
+    "updated_at": "2025-08-25T02:48:54.551Z"
+  }
+},
+{
+  "model": "api.activitylog",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "vol5"
+    ],
+    "activity_type": "assignment_accepted",
+    "description": "Accepted assignment for case: School Supplies for Children #2",
+    "points_earned": 5,
+    "metadata": {
+      "case_id": "9d51e974-f539-40c1-871a-df60b61503c4"
+    },
+    "created_at": "2025-08-25T02:48:54.300Z"
+  }
+},
+{
+  "model": "api.activitylog",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "vol3"
+    ],
+    "activity_type": "assignment_accepted",
+    "description": "Accepted assignment for case: Emergency Medical Assistance #3",
+    "points_earned": 5,
+    "metadata": {
+      "case_id": "64fef85c-830f-4aad-aca7-1340a9645dd2"
+    },
+    "created_at": "2025-08-25T02:48:54.320Z"
+  }
+},
+{
+  "model": "api.activitylog",
+  "pk": 8,
+  "fields": {
+    "user": [
+      "vol1"
+    ],
+    "activity_type": "assignment_accepted",
+    "description": "Accepted assignment for case: Shelter Support Needed #4",
+    "points_earned": 5,
+    "metadata": {
+      "case_id": "d4f7c0b4-5d77-468c-920a-4f6537b4d6f3"
+    },
+    "created_at": "2025-08-25T02:48:54.340Z"
+  }
+},
+{
+  "model": "api.activitylog",
+  "pk": 9,
+  "fields": {
+    "user": [
+      "vol4"
+    ],
+    "activity_type": "assignment_accepted",
+    "description": "Accepted assignment for case: Legal Aid Consultation #7",
+    "points_earned": 5,
+    "metadata": {
+      "case_id": "2d56cace-91a6-478a-940d-02d4b52a856a"
+    },
+    "created_at": "2025-08-25T02:48:54.361Z"
+  }
+},
+{
+  "model": "api.userbadge",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "vol1"
+    ],
+    "badge": "b2d4af19-ffe4-48d4-a9ef-1b6924becfc3",
+    "earned_at": "2025-08-25T02:48:54.410Z",
+    "earned_for_case": null,
+    "earned_for_story": null
+  }
+},
+{
+  "model": "api.userbadge",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "vol5"
+    ],
+    "badge": "e6818390-35c3-422e-9a27-7d40c07a19ec",
+    "earned_at": "2025-08-25T02:48:54.424Z",
+    "earned_for_case": null,
+    "earned_for_story": null
+  }
+},
+{
+  "model": "api.volunteerstory",
+  "pk": "a76f3213-e5e3-4fd8-985e-7899f7177287",
+  "fields": {
+    "title": "Volunteer update by Aisha",
+    "content": "Today I met with the family and assessed urgent needs.",
+    "author": [
+      "vol1"
+    ],
+    "related_case": "92a626bc-05e3-4a6e-a646-d88ebb78b27f",
+    "related_assignment": null,
+    "story_type": "CASE_UPDATE",
+    "status": "PUBLISHED",
+    "tags": [],
+    "likes_count": 1,
+    "comments_count": 1,
+    "shares_count": 1,
+    "created_at": "2025-08-25T02:48:54.448Z",
+    "updated_at": "2025-08-25T02:48:54.455Z",
+    "published_at": null
+  }
+},
+{
+  "model": "api.volunteerstory",
+  "pk": "f5040a81-21b1-4c31-bb4d-07046163686f",
+  "fields": {
+    "title": "Volunteer update by Kareem",
+    "content": "Volunteer team made a great progress this week!",
+    "author": [
+      "vol3"
+    ],
+    "related_case": "34235125-7120-41dd-87df-91013b892f79",
+    "related_assignment": null,
+    "story_type": "MILESTONE",
+    "status": "PUBLISHED",
+    "tags": [],
+    "likes_count": 9,
+    "comments_count": 2,
+    "shares_count": 0,
+    "created_at": "2025-08-25T02:48:54.468Z",
+    "updated_at": "2025-08-25T02:48:54.477Z",
+    "published_at": null
+  }
+},
+{
+  "model": "api.assignment",
+  "pk": "06312d3b-f661-46cc-8e87-95bbe50329cf",
+  "fields": {
+    "case": "9d51e974-f539-40c1-871a-df60b61503c4",
+    "volunteer": [
+      "vol5"
+    ],
+    "coordinator": [
+      "coordinator"
+    ],
+    "status": "IN_PROGRESS",
+    "assignment_note": "Please coordinate with local partner and update.",
+    "volunteer_response": "",
+    "estimated_hours": 4,
+    "actual_hours": null,
+    "scheduled_start": null,
+    "scheduled_end": null,
+    "created_at": "2025-08-25T02:48:54.295Z",
+    "accepted_at": null,
+    "started_at": null,
+    "completed_at": null
+  }
+},
+{
+  "model": "api.assignment",
+  "pk": "43337c1e-6ab9-43e8-930e-875b4c1346d3",
+  "fields": {
+    "case": "d4f7c0b4-5d77-468c-920a-4f6537b4d6f3",
+    "volunteer": [
+      "vol1"
+    ],
+    "coordinator": [
+      "coordinator"
+    ],
+    "status": "COMPLETED",
+    "assignment_note": "Please coordinate with local partner and update.",
+    "volunteer_response": "",
+    "estimated_hours": 1,
+    "actual_hours": null,
+    "scheduled_start": null,
+    "scheduled_end": null,
+    "created_at": "2025-08-25T02:48:54.336Z",
+    "accepted_at": null,
+    "started_at": null,
+    "completed_at": null
+  }
+},
+{
+  "model": "api.assignment",
+  "pk": "661506b0-a40b-46d6-8773-b5f7b516eaba",
+  "fields": {
+    "case": "64fef85c-830f-4aad-aca7-1340a9645dd2",
+    "volunteer": [
+      "vol3"
+    ],
+    "coordinator": [
+      "coordinator"
+    ],
+    "status": "ACCEPTED",
+    "assignment_note": "Please coordinate with local partner and update.",
+    "volunteer_response": "",
+    "estimated_hours": 5,
+    "actual_hours": null,
+    "scheduled_start": null,
+    "scheduled_end": null,
+    "created_at": "2025-08-25T02:48:54.316Z",
+    "accepted_at": null,
+    "started_at": null,
+    "completed_at": null
+  }
+},
+{
+  "model": "api.assignment",
+  "pk": "9649e6f7-be5f-4577-8928-5c6f4d5d3935",
+  "fields": {
+    "case": "2d56cace-91a6-478a-940d-02d4b52a856a",
+    "volunteer": [
+      "vol4"
+    ],
+    "coordinator": [
+      "coordinator"
+    ],
+    "status": "COMPLETED",
+    "assignment_note": "Please coordinate with local partner and update.",
+    "volunteer_response": "",
+    "estimated_hours": 6,
+    "actual_hours": null,
+    "scheduled_start": null,
+    "scheduled_end": null,
+    "created_at": "2025-08-25T02:48:54.358Z",
+    "accepted_at": null,
+    "started_at": null,
+    "completed_at": null
+  }
+},
+{
+  "model": "api.volunteerprofile",
+  "pk": 10,
+  "fields": {
+    "phone_number": "+20108069687",
+    "skills": "communication, logistics",
+    "availability": "weekends",
+    "is_onboarded": true,
+    "cases_completed": 4,
+    "current_streak": 4,
+    "longest_streak": 10,
+    "last_activity": "2025-08-25T02:48:54.346Z",
+    "total_points": 227
+  }
+},
+{
+  "model": "api.volunteerprofile",
+  "pk": 11,
+  "fields": {
+    "phone_number": "+20109844633",
+    "skills": "communication, logistics",
+    "availability": "weekends",
+    "is_onboarded": true,
+    "cases_completed": 1,
+    "current_streak": 0,
+    "longest_streak": 6,
+    "last_activity": "2025-08-22T02:48:50.776Z",
+    "total_points": 124
+  }
+},
+{
+  "model": "api.volunteerprofile",
+  "pk": 12,
+  "fields": {
+    "phone_number": "+20102254817",
+    "skills": "communication, logistics",
+    "availability": "weekends",
+    "is_onboarded": true,
+    "cases_completed": 1,
+    "current_streak": 3,
+    "longest_streak": 14,
+    "last_activity": "2025-08-25T02:48:54.326Z",
+    "total_points": 286
+  }
+},
+{
+  "model": "api.volunteerprofile",
+  "pk": 13,
+  "fields": {
+    "phone_number": "+20102628775",
+    "skills": "communication, logistics",
+    "availability": "weekends",
+    "is_onboarded": true,
+    "cases_completed": 1,
+    "current_streak": 2,
+    "longest_streak": 5,
+    "last_activity": "2025-08-25T02:48:54.366Z",
+    "total_points": 264
+  }
+},
+{
+  "model": "api.volunteerprofile",
+  "pk": 14,
+  "fields": {
+    "phone_number": "+20106331077",
+    "skills": "communication, logistics",
+    "availability": "weekends",
+    "is_onboarded": true,
+    "cases_completed": 1,
+    "current_streak": 6,
+    "longest_streak": 6,
+    "last_activity": "2025-08-25T02:48:54.306Z",
+    "total_points": 53
+  }
+},
+{
+  "model": "api.case",
+  "pk": "2d56cace-91a6-478a-940d-02d4b52a856a",
+  "fields": {
+    "title": "Legal Aid Consultation #7",
+    "description": "A touching milestone: the first day back to school.",
+    "status": "RESOLVED",
+    "urgency_score": 10,
+    "success_story": null,
+    "is_public": true,
+    "primary_subject": "d9e69ba6-7555-45ce-976d-24df3f90dc7b",
+    "assigned_volunteer": [
+      "vol3"
+    ],
+    "created_at": "2025-08-25T02:48:54.189Z",
+    "updated_at": "2025-08-25T02:48:54.211Z",
+    "resolved_at": null,
+    "associated_people": [
+      "84bedae0-5716-44cc-a82b-b68169bb321f",
+      "d9e69ba6-7555-45ce-976d-24df3f90dc7b"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "34235125-7120-41dd-87df-91013b892f79",
+  "fields": {
+    "title": "Legal Aid Consultation #1",
+    "description": "Volunteer team made a great progress this week!",
+    "status": "RESOLVED",
+    "urgency_score": 2,
+    "success_story": null,
+    "is_public": true,
+    "primary_subject": "5a24fd51-266d-4638-b61a-be245698fd80",
+    "assigned_volunteer": [
+      "vol3"
+    ],
+    "created_at": "2025-08-25T02:48:54.000Z",
+    "updated_at": "2025-08-25T02:48:54.037Z",
+    "resolved_at": null,
+    "associated_people": [
+      "4afc2ec9-1c77-455b-b475-295d8a2b0bcf",
+      "d8ccbd26-2657-40f4-adfd-3b336fb55565",
+      "2cea7f31-1479-4d7e-a993-3e45ba101e2f"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "51c0bb14-2e1a-4da4-8359-a810caf06673",
+  "fields": {
+    "title": "Emergency Medical Assistance #10",
+    "description": "Volunteer team made a great progress this week!",
+    "status": "RESOLVED",
+    "urgency_score": 9,
+    "success_story": null,
+    "is_public": false,
+    "primary_subject": "4ae26d22-4636-47df-b06c-83c9c6e51f73",
+    "assigned_volunteer": null,
+    "created_at": "2025-08-25T02:48:54.271Z",
+    "updated_at": "2025-08-25T02:48:54.271Z",
+    "resolved_at": null,
+    "associated_people": [
+      "4ae26d22-4636-47df-b06c-83c9c6e51f73",
+      "84bedae0-5716-44cc-a82b-b68169bb321f"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "59f16f08-76d1-4efd-929d-c8e1d9e9c4d4",
+  "fields": {
+    "title": "Shelter Support Needed #6",
+    "description": "A touching milestone: the first day back to school.",
+    "status": "IN_PROGRESS",
+    "urgency_score": 10,
+    "success_story": null,
+    "is_public": true,
+    "primary_subject": "2b899360-7f32-424e-8aa0-5ce2265858b8",
+    "assigned_volunteer": [
+      "vol1"
+    ],
+    "created_at": "2025-08-25T02:48:54.160Z",
+    "updated_at": "2025-08-25T02:48:54.182Z",
+    "resolved_at": null,
+    "associated_people": [
+      "4ae26d22-4636-47df-b06c-83c9c6e51f73",
+      "2cea7f31-1479-4d7e-a993-3e45ba101e2f"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "5c85f659-a217-45ac-af9a-917695e3b60d",
+  "fields": {
+    "title": "Emergency Medical Assistance #8",
+    "description": "A touching milestone: the first day back to school.",
+    "status": "NEW",
+    "urgency_score": 3,
+    "success_story": null,
+    "is_public": true,
+    "primary_subject": "2cea7f31-1479-4d7e-a993-3e45ba101e2f",
+    "assigned_volunteer": null,
+    "created_at": "2025-08-25T02:48:54.220Z",
+    "updated_at": "2025-08-25T02:48:54.220Z",
+    "resolved_at": null,
+    "associated_people": [
+      "d8ccbd26-2657-40f4-adfd-3b336fb55565",
+      "e900e78b-004f-4437-b1e2-d7508732667c"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "64fef85c-830f-4aad-aca7-1340a9645dd2",
+  "fields": {
+    "title": "Emergency Medical Assistance #3",
+    "description": "Today I met with the family and assessed urgent needs.",
+    "status": "RESOLVED",
+    "urgency_score": 2,
+    "success_story": null,
+    "is_public": true,
+    "primary_subject": "e900e78b-004f-4437-b1e2-d7508732667c",
+    "assigned_volunteer": [
+      "vol4"
+    ],
+    "created_at": "2025-08-25T02:48:54.081Z",
+    "updated_at": "2025-08-25T02:48:54.105Z",
+    "resolved_at": null,
+    "associated_people": [
+      "4afc2ec9-1c77-455b-b475-295d8a2b0bcf",
+      "2b899360-7f32-424e-8aa0-5ce2265858b8"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "92a626bc-05e3-4a6e-a646-d88ebb78b27f",
+  "fields": {
+    "title": "School Supplies for Children #5",
+    "description": "We coordinated with local partners to secure supplies.",
+    "status": "IN_PROGRESS",
+    "urgency_score": 2,
+    "success_story": null,
+    "is_public": true,
+    "primary_subject": "e900e78b-004f-4437-b1e2-d7508732667c",
+    "assigned_volunteer": null,
+    "created_at": "2025-08-25T02:48:54.142Z",
+    "updated_at": "2025-08-25T02:48:54.142Z",
+    "resolved_at": null,
+    "associated_people": [
+      "4afc2ec9-1c77-455b-b475-295d8a2b0bcf"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "9d51e974-f539-40c1-871a-df60b61503c4",
+  "fields": {
+    "title": "School Supplies for Children #2",
+    "description": "Volunteer team made a great progress this week!",
+    "status": "IN_PROGRESS",
+    "urgency_score": 7,
+    "success_story": null,
+    "is_public": true,
+    "primary_subject": "5a24fd51-266d-4638-b61a-be245698fd80",
+    "assigned_volunteer": [
+      "vol2"
+    ],
+    "created_at": "2025-08-25T02:48:54.049Z",
+    "updated_at": "2025-08-25T02:48:54.073Z",
+    "resolved_at": null,
+    "associated_people": [
+      "d8ccbd26-2657-40f4-adfd-3b336fb55565",
+      "d9e69ba6-7555-45ce-976d-24df3f90dc7b"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "d4f7c0b4-5d77-468c-920a-4f6537b4d6f3",
+  "fields": {
+    "title": "Shelter Support Needed #4",
+    "description": "We coordinated with local partners to secure supplies.",
+    "status": "RESOLVED",
+    "urgency_score": 1,
+    "success_story": null,
+    "is_public": false,
+    "primary_subject": "2cea7f31-1479-4d7e-a993-3e45ba101e2f",
+    "assigned_volunteer": [
+      "vol2"
+    ],
+    "created_at": "2025-08-25T02:48:54.113Z",
+    "updated_at": "2025-08-25T02:48:54.131Z",
+    "resolved_at": null,
+    "associated_people": [
+      "84bedae0-5716-44cc-a82b-b68169bb321f"
+    ]
+  }
+},
+{
+  "model": "api.case",
+  "pk": "e32a63ef-1fd0-465b-b2d9-eba9636b845c",
+  "fields": {
+    "title": "Job Placement Support #9",
+    "description": "We coordinated with local partners to secure supplies.",
+    "status": "RESOLVED",
+    "urgency_score": 5,
+    "success_story": null,
+    "is_public": false,
+    "primary_subject": "d9e69ba6-7555-45ce-976d-24df3f90dc7b",
+    "assigned_volunteer": null,
+    "created_at": "2025-08-25T02:48:54.247Z",
+    "updated_at": "2025-08-25T02:48:54.247Z",
+    "resolved_at": null,
+    "associated_people": [
+      "4afc2ec9-1c77-455b-b475-295d8a2b0bcf",
+      "2cea7f31-1479-4d7e-a993-3e45ba101e2f"
+    ]
+  }
+}
+]
