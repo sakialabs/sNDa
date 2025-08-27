@@ -1,0 +1,95 @@
+# 🚀 sNDa Frontend Deployment Configuration (Netlify)
+# Production-ready configuration for Next.js frontend
+
+[build]
+  publish = "frontend/.next"
+  command = "cd frontend && npm ci && npm run build"
+
+[functions]
+  external_node_modules = ["next"]
+  node_bundler = "esbuild"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# API Proxy to Backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://snda-backend.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# Internationalization redirects
+[[redirects]]
+  from = "/"
+  to = "/en"
+  status = 302
+  force = false
+
+# Production Environment
+[context.production.environment]
+  NEXT_PUBLIC_API_URL = "https://snda-backend.onrender.com"
+  NEXT_PUBLIC_FRONTEND_URL = "https://snda.netlify.app"
+  NODE_ENV = "production"
+
+# Deploy Preview Environment
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_API_URL = "https://snda-backend.onrender.com"
+  NEXT_PUBLIC_FRONTEND_URL = "$DEPLOY_PRIME_URL"
+  NODE_ENV = "production"
+
+# Branch Deploy Environment
+[context.branch-deploy.environment]
+  NEXT_PUBLIC_API_URL = "https://snda-backend.onrender.com"
+  NEXT_PUBLIC_FRONTEND_URL = "$DEPLOY_PRIME_URL"
+  NODE_ENV = "production"
+
+# Security Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    
+    # Content Security Policy
+    Content-Security-Policy = '''
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com;
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https: blob:;
+      font-src 'self' data:;
+      connect-src 'self' https://snda-backend.onrender.com wss://snda-backend.onrender.com https://api.stripe.com;
+      frame-src https://js.stripe.com;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+    '''
+    
+    # Performance
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Static Assets Caching
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# API Routes (no caching)
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"

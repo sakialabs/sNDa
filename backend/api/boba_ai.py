@@ -236,8 +236,8 @@ class BobaAI:
         # Community goal updates
         active_goals = CommunityGoal.objects.filter(
             is_active=True,
-            progress_percentage__gte=80,
-            progress_percentage__lt=100
+            current_value__gt=0,
+            target_value__gt=0
         )
         
         for goal in active_goals:

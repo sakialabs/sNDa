@@ -1,4 +1,12 @@
 from django.contrib import admin
+from django_celery_beat.models import (
+    PeriodicTask,
+    IntervalSchedule,
+    CrontabSchedule,
+    SolarSchedule,
+    ClockedSchedule,
+)
+from django_celery_beat import admin as beat_admin
 from .models import (
     Person,
     Case,
@@ -85,7 +93,21 @@ class CommunityGoalAdmin(admin.ModelAdmin):
     search_fields = ("title",)
 
 
-@admin.register(ActivityLog)
+class ActivityLogProxy(ActivityLog):
+    class Meta:
+        proxy = True
+        verbose_name = "Activity Log"
+        verbose_name_plural = "Activity Logs"
+
+
+# Ensure original is not double-registered
+try:
+    admin.site.unregister(ActivityLog)
+except admin.sites.NotRegistered:
+    pass
+
+
+@admin.register(ActivityLogProxy)
 class ActivityLogAdmin(admin.ModelAdmin):
     list_display = ("user", "activity_type", "points_earned", "created_at")
     list_filter = ("activity_type", "created_at")
@@ -104,3 +126,55 @@ class EmailAnalyticsAdmin(admin.ModelAdmin):
     list_display = ("email_type", "recipient_email", "delivery_status", "open_count", "click_count", "created_at")
     list_filter = ("delivery_status", "email_type", "created_at")
     search_fields = ("recipient_email", "email_type")
+
+
+# --- Capitalized labels for django-celery-beat models via proxy ---
+# Unregister originals (if registered by beat)
+for m in (PeriodicTask, IntervalSchedule, CrontabSchedule, SolarSchedule, ClockedSchedule):
+    try:
+        admin.site.unregister(m)
+    except admin.sites.NotRegistered:
+        pass
+
+
+class PeriodicTaskProxy(PeriodicTask):
+    class Meta:
+        proxy = True
+        verbose_name = "Periodic Task"
+        verbose_name_plural = "Periodic Tasks"
+
+
+class IntervalScheduleProxy(IntervalSchedule):
+    class Meta:
+        proxy = True
+        verbose_name = "Interval Schedule"
+        verbose_name_plural = "Interval Schedules"
+
+
+class CrontabScheduleProxy(CrontabSchedule):
+    class Meta:
+        proxy = True
+        verbose_name = "Crontab Schedule"
+        verbose_name_plural = "Crontab Schedules"
+
+
+class SolarScheduleProxy(SolarSchedule):
+    class Meta:
+        proxy = True
+        verbose_name = "Solar Event"
+        verbose_name_plural = "Solar Events"
+
+
+class ClockedScheduleProxy(ClockedSchedule):
+    class Meta:
+        proxy = True
+        verbose_name = "Clocked Schedule"
+        verbose_name_plural = "Clocked Schedules"
+
+
+# Re-register proxies. Use beat's PeriodicTaskAdmin if available; fall back to default for others.
+admin.site.register(PeriodicTaskProxy, getattr(beat_admin, 'PeriodicTaskAdmin', admin.ModelAdmin))
+admin.site.register(IntervalScheduleProxy, getattr(beat_admin, 'IntervalScheduleAdmin', admin.ModelAdmin))
+admin.site.register(CrontabScheduleProxy, getattr(beat_admin, 'CrontabScheduleAdmin', admin.ModelAdmin))
+admin.site.register(SolarScheduleProxy, getattr(beat_admin, 'SolarScheduleAdmin', admin.ModelAdmin))
+admin.site.register(ClockedScheduleProxy, getattr(beat_admin, 'ClockedScheduleAdmin', admin.ModelAdmin))

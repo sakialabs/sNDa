@@ -463,7 +463,7 @@ export default function CaseDetailsPage() {
             ) : (
               <Button asChild className="w-full">
                 <a
-                  href={`mailto:coordinator@snda.org?subject=${encodeURIComponent(
+                  href={`mailto:snda@hey.me?subject=${encodeURIComponent(
                     `Support needed for case: ${item.title}`
                   )}&body=${encodeURIComponent(
                     `Hello,\n\nI would like to offer support for case: ${item.title}\n\nCase details: ${item.description}\n\nPlease let me know how I can help.\n\nBest regards`

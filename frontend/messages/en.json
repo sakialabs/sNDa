@@ -11,6 +11,44 @@
     "login": "Login",
     "joinUs": "Join Us"
   },
+  "home": {
+    "title": "🥪 a Sandwich of Support 🥪",
+    "subtitle": "sNDa connects kids, families, volunteers, and donors to build a resilient network of care, starting with urgent needs in Sudan.",
+    "cta": {
+      "primary": "Get Involved",
+      "secondary": "Learn More"
+    },
+    "stories": {
+      "title": "Stories of Impact",
+      "subtitle": "Real change happens through collective action",
+      "story1": {
+        "title": "Community Gardens Project",
+        "description": "Transforming vacant lots into thriving community spaces that bring neighbors together and provide fresh produce for local families."
+      },
+      "story2": {
+        "title": "Youth Leadership Program",
+        "description": "Empowering young voices to lead change in their communities through mentorship, skills training, and civic engagement."
+      },
+      "story3": {
+        "title": "Digital Inclusion Initiative",
+        "description": "Bridging the digital divide by providing technology access and digital literacy training to underserved communities."
+      }
+    },
+    "getInvolved": {
+      "title": "Ready to Make a Difference?",
+      "subtitle": "Every action counts. Join us in creating positive change.",
+      "volunteer": "Volunteer",
+      "donate": "Donate",
+      "community": "Join Community"
+    },
+    "submitReferral": "Submit Referral",
+    "seeMore": "See More",
+    "noCases": "No cases available at the moment.",
+    "latestStories": "Latest Stories",
+    "seeAllStories": "See All Stories",
+    "urgentReferrals": "Urgent Referrals",
+    "joinCommunity": "Join Community"
+  },
   "about": {
     "title": "About sNDa",
     "subtitle": "🥪 a Sandwich of Support 🥪",

@@ -157,7 +157,7 @@ export function DonationPlatform() {
     <div className="space-y-6">
       <div className="text-center animate-fade-in">
         <h1 className="text-4xl font-bold tracking-tight mb-4">
-          Make a Difference Today
+        🌱 Make a Difference Today
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Your generosity directly supports families in need, providing essential care and hope during their most challenging times.
@@ -165,7 +165,7 @@ export function DonationPlatform() {
       </div>
 
       {/* Impact Stats */}
-      <div className="grid gap-4 md:grid-cols-4 animate-fade-in">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in">
         <Card>
           <CardContent className="p-6 text-center">
             <Heart className="w-8 h-8 mx-auto mb-2 text-primary" />

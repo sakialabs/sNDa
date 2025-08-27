@@ -19,7 +19,7 @@ class EmailService:
     """Centralized email service for sNDa platform"""
     
     def __init__(self):
-        self.from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@snda.org')
+        self.from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'snda@hey.com')
     
     def send_welcome_email(self, user, is_volunteer=True):
         """Day 0: Welcome Email 🥪"""

@@ -115,8 +115,8 @@ FRONTEND_URL=https://snda.netlify.app
 # Email (SendGrid)
 EMAIL_BACKEND=sendgrid_backend.SendgridBackend
 SENDGRID_API_KEY=your_sendgrid_api_key_here
-EMAIL_HOST_USER=noreply@snda.org
-DEFAULT_FROM_EMAIL=sNDa Platform <noreply@snda.org>
+EMAIL_HOST_USER=snda@hey.com
+DEFAULT_FROM_EMAIL=sNDa Platform <snda@hey.com>
 
 # Stripe
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
@@ -258,13 +258,13 @@ python manage.py collectstatic --noinput
 ### **SendGrid Configuration**
 1. Create SendGrid account: https://sendgrid.com
 2. Generate API key with full access
-3. Verify sender identity: `noreply@snda.org`
+3. Verify sender identity: `snda@hey.com`
 4. Add to Render environment variables:
 ```env
 EMAIL_BACKEND=sendgrid_backend.SendgridBackend
 SENDGRID_API_KEY=your_sendgrid_api_key_here
-EMAIL_HOST_USER=noreply@snda.org
-DEFAULT_FROM_EMAIL=sNDa Platform <noreply@snda.org>
+EMAIL_HOST_USER=snda@hey.com
+DEFAULT_FROM_EMAIL=sNDa Platform <snda@hey.com>
 ```
 
 ### **Email Templates Ready**

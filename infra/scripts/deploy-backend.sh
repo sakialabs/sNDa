@@ -30,9 +30,19 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Get the project root directory
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+BACKEND_DIR="$PROJECT_ROOT/backend"
+
+print_status "Project root: $PROJECT_ROOT"
+print_status "Backend directory: $BACKEND_DIR"
+
+# Change to backend directory
+cd "$BACKEND_DIR"
+
 # Check if we're in the right directory
 if [ ! -f "manage.py" ]; then
-    print_error "Please run this script from the backend directory"
+    print_error "Backend directory not found or invalid: $BACKEND_DIR"
     exit 1
 fi
 
@@ -74,7 +84,7 @@ print_status "🌐 Your backend is ready for Render deployment"
 print_status "📋 Next steps:"
 echo "   1. Push code to GitHub"
 echo "   2. Create Render account"
-echo "   3. Follow RENDER_DEPLOYMENT.md guide"
+echo "   3. Follow docs/DEPLOYMENT_GUIDE.md"
 echo "   4. Your API will be live at: https://snda-backend.onrender.com"
 
 print_success "🎯 sNDa platform ready to serve communities worldwide!"

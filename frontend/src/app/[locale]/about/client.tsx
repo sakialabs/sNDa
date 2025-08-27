@@ -35,7 +35,7 @@ export default function AboutClient() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className={`text-center mb-10`}
         >
           <h1 className="text-4xl font-bold text-foreground">{t("about.title")}</h1>
           <p className="text-xl text-muted-foreground mt-2 max-w-3xl mx-auto">{t("about.subtitle")}</p>
@@ -45,23 +45,35 @@ export default function AboutClient() {
         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6">
           {/* Intro / Name & meaning */}
           <motion.div variants={itemVariants}>
-            <h2 className="text-base font-medium text-foreground text-center mb-3">{t("about.whoWeAre.title")}</h2>
             <Card>
+              <CardHeader>
+                <CardTitle className={`flex items-center gap-2 justify-start ${isAR ? "flex-row-reverse" : ""}`}>
+                  <Heart className="h-5 w-5 text-primary" />
+                  {t("about.whoWeAre.title")}
+                </CardTitle>
+              </CardHeader>
               <CardContent className="space-y-3">
                 {/* Intro copy */}
-                <p className="text-center">{t.rich("about.whoWeAre.intro", { strong: (chunk) => <strong>{chunk}</strong> })}</p>
-                <p className="text-muted-foreground">Pronounced <em>sun-dah</em> (سندة); in Sudanese slang it means a light snack, and in Arabic it means support. We bring both warmth and practical help.</p>
-                <p className="text-foreground text-center">We’re a solidarity platform that blends grassroots care with a global vision. By combining human connection with smart technology, sNDa supports children in Sudan today and vulnerable communities worldwide tomorrow.</p>
+                <p className={`${isAR ? "text-right" : "text-left"}`}>{t.rich("about.whoWeAre.intro", { strong: (chunk) => <strong>{chunk}</strong> })}</p>
+                <p className={`text-muted-foreground ${isAR ? "text-right" : "text-left"}`}>
+                  {isAR ? "تُنطق سُن-دة (سندة)؛ في اللهجة السودانية تعني وجبة خفيفة، وفي العربية تعني الدعم. نحن نجلب الدفء والمساعدة العملية معًا." : "Pronounced sun-dah (سندة); in Sudanese slang it means a light snack, and in Arabic it means support. We bring both warmth and practical help."}
+                </p>
+                <p className={`text-foreground ${isAR ? "text-right" : "text-left"}`}>We’re a solidarity platform that blends grassroots care with a global vision. By combining human connection with smart technology, sNDa supports children in Sudan today and vulnerable communities worldwide tomorrow.</p>
               </CardContent>
             </Card>
           </motion.div>
 
           {/* What we do */}
           <motion.div variants={itemVariants}>
-            <h2 className="text-base font-medium text-foreground text-center mb-3">What we do</h2>
             <Card>
-              <CardContent className="space-y-5">
-                <p className="text-foreground text-center max-w-3xl mx-auto">sNDa connects families, volunteers, coordinators, donors, and hospitals so help arrives faster and outcomes remain transparent. The platform focuses on fast referrals, coordinated triage, secure case tracking, and clear donor impact.</p>
+              <CardHeader>
+                <CardTitle className={`flex items-center gap-2 justify-start ${isAR ? "flex-row-reverse" : ""}`}>
+                  <Sparkles className="h-5 w-5 text-primary" />
+                  What we do
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className={`text-foreground ${isAR ? "text-right" : "text-left"}`}>sNDa connects families, volunteers, coordinators, donors, and hospitals so help arrives faster and outcomes remain transparent. The platform focuses on fast referrals, coordinated triage, secure case tracking, and clear donor impact.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                   <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
                     <Heart className="h-5 w-5 text-primary" />
@@ -103,74 +115,70 @@ export default function AboutClient() {
             </Card>
           </motion.div>
 
-          {/* How it works (icon cards) */}
+          {/* How it works (Recent Achievements style) */}
           <motion.div variants={itemVariants}>
-            <h2 className="text-base font-medium text-foreground text-center mb-4">How it works</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className={`flex items-center justify-center gap-2 text-base font-medium ${isAR ? "flex-row-reverse" : ""}`}>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <ClipboardList className="h-5 w-5 text-primary" />
+                  How it works
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className={`text-foreground mb-3 ${isAR ? "text-right" : "text-left"}`}>
+                  Our web app makes it simple to go from a referral to real impact. Each case starts with verified details, then moves through clear steps. Along the way, progress is tracked and shared so the whole community can see the difference they’re making.     </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
                     <ClipboardList className="h-5 w-5 text-primary" />
-                    Referral & triage
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center">Collect and verify case details.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className={`flex items-center justify-center gap-2 text-base font-medium ${isAR ? "flex-row-reverse" : ""}`}>
+                    <div>
+                      <div className="font-medium">Referral & triage</div>
+                      <div className="text-xs text-muted-foreground">Collect and verify case details</div>
+                    </div>
+                  </div>
+                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
                     <UserCheck className="h-5 w-5 text-primary" />
-                    Coordinator assignment
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center">Match to the right coordinator.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className={`flex items-center justify-center gap-2 text-base font-medium ${isAR ? "flex-row-reverse" : ""}`}>
+                    <div>
+                      <div className="font-medium">Coordinator assignment</div>
+                      <div className="text-xs text-muted-foreground">Match to the right coordinator</div>
+                    </div>
+                  </div>
+                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
                     <Stethoscope className="h-5 w-5 text-primary" />
-                    Hospital care
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center">Coordinate treatment logistics.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className={`flex items-center justify-center gap-2 text-base font-medium ${isAR ? "flex-row-reverse" : ""}`}>
+                    <div>
+                      <div className="font-medium">Hospital care</div>
+                      <div className="text-xs text-muted-foreground">Coordinate treatment logistics</div>
+                    </div>
+                  </div>
+                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
                     <HandCoins className="h-5 w-5 text-primary" />
-                    Donor support & tracking
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center">Fund transparently with updates.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className={`flex items-center justify-center gap-2 text-base font-medium ${isAR ? "flex-row-reverse" : ""}`}>
+                    <div>
+                      <div className="font-medium">Donor support & tracking</div>
+                      <div className="text-xs text-muted-foreground">Fund transparently with updates</div>
+                    </div>
+                  </div>
+                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
                     <Sparkles className="h-5 w-5 text-primary" />
-                    Stories & impact
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center">Share progress with the community.</p>
-                </CardContent>
-              </Card>
-            </div>
+                    <div>
+                      <div className="font-medium">Stories & impact</div>
+                      <div className="text-xs text-muted-foreground">Share progress with the community</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
 
           {/* Built by & for */}
           <motion.div variants={itemVariants}>
-            <h2 className="text-base font-medium text-foreground text-center mb-3">Our backbone</h2>
             <Card>
+              <CardHeader>
+                <CardTitle className={`flex items-center gap-2 justify-start ${isAR ? "flex-row-reverse" : ""}`}>
+                  <Users className="h-5 w-5 text-primary" />
+                  Our backbone
+                </CardTitle>
+              </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-black">Open-source, privacy-first, multilingual (AR/EN at launch)</p>
+                <p className="text-foreground">Open-source, privacy-first, multilingual (AR/EN at launch)</p>
                 <p className="text-muted-foreground">Tech: <strong>Django, Next.js, PostgreSQL, PyTorch</strong> for reliability, speed, and inclusivity.</p>
               </CardContent>
             </Card>

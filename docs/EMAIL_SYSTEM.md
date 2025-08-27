@@ -63,7 +63,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
-DEFAULT_FROM_EMAIL = 'noreply@snda.org'
+DEFAULT_FROM_EMAIL = 'snda@hey.com'
 ```
 
 ### Environment Variables
@@ -317,7 +317,7 @@ python manage.py shell
 >>> send_mail(
 ...     'Test Email',
 ...     'This is a test message.',
-...     'noreply@snda.org',
+...     'snda@hey.com',
 ...     ['your-email@example.com'],
 ...     fail_silently=False,
 ... )

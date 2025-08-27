@@ -21,9 +21,19 @@ function Write-Error {
 
 Write-Host "🚀 Starting sNDa Backend Deployment to Render..." -ForegroundColor Cyan
 
+# Get the project root directory
+$ProjectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+$BackendDir = Join-Path $ProjectRoot "backend"
+
+Write-Status "Project root: $ProjectRoot"
+Write-Status "Backend directory: $BackendDir"
+
+# Change to backend directory
+Set-Location $BackendDir
+
 # Check if we're in the right directory
 if (-not (Test-Path "manage.py")) {
-    Write-Error "Please run this script from the backend directory"
+    Write-Error "Backend directory not found or invalid: $BackendDir"
     exit 1
 }
 
@@ -70,7 +80,7 @@ Write-Status "🌐 Your backend is ready for Render deployment"
 Write-Status "📋 Next steps:"
 Write-Host "   1. Push code to GitHub: git add . && git commit -m 'Ready for Render' && git push"
 Write-Host "   2. Create Render account at render.com"
-Write-Host "   3. Follow RENDER_DEPLOYMENT.md guide"
+Write-Host "   3. Follow docs/DEPLOYMENT_GUIDE.md"
 Write-Host "   4. Your API will be live at: https://snda-backend.onrender.com"
 Write-Host ""
 Write-Success "🎯 sNDa platform ready to serve communities worldwide!"
@@ -78,5 +88,10 @@ Write-Success "🎯 sNDa platform ready to serve communities worldwide!"
 # Optional: Open deployment guide
 $openGuide = Read-Host "Open deployment guide? (y/N)"
 if ($openGuide -eq 'y' -or $openGuide -eq 'Y') {
-    Start-Process "RENDER_DEPLOYMENT.md"
+    $deploymentGuide = Join-Path $ProjectRoot "docs/DEPLOYMENT_GUIDE.md"
+    if (Test-Path $deploymentGuide) {
+        Start-Process $deploymentGuide
+    } else {
+        Write-Warning "Deployment guide not found at: $deploymentGuide"
+    }
 }

@@ -69,19 +69,17 @@ export default async function LocaleLayout({
   const dir = getDir(locale as Locale);
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning>
-      <body className={`${(locale === "ar" ? cairo : inter).className} flex flex-col min-h-screen`}>
-        <NextIntlClientProvider messages={messages} locale={locale} timeZone="UTC">
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <AuthProvider>
-              <Header />
-              <main className="flex-grow container mx-auto p-4">{children}</main>
-              <Footer />
-            </AuthProvider>
-          </ThemeProvider>
-        </NextIntlClientProvider>
-        <Toaster position="top-center" richColors expand visibleToasts={3} />
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages} locale={locale} timeZone="UTC">
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <AuthProvider>
+          <div dir={dir} className={`${(locale === "ar" ? cairo : inter).className} flex flex-col min-h-screen`}>
+            <Header />
+            <main className="flex-grow container mx-auto p-4">{children}</main>
+            <Footer />
+          </div>
+        </AuthProvider>
+      </ThemeProvider>
+      <Toaster position="top-center" richColors expand visibleToasts={3} />
+    </NextIntlClientProvider>
   );
 }

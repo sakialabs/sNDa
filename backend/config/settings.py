@@ -246,8 +246,8 @@ CHANNEL_LAYERS = {
 # Email Configuration
 EMAIL_BACKEND = env("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
 SENDGRID_API_KEY = env("SENDGRID_API_KEY", default="")
-EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="noreply@snda.org")
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="sNDa Platform <noreply@snda.org>")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="snda@hey.com")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="sNDa Platform <snda@hey.com>")
 
 # Frontend URL
 FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:3000")

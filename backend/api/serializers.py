@@ -222,9 +222,11 @@ class DashboardStatsSerializer(serializers.Serializer):
     """Serializer for volunteer dashboard statistics"""
     cases_completed = serializers.IntegerField()
     current_streak = serializers.IntegerField()
+    longest_streak = serializers.IntegerField()
     total_points = serializers.IntegerField()
     recent_badges = BadgeSerializer(many=True)
     active_assignments = serializers.IntegerField()
     recent_activities = ActivityLogSerializer(many=True)
     community_rank = serializers.IntegerField()
+    stories_published = serializers.IntegerField()
     impact_summary = serializers.DictField()

@@ -27,8 +27,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_PASSWORD = os.environ.get('MAILGUN_SMTP_PASSWORD')
 
 # Default email addresses
-DEFAULT_FROM_EMAIL = 'sNDa Platform <noreply@snda.org>'
-SERVER_EMAIL = 'sNDa Server <server@snda.org>'
+DEFAULT_FROM_EMAIL = 'sNDa Platform <snda@hey.com>'
+SERVER_EMAIL = 'sNDa Server <snda@hey.com>'
 
 # Frontend URL for email links
 FRONTEND_URL = 'http://localhost:3000'  # Development

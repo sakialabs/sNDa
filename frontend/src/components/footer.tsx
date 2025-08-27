@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 
 export function Footer() {
@@ -27,7 +28,7 @@ export function Footer() {
               Privacy Policy
             </Link>
             <a
-              href="mailto:snda@hey.com"
+              href="mailto:snda@hey.me"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Contact

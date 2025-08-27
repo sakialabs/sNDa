@@ -152,9 +152,13 @@ cython_debug/
 # Abstra
 .abstra/
 
-# Visual Studio Code
+# IDE and Editor files
 .vscode/
 .idea/
+.github/
+
+# Next.js build artifacts (root level)
+.next/
 
 # Ruff stuff:
 .ruff_cache/

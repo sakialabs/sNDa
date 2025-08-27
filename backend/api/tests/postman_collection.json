@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "sNDa API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "sNDa Backend API collection with JWT pre-request auth"
+  },
+  "item": [
+    {
+      "name": "Auth / Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/token/", "host": ["{{baseUrl}}"], "path": ["api", "token", ""] },
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}" }
+      }
+    },
+    {
+      "name": "Cases List",
+      "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/cases/", "host": ["{{baseUrl}}"], "path": ["api", "cases", ""] } }
+    },
+    {
+      "name": "Cases Create",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseUrl}}/api/cases/", "host": ["{{baseUrl}}"], "path": ["api", "cases", ""] },
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"New Case\",\n  \"description\": \"desc\",\n  \"status\": \"NEW\",\n  \"primary_subject_id\": \"<person-uuid>\"\n}" }
+      }
+    },
+    { "name": "Intake", "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/intake/", "host": ["{{baseUrl}}"], "path": ["api", "intake", ""] }, "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw", "raw": "{\n  \"child_name\": \"Ali Ahmed\",\n  \"location\": \"City\",\n  \"description\": \"...\",\n  \"consent\": true\n}" } } },
+    { "name": "Public Stories", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/public/stories/", "host": ["{{baseUrl}}"], "path": ["api","public","stories",""] } } },
+    { "name": "Community Stats", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/community/stats/", "host": ["{{baseUrl}}"], "path": ["api","community","stats",""] } } },
+    { "name": "Boba Recommendations", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/boba/recommendations/", "host": ["{{baseUrl}}"], "path": ["api","boba","recommendations",""] } } },
+    { "name": "Boba Notifications", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/boba/notifications/", "host": ["{{baseUrl}}"], "path": ["api","boba","notifications",""] } } }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// If we have jwt_token in variables, set it to Authorization",
+          "if (pm.collectionVariables.get('jwt_token')) {",
+          "  pm.request.headers.upsert({key: 'Authorization', value: 'Bearer ' + pm.collectionVariables.get('jwt_token')});",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000" },
+    { "key": "jwt_token", "value": "" }
+  ]
+}

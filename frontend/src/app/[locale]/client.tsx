@@ -11,18 +11,55 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { authFetch } from "@/lib/api/client";
 import type { Case } from "@/lib/types";
 import Link from "next/link";
-import { useLocale, useFormatter } from "next-intl";
+import { useLocale, useFormatter, useTranslations } from "next-intl";
 
 export default function HomeClient() {
+  const [mounted, setMounted] = useState(false);
   const locale = useLocale();
   const f = useFormatter();
+  const t = useTranslations();
   const prefix = `/${locale}`;
+  const isAR = locale === "ar";
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [featured, setFeatured] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [stories] = useState(
-    [
+    isAR ? [
+      {
+        id: "h1",
+        title: "بداية جديدة لأميرة",
+        content:
+          "نمت الثقة مع الإرشاد؛ أميرة تتفوق في المدرسة وتكوّن صداقات.",
+        author_name: "سارة أحمد",
+        case_title: "الدعم التعليمي - أميرة ك.",
+        tags: ["تعليم", "إرشاد"],
+        likes_count: 24,
+        published_at: "2024-01-10",
+      },
+      {
+        id: "h2",
+        title: "بناء الجسور من خلال الفن",
+        content:
+          "العلاج بالفن ساعد عمر في إيجاد صوته ومشاركة قصص الأمل.",
+        author_name: "ليلى محمود",
+        case_title: "الدعم العاطفي - عمر ت.",
+        tags: ["فن", "إبداع"],
+        likes_count: 31,
+        published_at: "2024-01-08",
+      },
+      {
+        id: "h3",
+        title: "من الخوف إلى الصداقة",
+        content:
+          "الأنشطة الجماعية ساعدت نور في الانتقال من العزلة إلى القيادة.",
+        author_name: "عمر حسن",
+        case_title: "التكامل الاجتماعي - نور م.",
+        tags: ["اجتماعي", "قيادة"],
+        likes_count: 18,
+        published_at: "2024-01-05",
+      },
+    ] : [
       {
         id: "h1",
         title: "A New Beginning for Amira",
@@ -60,6 +97,10 @@ export default function HomeClient() {
   );
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     const load = async () => {
       try {
         setLoading(true);
@@ -89,18 +130,17 @@ export default function HomeClient() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-5xl font-bold text-foreground"
+          className="text-5xl font-bold text-foreground text-center"
         >
-          🥪 a Sandwich of Support 🥪
+          {t("home.title")}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-4 max-w-xl mx-auto text-lg text-muted-foreground"
+          className={`mt-4 max-w-xl mx-auto text-lg text-muted-foreground ${isAR ? "text-right" : "text-center"}`}
         >
-          sNDa connects kids, families, volunteers, and donors to build a
-          resilient network of care, starting with urgent needs in Sudan.
+          {t("home.subtitle")}
         </motion.p>
 
         <motion.div
@@ -110,21 +150,28 @@ export default function HomeClient() {
           className="mt-8 space-y-4"
         >
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Dialog open={isFormVisible} onOpenChange={setIsFormVisible}>
-              <DialogTrigger asChild>
-                <Button size="lg" className="flex-1 sm:flex-none">
-                  Submit a Referral
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[625px]">
-                <ReferralForm />
-              </DialogContent>
-            </Dialog>
+            {mounted && (
+              <Dialog open={isFormVisible} onOpenChange={setIsFormVisible}>
+                <DialogTrigger asChild>
+                  <Button size="lg" className="w-auto rounded-md">
+                    {t("home.submitReferral")}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[625px]">
+                  <ReferralForm />
+                </DialogContent>
+              </Dialog>
+            )}
+            {!mounted && (
+              <Button size="lg" className="w-auto rounded-md" disabled>
+                {t("home.submitReferral")}
+              </Button>
+            )}
 
             <Button
               size="lg"
               variant="outline"
-              className="flex-1 sm:flex-none"
+              className="w-auto rounded-md"
               onClick={() => {
                 const joinUsButton = document.querySelector("[data-join-us]");
                 if (joinUsButton) {
@@ -132,19 +179,19 @@ export default function HomeClient() {
                 }
               }}
             >
-              Join Our Community
+              {t("home.joinCommunity")}
             </Button>
           </div>
         </motion.div>
 
         <div className="mt-12 space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Urgent referrals</h2>
+          <div className={`flex items-center justify-between ${isAR ? "flex-row-reverse" : ""}`}>
+            <h2 className="text-2xl font-semibold">{t("home.urgentReferrals")}</h2>
             <Link
               href={`${prefix}/dashboard`}
               className="text-sm underline underline-offset-4"
             >
-              See more
+              {t("home.seeMore")}
             </Link>
           </div>
           {error && <div className="text-sm text-red-600">{error}</div>}
@@ -162,7 +209,7 @@ export default function HomeClient() {
               ))}
             </ul>
           ) : featured.length === 0 ? (
-            <div className="text-sm text-muted-foreground">No cases yet.</div>
+            <div className="text-sm text-muted-foreground">{t("home.noCases")}</div>
           ) : (
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {featured.map((c) => (
@@ -190,16 +237,16 @@ export default function HomeClient() {
                       {c.primary_subject?.first_name} {c.primary_subject?.last_name}
                     </div>
                     <span className="text-xs rounded px-2 py-0.5 border">
-                      {c.status === "NEW" ? "New" : c.status.replace("_", " ")}
+                      {c.status === "NEW" ? t("home.new") : c.status.replace("_", " ")}
                     </span>
                   </div>
-                  <div className="mt-3 flex gap-2">
+                  <div className={`mt-3 flex gap-2 ${isAR ? "flex-row-reverse" : ""}`}>
                     <Button asChild size="sm" variant="secondary">
-                      <Link href={`${prefix}/cases/${c.id}`}>View details</Link>
+                      <Link href={`${prefix}/cases/${c.id}`}>{t("home.viewDetails")}</Link>
                     </Button>
                     <Button asChild size="sm">
                       <Link href={`${prefix}/cases/${c.id}?support=1`}>
-                        Offer support
+                        {t("home.offerSupport")}
                       </Link>
                     </Button>
                   </div>
@@ -215,10 +262,10 @@ export default function HomeClient() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-14 space-y-4"
         >
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Latest stories</h2>
+          <div className={`flex items-center justify-between ${isAR ? "flex-row-reverse" : ""}`}>
+            <h2 className="text-2xl font-semibold">{t("home.latestStories")}</h2>
             <Link href={`${prefix}/wall-of-love`} className="text-sm underline underline-offset-4">
-              See all stories
+              {t("home.seeAllStories")}
             </Link>
           </div>
           <Card>
@@ -230,20 +277,20 @@ export default function HomeClient() {
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.45, delay: 0.05 * i }}
-                    className={`${locale === "ar" ? "border-r-4 pr-4" : "border-l-4 pl-4"} border-primary/20`}
+                    className={`${isAR ? "border-r-4 pr-4 text-right" : "border-l-4 pl-4 text-left"} border-primary/20`}
                   >
-                    <div className="flex items-start justify-between mb-1">
-                      <div>
+                    <div className={`flex items-start justify-between mb-1 ${isAR ? "flex-row-reverse" : ""}`}>
+                      <div className={isAR ? "text-right" : "text-left"}>
                         <div className="font-semibold line-clamp-1">{s.title}</div>
-                        <div className="text-xs text-muted-foreground line-clamp-1">by {s.author_name} • {s.case_title}</div>
+                        <div className="text-xs text-muted-foreground line-clamp-1">{isAR ? "بواسطة" : "by"} {s.author_name} • {s.case_title}</div>
                       </div>
                       <div className="flex items-center gap-1 text-primary">
                         <Heart className="h-4 w-4" />
                         <span className="text-xs">{f.number(s.likes_count)}</span>
                       </div>
                     </div>
-                    <p className="text-sm text-foreground line-clamp-3">{s.content}</p>
-                    <div className="mt-2 flex items-center justify-between">
+                    <p className={`text-sm text-foreground line-clamp-3 ${isAR ? "text-right" : "text-left"}`}>{s.content}</p>
+                    <div className={`mt-2 flex items-center justify-between ${isAR ? "flex-row-reverse" : ""}`}>
                       <div className="flex gap-2 flex-wrap">
                         {s.tags.map((t) => (
                           <Badge key={t} variant="secondary" className="text-[10px]">

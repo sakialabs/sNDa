@@ -9,6 +9,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // Document, providers, and lang/dir are handled in app/[locale]/layout.tsx
-  return <>{children}</>;
+  // Wrap with required html/body per Next.js App Router
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen">
+        {children}
+      </body>
+    </html>
+  );
 }

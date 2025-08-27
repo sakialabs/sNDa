@@ -141,7 +141,7 @@ export default function WallOfLoveClient() {
         transition={{ duration: 0.6 }}
         className="text-center mb-10"
       >
-        <h1 className="text-4xl font-bold text-foreground">Wall of Love</h1>
+        <h1 className="text-4xl font-bold text-foreground">💖 Wall of Love</h1>
         <p className="text-muted-foreground mt-2">A living feed of community impact stories.</p>
       </motion.div>
 

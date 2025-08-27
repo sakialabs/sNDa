@@ -48,15 +48,7 @@ export function Header() {
     router.push(`/${locale}/`);
   };
 
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= 768) setMobileOpen(false);
-    };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+  // Mobile menu state removed in favor of DropdownMenu popover
 
   useEffect(() => {
     setMounted(true);
@@ -75,39 +67,49 @@ export function Header() {
 
   const localePrefix = `/${locale}`;
   return (
-    <header className="sticky top-0 z-50">
-      <div className="w-full px-4 py-2">
-        <div className="w-full flex items-center gap-3">
-          {/* Left: Brand in rounded capsule */}
-          <motion.div
-            className="flex items-center flex-1"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <Link
-              href={`${localePrefix}/`}
-              className="px-3 py-2 rounded-xl bg-card/80 border border-border backdrop-blur-sm shadow-sm text-card-foreground font-semibold inline-flex items-center gap-2"
-            >
-              <Image
-                src="/logo.png"
-                alt="sNDa logo"
-                width={24}
-                height={24}
-                className="h-6 w-6 object-contain"
-                priority
-              />
-              <span className="text-base leading-none">sNDa</span>
-            </Link>
-          </motion.div>
+    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/60 bg-background/80 border-b">
+      <div className="w-full mx-auto px-4">
+        <div className="h-14 flex items-center">
+          {/* Left: Mobile menu button (md:hidden) + Logo */}
+          <div className="flex items-center gap-2 md:flex-1">
+            <div className="md:hidden">
+              {mounted ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" aria-label="Open menu" className="size-9">
+                      <Menu className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" sideOffset={8} className="w-64 p-1">
+                    {links.map((l) => (
+                      <DropdownMenuItem key={l.href} className="py-3 text-base" onClick={() => router.push(`${localePrefix}${l.href}`)}>
+                        {l.label}
+                      </DropdownMenuItem>
+                    ))}
+                    {!isAuthenticated && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="py-3 text-base" onClick={() => setShowLoginForm(true)}>{t("auth.login")}</DropdownMenuItem>
+                        <DropdownMenuItem className="py-3 text-base" onClick={() => setShowSignupForm(true)}>{t("auth.joinUs")}</DropdownMenuItem>
+                      </>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button variant="ghost" size="icon" aria-label="Open menu" className="size-9 opacity-70">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              )}
+            </div>
 
-          {/* Center: Primary Nav pill */}
-          <motion.nav
-            className="hidden md:flex items-center justify-center gap-1 px-2 py-1 rounded-xl bg-card/80 text-card-foreground border border-border backdrop-blur-sm shadow-sm flex-1"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.05 }}
-          >
+            <Link href={`${localePrefix}/`} className="inline-flex items-center gap-2">
+              <Image src="/logo.png" alt="sNDa logo" width={24} height={24} className="h-6 w-6 object-contain" priority />
+              <span className="text-base font-semibold leading-none">sNDa</span>
+            </Link>
+          </div>
+
+          {/* Center: Primary Nav (md+) - Absolutely centered */}
+          <nav className="hidden md:flex items-center justify-center gap-1 absolute left-1/2 transform -translate-x-1/2">
             {links.map((l) => {
               const current = normalize(pathname || "");
               const active = mounted && (current === l.href || current.startsWith(`${l.href}/`));
@@ -115,135 +117,72 @@ export function Header() {
                 <Link
                   key={l.href}
                   href={`${localePrefix}${l.href}`}
-                  className={`relative isolate text-sm font-medium transition-colors px-3 py-2 rounded-md ${
-                    active ? "text-card-foreground" : "text-card-foreground/80 hover:text-card-foreground"
+                  className={`relative px-3 py-2 text-sm font-medium transition-colors hover:text-foreground ${
+                    active ? "text-foreground" : "text-foreground/70"
                   }`}
                 >
+                  <span className="whitespace-nowrap">{l.label}</span>
                   {active && (
-                    <span
-                      className="absolute inset-0 z-[1] rounded-md bg-accent pointer-events-none"
-                    />
+                    <span className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-primary" />
                   )}
-                  <span className="relative z-[2] whitespace-nowrap">{l.label}</span>
                 </Link>
               );
             })}
-          </motion.nav>
+          </nav>
 
-          {/* Right: Actions in rounded capsule */}
-          <motion.div
-            className="flex items-center justify-end flex-1"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
-            {/* Mobile burger */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden mr-1"
-              aria-label="Toggle menu"
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen((v) => !v)}
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
+          {/* Right: Language, Theme, Auth */}
+          <div className="flex items-center gap-1 ml-auto md:flex-1 md:justify-end">
+            <LanguageSwitcher />
+            <DarkModeToggle />
 
-            {/* Actions group: Auth + Theme in same square */}
-            <div className="flex items-center gap-2 px-2 py-1 rounded-xl bg-card/80 text-card-foreground border border-border backdrop-blur-sm shadow-sm">
-              {isAuthenticated ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                      <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" alt={getFullName(user)} />
-                        <AvatarFallback>
-                          {user?.first_name?.[0]}
-                          {user?.last_name?.[0]}
-                        </AvatarFallback>
-                      </Avatar>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel className="font-normal">
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{getFullName(user)}</p>
-                        <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => router.push(`/${locale}/dashboard`)}>My Cases</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${locale}/volunteer`)}>Volunteer Hub</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${locale}/coordinator`)}>Manage Cases</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${locale}/donate`)}>Support Families</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${locale}/profile`)}>Profile</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <div className="hidden sm:flex items-center gap-2">
-                  <Button variant="ghost" onClick={() => setShowLoginForm(true)} data-login size="sm">
-                    {t("auth.login")}
+            {mounted && isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" alt={getFullName(user)} />
+                      <AvatarFallback>
+                        {user?.first_name?.[0]}
+                        {user?.last_name?.[0]}
+                      </AvatarFallback>
+                    </Avatar>
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    data-join-us
-                    className="hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    onClick={() => setShowSignupForm(true)}
-                  >
-                    {t("auth.joinUs")}
-                  </Button>
-                </div>
-              )}
-              <LanguageSwitcher />
-              <DarkModeToggle />
-            </div>
-          </motion.div>
-        </div>
-        {/* Mobile menu panel */}
-        {mobileOpen && (
-          <div className="md:hidden mt-2 rounded-xl border border-border bg-card/95 text-card-foreground backdrop-blur p-2 shadow-lg">
-            <nav className="flex flex-col">
-              {links.map((l) => (
-                <Link
-                  key={l.href}
-                  href={`${localePrefix}${l.href}`}
-                  className="px-3 py-2 rounded-lg text-card-foreground/90 hover:bg-accent"
-                  onClick={() => setMobileOpen(false)}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{getFullName(user)}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/dashboard`)}>My Cases</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/volunteer`)}>Volunteer Hub</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/coordinator`)}>Manage Cases</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/donate`)}>Support Families</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/profile`)}>Profile</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="hidden sm:flex items-center gap-1">
+                <Button variant="ghost" onClick={() => setShowLoginForm(true)} data-login size="sm">
+                  {t("auth.login")}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  data-join-us
+                  className="hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  onClick={() => setShowSignupForm(true)}
                 >
-                  {l.label}
-                </Link>
-              ))}
-              {!isAuthenticated && (
-                <div className="flex gap-2 px-1 pt-2">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => {
-                      setShowLoginForm(true);
-                      setMobileOpen(false);
-                    }}
-                  >
-                    {t("auth.login")}
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => {
-                      setShowSignupForm(true);
-                      setMobileOpen(false);
-                    }}
-                  >
-                    {t("auth.joinUs")}
-                  </Button>
-                </div>
-              )}
-            </nav>
+                  {t("auth.joinUs")}
+                </Button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       <Dialog open={showLoginForm} onOpenChange={setShowLoginForm}>

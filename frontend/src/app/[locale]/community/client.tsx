@@ -227,7 +227,7 @@ export default function CommunityClient() {
           </div>
 
           {/* Stats skeleton */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="rounded-lg border p-6">
                 <div className="h-6 w-6 bg-muted animate-pulse rounded mb-3" />
@@ -301,7 +301,7 @@ export default function CommunityClient() {
           className="text-center mb-12"
         >
           <h1 className="text-4xl font-bold text-foreground mb-4">
-            Our Community Impact
+          🌍 Our Community Impact
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Together, we're creating lasting change in the lives of children and families. 
@@ -315,7 +315,7 @@ export default function CommunityClient() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
           >
             <motion.div variants={itemVariants}>
               <Card className="text-center">

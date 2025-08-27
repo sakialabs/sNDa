@@ -215,10 +215,15 @@ class VolunteerDashboardView(APIView):
             'longest_streak': profile.longest_streak,
             'total_points': profile.total_points,
             'recent_badges': [badge.badge for badge in recent_badges],
-            'active_assignments': active_assignments,
+            'active_assignments': active_assignments.count(),
             'recent_activities': recent_activities,
             'community_rank': community_rank,
-            'stories_published': stories_published
+            'stories_published': stories_published,
+            'impact_summary': {
+                'total_cases': profile.cases_completed,
+                'total_points': profile.total_points,
+                'community_rank': community_rank
+            }
         }
         
         serializer = DashboardStatsSerializer(stats)
