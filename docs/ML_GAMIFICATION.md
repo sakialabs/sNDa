@@ -1,4 +1,4 @@
-# 🤖 sNDa Gamification & Boba ML Plan
+# 🤖 sNDa Gamification & Boba AI Plan
 
 ## 1️⃣ Overview
 **Goal:** Make volunteer engagement fun, motivating, and community-driven with streaks, badges, highlights, mini challenges, and friendly notifications powered by Boba AI.

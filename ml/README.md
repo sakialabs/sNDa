@@ -1,4 +1,4 @@
-# 🤖 sNDa Machine Learning & AI
+# 🤖 sNDa Machine Learning & Boba AI
 
 **Intelligent Automation and Predictive Analytics for Humanitarian Case Management**
 

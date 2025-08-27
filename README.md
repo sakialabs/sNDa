@@ -1,6 +1,6 @@
 # 🥪 sNDa - Solidarity Network for Development & Action
 
-> Pronounced **sun-dah (سندة)** - Arabic for "support" and Sudanese slang for "a little boost"
+> Pronounced **sun-dah (سندة)** - Arabic for "support" and Sudanese slang for "a little snack"
 
 A platform that **wraps children and communities in care**, connecting volunteers, donors, and coordinators to support vulnerable kids in Sudan and beyond. Built with Django, React, and AI-powered features.
 
@@ -49,7 +49,7 @@ Every child deserves dignity, care, and opportunity. sNDa connects **kids, famil
 - **Personal Dashboard** with assignment tracking and impact metrics
 - **Story Sharing Platform** with rich media uploads and community engagement
 - **Gamification System** with badges, streaks, and leaderboards
-- **🤖 Boba AI Assistant** for personalized recommendations
+- ** Boba AI Assistant** for personalized recommendations
 
 ### 🌟 Community & Engagement
 - **Wall of Love** showcasing volunteer stories and impact
@@ -118,8 +118,8 @@ We welcome **coders, designers, researchers, and changemakers**!
 
 ```plaintext
 sNDa/
-├── backend/          # Django API with gamification & AI features
-├── frontend/         # Next.js app with volunteer & donor platforms
+├── backend/         # Django API with gamification & AI features
+├── frontend/        # Next.js app with volunteer & donor platforms
 ├── docs/            # Comprehensive documentation
 ├── comms/           # Email templates & communication assets
 └── infra/           # Docker configs & deployment scripts
