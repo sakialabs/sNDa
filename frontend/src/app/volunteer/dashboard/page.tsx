@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 import { 
   Trophy, Flame, Star, Target, Clock, BookOpen, 
   TrendingUp, Award, Zap, Heart, Users, Calendar
@@ -42,6 +43,7 @@ interface DashboardStats {
 }
 
 export default function VolunteerDashboard() {
+  const t = useTranslations()
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -119,12 +121,8 @@ export default function VolunteerDashboard() {
       <div className="container mx-auto px-4 py-8">
         {/* Welcome Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, Volunteer! 🌟
-          </h1>
-          <p className="text-gray-600">
-            Here's your impact dashboard - every action you take makes a difference.
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('volunteer.dashboard.welcomeTitle')}</h1>
+          <p className="text-gray-600">{t('volunteer.dashboard.welcomeSubtitle')}</p>
         </div>
 
         {/* Key Stats Row */}
@@ -136,7 +134,7 @@ export default function VolunteerDashboard() {
               </div>
               <p className="text-sm text-gray-600 flex items-center justify-center gap-1">
                 <Trophy className="h-4 w-4" />
-                Cases Completed
+                {t('volunteer.dashboard.casesCompleted')}
               </p>
             </CardContent>
           </Card>
@@ -148,7 +146,7 @@ export default function VolunteerDashboard() {
               </div>
               <p className="text-sm text-gray-600 flex items-center justify-center gap-1">
                 <Flame className="h-4 w-4" />
-                Current Streak {getStreakEmoji(stats.current_streak)}
+                {t('volunteer.dashboard.currentStreak')} {getStreakEmoji(stats.current_streak)}
               </p>
             </CardContent>
           </Card>
@@ -160,7 +158,7 @@ export default function VolunteerDashboard() {
               </div>
               <p className="text-sm text-gray-600 flex items-center justify-center gap-1">
                 <Star className="h-4 w-4" />
-                Total Points
+                {t('volunteer.dashboard.totalPoints')}
               </p>
             </CardContent>
           </Card>
@@ -172,7 +170,7 @@ export default function VolunteerDashboard() {
               </div>
               <p className="text-sm text-gray-600 flex items-center justify-center gap-1">
                 <TrendingUp className="h-4 w-4" />
-                Community Rank {getRankEmoji(stats.community_rank)}
+                {t('volunteer.dashboard.communityRank')} {getRankEmoji(stats.community_rank)}
               </p>
             </CardContent>
           </Card>
@@ -184,9 +182,9 @@ export default function VolunteerDashboard() {
             {/* Recent Badges */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2">
                   <Award className="h-5 w-5 text-yellow-600" />
-                  Recent Achievements
+                  {t('volunteer.dashboard.recentAchievements')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -208,7 +206,7 @@ export default function VolunteerDashboard() {
                 ) : (
                   <div className="text-center py-6 text-gray-500">
                     <Award className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                    <p>Complete your first case to earn badges!</p>
+                    <p>{t('volunteer.dashboard.completeFirstCase')}</p>
                   </div>
                 )}
               </CardContent>
@@ -217,9 +215,9 @@ export default function VolunteerDashboard() {
             {/* Streak Progress */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2">
                   <Flame className={`h-5 w-5 ${getStreakColor(stats.current_streak)}`} />
-                  Activity Streak
+                  {t('volunteer.dashboard.activityStreak')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -228,13 +226,13 @@ export default function VolunteerDashboard() {
                     <div className={`text-4xl font-bold ${getStreakColor(stats.current_streak)}`}>
                       {stats.current_streak} {getStreakEmoji(stats.current_streak)}
                     </div>
-                    <p className="text-sm text-gray-600">Days active</p>
+                    <p className="text-sm text-gray-600">{t('volunteer.dashboard.daysActive')}</p>
                   </div>
                   
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span>Personal Best: {stats.longest_streak} days</span>
-                      <span>Next Goal: {Math.ceil((stats.current_streak + 1) / 7) * 7} days</span>
+                      <span>{t('volunteer.dashboard.personalBest', { days: stats.longest_streak })}</span>
+                      <span>{t('volunteer.dashboard.nextGoal', { days: Math.ceil((stats.current_streak + 1) / 7) * 7 })}</span>
                     </div>
                     <Progress 
                       value={(stats.current_streak % 7) * (100 / 7)} 
@@ -300,12 +298,10 @@ export default function VolunteerDashboard() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-6 text-gray-500">
+                    <div className="text-center py-6 text-gray-500">
                     <Target className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                    <p className="mb-2">No active assignments</p>
-                    <Button variant="outline" size="sm">
-                      Browse Available Cases
-                    </Button>
+                    <p className="mb-2">{t('volunteer.dashboard.noActiveAssignments')}</p>
+                    <Button variant="outline" size="sm">{t('volunteer.dashboard.browseCases')}</Button>
                   </div>
                 )}
               </CardContent>
@@ -314,28 +310,28 @@ export default function VolunteerDashboard() {
             {/* Quick Actions */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2">
                   <Zap className="h-5 w-5 text-purple-600" />
-                  Quick Actions
+                  {t('volunteer.dashboard.quickActions')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-3">
                   <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
                     <BookOpen className="h-6 w-6" />
-                    <span className="text-sm">Share Story</span>
+                    <span className="text-sm">{t('volunteer.dashboard.shareStory')}</span>
                   </Button>
                   <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
                     <Users className="h-6 w-6" />
-                    <span className="text-sm">View Community</span>
+                    <span className="text-sm">{t('volunteer.dashboard.viewCommunity')}</span>
                   </Button>
                   <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
                     <Heart className="h-6 w-6" />
-                    <span className="text-sm">Donate</span>
+                    <span className="text-sm">{t('volunteer.dashboard.donate')}</span>
                   </Button>
                   <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
                     <Trophy className="h-6 w-6" />
-                    <span className="text-sm">Leaderboard</span>
+                    <span className="text-sm">{t('volunteer.dashboard.leaderboard')}</span>
                   </Button>
                 </div>
               </CardContent>
@@ -347,9 +343,9 @@ export default function VolunteerDashboard() {
             {/* Recent Activity */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2">
                   <Calendar className="h-5 w-5 text-green-600" />
-                  Recent Activity
+                  {t('volunteer.dashboard.recentActivity')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -359,9 +355,9 @@ export default function VolunteerDashboard() {
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                         <div>
-                          <div className="text-sm font-medium">
-                            {activity.activity_type.replace('_', ' ').toLowerCase()}
-                          </div>
+                                <div className="text-sm font-medium">
+                                  {activity.activity_type.replace('_', ' ').toLowerCase()}
+                                </div>
                           <div className="text-xs text-gray-500">
                             {new Date(activity.created_at).toLocaleDateString()}
                           </div>
@@ -378,10 +374,10 @@ export default function VolunteerDashboard() {
 
             {/* Impact Summary */}
             <Card>
-              <CardHeader>
+                  <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Heart className="h-5 w-5 text-red-500" />
-                  Your Impact
+                  {t('volunteer.dashboard.yourImpact')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -390,7 +386,7 @@ export default function VolunteerDashboard() {
                     <div className="text-2xl font-bold text-red-500 mb-1">
                       {stats.cases_completed + stats.stories_published}
                     </div>
-                    <p className="text-sm text-gray-600">Lives Touched</p>
+                    <p className="text-sm text-gray-600">{t('volunteer.dashboard.livesTouched')}</p>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4 text-center">
@@ -398,20 +394,18 @@ export default function VolunteerDashboard() {
                       <div className="text-lg font-semibold text-blue-600">
                         {stats.stories_published}
                       </div>
-                      <p className="text-xs text-gray-600">Stories Shared</p>
+                      <p className="text-xs text-gray-600">{t('volunteer.dashboard.storiesShared')}</p>
                     </div>
                     <div>
                       <div className="text-lg font-semibold text-green-600">
                         {stats.longest_streak}
                       </div>
-                      <p className="text-xs text-gray-600">Best Streak</p>
+                      <p className="text-xs text-gray-600">{t('volunteer.dashboard.bestStreak')}</p>
                     </div>
                   </div>
 
                   <div className="bg-gradient-to-r from-red-50 to-pink-50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-700">
-                      "Every case you complete changes a life. Thank you for making a difference! 💝"
-                    </p>
+                    <p className="text-sm text-gray-700">{t('volunteer.dashboard.motivationalQuote')}</p>
                   </div>
                 </div>
               </CardContent>
@@ -421,15 +415,10 @@ export default function VolunteerDashboard() {
 
         {/* Motivational Footer */}
         <Card className="mt-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-          <CardContent className="text-center py-6">
-            <h3 className="text-xl font-bold mb-2">Keep Up the Amazing Work! 🌟</h3>
-            <p className="mb-4">
-              You're ranked #{stats.community_rank} in our community. 
-              Complete one more case to boost your streak!
-            </p>
-            <Button variant="secondary" size="lg">
-              Find New Cases to Help
-            </Button>
+            <CardContent className="text-center py-6">
+            <h3 className="text-xl font-bold mb-2">{t('volunteer.dashboard.keepUpTitle')}</h3>
+            <p className="mb-4">{t('volunteer.dashboard.keepUpSubtitle', { rank: stats.community_rank })}</p>
+            <Button variant="secondary" size="lg">{t('volunteer.dashboard.findNewCases')}</Button>
           </CardContent>
         </Card>
       </div>

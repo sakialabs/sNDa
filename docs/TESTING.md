@@ -5,6 +5,7 @@
 sNDa has comprehensive testing coverage across both backend and frontend, ensuring reliability and maintainability.
 
 ### 🚀 **Quick Test Commands**
+
 ```bash
 # Backend API tests
 cd backend && python -m pytest --cov=api --cov=users
@@ -30,6 +31,7 @@ docker-compose up --build
 **Coverage**: 100% endpoint coverage (27/27 endpoints tested)
 
 ### Quick Commands
+
 ```bash
 cd backend
 python run_tests.py all              # Full test suite with coverage
@@ -37,6 +39,7 @@ python -m pytest --cov=api --cov=users  # Direct pytest
 ```
 
 **Features Tested**:
+
 - Authentication & JWT tokens
 - CRUD operations for all models
 - File uploads & media handling
@@ -54,6 +57,7 @@ python -m pytest --cov=api --cov=users  # Direct pytest
 **Coverage**: Basic components verified, infrastructure ready for expansion
 
 ### Quick Commands
+
 ```bash
 cd frontend
 npm test                    # Run all tests
@@ -62,6 +66,7 @@ npx vitest --ui            # Test UI
 ```
 
 **Current Tests**:
+
 - ✅ Header Component (2/2 tests passing)
 - ✅ Footer Component (2/2 tests passing)
 - ✅ Coordinator components (simplified & ready)
@@ -72,6 +77,7 @@ npx vitest --ui            # Test UI
 ## 🚀 **Development Workflow**
 
 ### **Pre-Commit Checks**
+
 ```bash
 # Frontend quality checks
 cd frontend
@@ -86,6 +92,7 @@ python -m pytest --cov=api --cov=users
 ```
 
 ### **CI/CD Integration**
+
 Both test suites are ready for automated testing in GitHub Actions or similar CI/CD pipelines.
 
 ## 🎯 **Testing Philosophy**

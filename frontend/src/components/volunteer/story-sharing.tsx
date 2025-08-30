@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,6 +52,7 @@ interface StoryFormData {
 }
 
 export function StorySharing() {
+  const t = useTranslations();
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -166,38 +168,38 @@ export function StorySharing() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold">Volunteer Stories</h2>
-          <p className="text-muted-foreground">Share your experiences and inspire others</p>
+          <h2 className="text-2xl font-bold">{t("stories.title")}</h2>
+          <p className="text-muted-foreground">{t("stories.subtitle")}</p>
         </div>
         <Button onClick={() => setShowForm(!showForm)} className="animate-fade-in">
           <FileText className="w-4 h-4 mr-2" />
-          Share Story
+          {t("stories.shareButton")}
         </Button>
       </div>
 
       {showForm && (
         <Card className="animate-slide-in-from-top">
-          <CardHeader>
-            <CardTitle>Share Your Story</CardTitle>
+            <CardHeader>
+            <CardTitle>{t("stories.form.title")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="title">Story Title</Label>
+              <Label htmlFor="title">{t("stories.form.titleLabel")}</Label>
               <Input
                 id="title"
                 value={formData.title}
                 onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                placeholder="Give your story a compelling title..."
+                placeholder={t("stories.form.titlePlaceholder")}
               />
             </div>
 
             <div>
-              <Label htmlFor="content">Your Story</Label>
+              <Label htmlFor="content">{t("stories.form.contentLabel")}</Label>
               <Textarea
                 id="content"
                 value={formData.content}
                 onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                placeholder="Share your experience, challenges overcome, or moments of impact..."
+                placeholder={t("stories.form.contentPlaceholder")}
                 rows={6}
               />
             </div>
@@ -215,9 +217,7 @@ export function StorySharing() {
                 />
                 <label htmlFor="file-upload" className="cursor-pointer">
                   <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">
-                    Click to upload photos or videos
-                  </p>
+                  <p className="text-sm text-muted-foreground">{t("stories.form.uploadHint")}</p>
                 </label>
               </div>
               

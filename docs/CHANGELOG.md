@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.5.0 - Professional UI & Social Authentication Platform
+
+- 🎨 **Unified Design System**: Complete UI/UX overhaul with consistent Shadcn/UI components, professional button styling using app color scheme (earth/sand/stone), enhanced dialog backgrounds with `bg-card` matching, and improved spacing/typography across all interfaces
+- 🔐 **Complete Social Authentication**: Full OAuth implementation with Google and Facebook sign-in/sign-up, comprehensive error handling with fallback configuration, graceful degradation when providers unavailable, and production-ready token management with secure cookie handling
+- 🌍 **Finalized Arabic Support**: Production-ready RTL (Right-to-Left) implementation with cultural adaptations, complete Arabic translations for all new UI elements, proper text direction handling, and enhanced Arabic typography with Cairo font integration
+- 📱 **Professional Component Library**: Enhanced login/signup forms with OAuth integration, improved divider styling with app colors, professional button hover effects (white→gray-50 for Google, darker blue for Facebook), and consistent disabled states with helpful messaging
+- 🔧 **Backend OAuth Infrastructure**: Django-allauth integration with OAuth endpoints (`/api/auth/google/`, `/api/auth/facebook/`), secure callback handling, token management, CORS configuration, and environment variable fallback support
+- 📱 **Frontend OAuth Service**: Type-safe OAuth service layer with comprehensive error handling, configuration validation, per-provider availability checking, and user-friendly error messages for missing configurations
+- 🧪 **Enhanced Testing Infrastructure**: OAuth integration tests, comprehensive error scenario coverage, frontend component testing for authentication flows, and automated test coverage for new features
+- 📚 **Streamlined Documentation**: Consolidated authentication guides, implementation checklists, security best practices, and updated deployment guides with OAuth configuration instructions
+- ⚡ **Performance & Stability**: Improved error handling to prevent console crashes, optimized configuration checking, reduced API calls with fallback handling, and enhanced loading states for better user experience
+- 🔒 **Security Enhancements**: Secure OAuth token storage, CSRF protection for authentication flows, environment variable validation, and graceful handling of missing provider configurations
+
 ## v0.4.0 - Production-Ready Platform with Advanced Features
 
 - 🧪 **Comprehensive Testing Infrastructure**: 100% API endpoint coverage (27/27 tested), frontend component testing with Vitest and Playwright, automated CI/CD pipeline with quality gates
@@ -17,7 +30,7 @@ All notable changes to this project will be documented in this file.
 
 ## v0.3.1 - Deployments, i18n, Boba, and UX
 
-- 🚀 Full-Stack Deployment: Frontend on Netlify (https://snda.netlify.app). Backend API deployed with environment configuration (SendGrid, Redis, Celery workers) and production hardening
+- 🚀 Full-Stack Deployment: Frontend on Netlify (<https://snda.netlify.app>). Backend API deployed with environment configuration (SendGrid, Redis, Celery workers) and production hardening
 - 🔔 Boba Notifications: Streak reminders, badge celebrations, and gentle assignment nudges across email and in-app surfaces
 - 🌍 Arabic i18n: App-wide Arabic version with RTL support, localized routes (`/[locale]/*`), and translated UI strings (`frontend/messages/ar.json`)
 - 📄 New Pages & Sections: Added public pages and dashboard sections to improve discoverability and impact storytelling

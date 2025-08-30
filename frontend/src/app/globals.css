@@ -140,9 +140,14 @@
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
   }
   100% {
     background-position: 200% 0;
+    opacity: 0.8;
   }
 }
 
@@ -169,7 +174,7 @@
 }
 
 .animate-shimmer {
-  animation: shimmer 2s infinite;
+  animation: shimmer 2.5s ease-in-out infinite;
 }
 
 .animate-fade-in {
@@ -208,6 +213,53 @@
   --toast-text: var(--popover-foreground);
 }
 
+/* Custom Toast Styling - Sandy Theme */
+[data-sonner-toast] {
+  background: hsl(var(--card)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  color: hsl(var(--card-foreground)) !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+  background: hsl(19 56% 40%) !important; /* earth */
+  color: hsl(39 100% 96%) !important; /* sand */
+  border-color: hsl(19 56% 35%) !important;
+}
+
+[data-sonner-toast][data-type="success"] {
+  background: hsl(120 60% 50%) !important;
+  color: white !important;
+  border-color: hsl(120 60% 45%) !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  background: hsl(var(--destructive)) !important;
+  color: white !important;
+  border-color: hsl(0 84% 55%) !important;
+}
+
+[data-sonner-toast][data-type="warning"] {
+  background: hsl(45 100% 60%) !important; /* sunshine-like */
+  color: hsl(15 15% 18%) !important; /* ink */
+  border-color: hsl(45 100% 55%) !important;
+}
+
+/* Custom Skeleton Styling - Sandy Theme */
+.animate-pulse {
+  background: hsl(var(--card)) !important;
+  /* border: 1px solid hsl(var(--border)) !important; */
+  animation: pulse-fade 1.5s ease-in-out infinite !important;
+}
+
+@keyframes pulse-fade {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
 /* Enhanced loading states */
 .loading-dots {
   display: inline-flex;
@@ -232,4 +284,62 @@
   80%, 100% {
     content: '';
   }
+}
+
+/* Dialog animations using CSS keyframes for better compatibility */
+@keyframes dialog-overlay-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-overlay-hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-content-show {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes dialog-content-hide {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+}
+
+/* Apply animations to dialog states */
+.dialog-overlay[data-state="open"] {
+  animation: dialog-overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog-overlay[data-state="closed"] {
+  animation: dialog-overlay-hide 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog-content[data-state="open"] {
+  animation: dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialog-content[data-state="closed"] {
+  animation: dialog-content-hide 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }

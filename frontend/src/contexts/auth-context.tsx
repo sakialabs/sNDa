@@ -14,6 +14,7 @@ import { API_CONFIG } from "@/lib/api/config";
 import { toast } from "sonner";
 import type { User } from "@/lib/types";
 import { useLocale } from "next-intl";
+import { oauthService, type OAuthResponse } from "@/lib/api/auth/oauth-service";
 
 // Type for the decoded JWT payload
 interface DecodedToken {
@@ -25,6 +26,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (identifier: string, password: string) => Promise<void>;
+  loginWithOAuth: (response: OAuthResponse) => void;
   logout: () => void;
   loading: boolean;
 }
@@ -146,12 +148,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     toast.success("Logged in successfully");
   };
 
+  const loginWithOAuth = (response: OAuthResponse) => {
+    // Store tokens and user data from OAuth response
+    localStorage.setItem(API_CONFIG.STORAGE_KEYS.ACCESS_TOKEN, response.access);
+    localStorage.setItem(API_CONFIG.STORAGE_KEYS.REFRESH_TOKEN, response.refresh);
+    localStorage.setItem(API_CONFIG.STORAGE_KEYS.USER, JSON.stringify(response.user));
+    
+    // Set cookies for middleware
+    document.cookie = `${API_CONFIG.STORAGE_KEYS.ACCESS_TOKEN}=${response.access}; Max-Age=3600; path=/`;
+    document.cookie = `${API_CONFIG.STORAGE_KEYS.REFRESH_TOKEN}=${response.refresh}; Max-Age=604800; path=/`;
+    
+    // Update user state - convert id to string to match User type
+    setUser({
+      ...response.user,
+      id: response.user.id.toString()
+    });
+    
+    // Navigate to dashboard
+    router.push(`/${locale}/dashboard`);
+    
+    // Show success message
+    const providerName = response.user.provider === 'google' ? 'Google' : 'Facebook';
+    toast.success(`Successfully signed in with ${providerName}!`);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
         isAuthenticated: !!user,
         login,
+        loginWithOAuth,
         logout,
         loading,
       }}

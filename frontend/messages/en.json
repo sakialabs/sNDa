@@ -2,6 +2,7 @@
   "nav": {
     "about": "About",
     "community": "Community",
+  "referrals": "Referrals",
     "contact": "Contact",
     "donate": "Donate",
     "volunteer": "Volunteer",
@@ -9,7 +10,43 @@
   },
   "auth": {
     "login": "Login",
-    "joinUs": "Join Us"
+    "joinUs": "Join Us",
+    "loginTitle": "Welcome Back",
+    "loginDescription": "Please enter your credentials to access your account and continue your noble mission",
+    "usernameOrEmail": "Username or Email",
+    "usernameOrEmailPlaceholder": "Enter your username or email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "loggingIn": "Logging in...",
+    "forgotPassword": "Forgot password?",
+    "rememberMe": "Remember me",
+    "newToSanda": "New to sNDa?",
+    "signupHere": "Create an account here",
+    "welcomeBack": "Welcome back",
+    "signupTitle": "Create your account",
+    "signupDescription": "Join our community and start making a difference",
+    "orSignupWithEmail": "Or signup with email",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastName": "Last Name", 
+    "lastNamePlaceholder": "Enter your last name",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email address",
+    "username": "Username",
+    "usernamePlaceholder": "Choose a username",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "createAccount": "Create Account",
+    "creatingAccount": "Creating account...",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginHere": "Sign in here",
+    "registrationSuccess": "Account created successfully! Please sign in.",
+    "orContinueWith": "Or continue with",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithFacebook": "Continue with Facebook",
+    "socialLoginError": "Social login failed. Please try again.",
+    "googleLoginSuccess": "Successfully signed in with Google!",
+    "facebookLoginSuccess": "Successfully signed in with Facebook!"
   },
   "home": {
     "title": "🥪 a Sandwich of Support 🥪",
@@ -47,14 +84,417 @@
     "latestStories": "Latest Stories",
     "seeAllStories": "See All Stories",
     "urgentReferrals": "Urgent Referrals",
-    "joinCommunity": "Join Community"
+    "joinCommunity": "Join Community",
+    "new": "New",
+    "offerSupport": "Offer Support",
+    "viewDetails": "View Details"
+  },
+  "referrals": {
+  "title": "🚨 Referrals",
+    "subtitle": "Browse urgent and ongoing referral requests. Search and filter to find ways to help.",
+  "filtersHeader": "Search & Filters",
+    "filters": {
+      "searchPlaceholder": "Search by title, summary or location...",
+      "urgency": "Urgency",
+      "caseType": "Case type",
+      "all": "All",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "types": {
+        "medical": "Medical",
+        "education": "Education",
+        "nutrition": "Nutrition",
+        "shelter": "Shelter",
+        "protection": "Protection"
+      }
+    },
+    "resultsTitle": "Results",
+  "noResults": "No referrals found.",
+  "loadMore": "Load more",
+  "loadingMore": "Loading..."
+  },
+  "referralModal": {
+    "close": "Close",
+    "loading": "Loading…",
+    "notAvailable": "Details not available.",
+    "detailsHeading": "Details",
+    "noExtraDetails": "No extra details provided.",
+    "locationContactHeading": "Location & Contact",
+    "unspecified": "Unspecified",
+    "noContact": "No contact listed"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you!",
+    "generalSupport": "General support",
+    "generalSupportDesc": "Questions, feedback, platform help.",
+    "emailUs": "Email us",
+    "emailUsShort": "snda@hey.me",
+    "weReadEveryMessage": "We read every message carefully 🌍❤️",
+    "contribute": "Contribute",
+    "contributeDesc": "Open issues, propose features, join discussions.",
+    "contributeShort": "Design, code, research, operations, there's room for you.",
+    "github": "GitHub",
+    "partnerships": "Partnerships & press",
+    "partnershipsDesc": "Orgs, hospitals, NGOs, and media.",
+    "partnerWithUs": "Partner with us",
+    "includeOrgDetails": "Include: org name, goals, and timeline.",
+    "security": "Security",
+    "securityDesc": "Report vulnerabilities responsibly to {email} (subject \"Security\")."
+  },
+  "volunteer": {
+    "title": "🤝 Volunteer Hub",
+    "subtitle": "Join our community of volunteers making a real difference in the lives of displaced families and children.",
+    "activeVolunteers": "Active Volunteers",
+    "casesResolved": "Cases Resolved",
+    "citiesCovered": "Cities Covered",
+    "successRate": "Success Rate",
+    "howItWorks": {
+      "title": "How Volunteering Works",
+      "step1": { "title": "Sign Up & Get Matched", "desc": "Create your profile and we'll match you with cases that fit your skills and availability." },
+      "step2": { "title": "Take Action", "desc": "Work directly with families to provide support, guidance, and resources they need." },
+      "step3": { "title": "Share Your Impact", "desc": "Document your journey and inspire others by sharing stories of the lives you've touched." }
+    },
+    "waysToHelp": {
+      "title": "Ways to Help",
+      "caseWorker": { "title": "Case Worker", "desc": "Direct family support and advocacy" },
+      "translator": { "title": "Translator", "desc": "Language support and communication" },
+      "mentor": { "title": "Mentor", "desc": "Long-term guidance and friendship" },
+      "emergency": { "title": "Emergency Response", "desc": "Urgent case assistance" }
+    },
+    "why": { "title": "Why Volunteers Love sNDa", "gamified": { "title": "Gamified Experience", "desc": "Earn badges, track streaks, and see your impact grow with our engaging reward system." }, "realImpact": { "title": "Real Impact", "desc": "Every case you complete directly changes a family's life and helps them build a better future." }, "learning": { "title": "Continuous Learning", "desc": "Develop new skills, gain cultural awareness, and grow personally through meaningful work." } },
+    "cta": { "title": "Ready to Make a Difference?", "subtitle": "Join hundreds of volunteers who are already changing lives in their communities." },
+    "dashboard": {
+      "welcomeTitle": "Welcome back, Volunteer! 🌟",
+      "welcomeSubtitle": "Here's your impact dashboard - every action you take makes a difference.",
+      "casesCompleted": "Cases Completed",
+      "currentStreak": "Current Streak",
+      "totalPoints": "Total Points",
+      "communityRank": "Community Rank",
+      "recentAchievements": "Recent Achievements",
+      "completeFirstCase": "Complete your first case to earn badges!",
+      "activityStreak": "Activity Streak",
+      "daysActive": "Days active",
+      "personalBest": "Personal Best: {days} days",
+      "nextGoal": "Next Goal: {days} days",
+      "noActiveAssignments": "No active assignments",
+      "browseCases": "Browse Available Cases",
+      "quickActions": "Quick Actions",
+      "shareStory": "Share Story",
+      "viewCommunity": "View Community",
+      "donate": "Donate",
+      "leaderboard": "Leaderboard",
+      "recentActivity": "Recent Activity",
+      "yourImpact": "Your Impact",
+      "livesTouched": "Lives Touched",
+      "storiesShared": "Stories Shared",
+      "bestStreak": "Best Streak",
+      "motivationalQuote": "Every case you complete changes a life. Thank you for making a difference! 💝",
+      "keepUpTitle": "Keep Up the Amazing Work! 🌟",
+      "keepUpSubtitle": "You're ranked #{rank} in our community. Complete one more case to boost your streak!",
+      "findNewCases": "Find New Cases to Help"
+    }
+  },
+  "actions": {
+    "getStarted": "Get Started Today",
+    "seeImpact": "See Our Impact"
+  },
+  "wallOfLove": {
+    "title": "💖 Wall of Love",
+    "subtitle": "A living feed of community impact stories.",
+    "latestStories": "Latest Stories",
+    "filters": {
+      "all": "All",
+      "success": "Success",
+      "progress": "Progress",
+      "breakthrough": "Breakthrough"
+    },
+    "noStories": "No stories yet. Be the first to share a sandwich of support 🥪",
+    "by": "by",
+    "like": "Like",
+    "unlike": "Unlike",
+    "clickToLogin": "Click to login and like this story",
+    "redirectingToLogin": "Redirecting to login...",
+    "likesProcessed": "Processed {count} like(s) from before login",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "mediaPreview": "Media preview"
+  },
+  "stories": {
+    "title": "Volunteer Stories",
+    "subtitle": "Share your experiences and inspire others",
+    "shareButton": "Share Story",
+    "form": {
+      "title": "Share Your Story",
+      "titleLabel": "Story Title",
+      "titlePlaceholder": "Give your story a compelling title...",
+      "contentLabel": "Your Story",
+      "contentPlaceholder": "Share your experience, challenges overcome, or moments of impact...",
+      "uploadHint": "Click to upload photos or videos"
+    }
+  },
+  "community": {
+    "title": "🌍 Our Community Impact",
+    "subtitle": "Together, we're creating lasting change in the lives of children and families. Every volunteer contribution, every story shared, and every goal achieved brings us closer to our mission.",
+    "wallOfLoveTitle": "Wall of Love",
+    "stats": {
+      "casesResolved": "Cases Resolved",
+      "activeVolunteers": "Active Volunteers",
+      "storiesShared": "Stories Shared",
+      "activeGoals": "Active Goals"
+    },
+    "goalsTitle": "Community Goals",
+    "topContributors": "Top Contributors",
+    "topVolunteers": {
+      "stats": "{cases} cases • {streak} day streak"
+    },
+    "recentAchievements": "Recent Achievements",
+    "earned": "earned",
+    "cta": {
+      "title": "Join Our Community",
+      "subtitle": "Be part of the change. Every volunteer makes a difference in a child's life.",
+      "becomeVolunteer": "Become a Volunteer",
+      "learnMore": "Learn More"
+    }
   },
   "about": {
     "title": "About sNDa",
     "subtitle": "🥪 a Sandwich of Support 🥪",
     "whoWeAre": {
       "title": "Who we are",
-      "intro": "<strong>sNDa</strong> is the backronym for <strong>Solidarity Network for Development & Action</strong>"
+      "intro": "<strong>sNDa</strong> is the backronym for <strong>Solidarity Network for Development & Action</strong>",
+      "pronunciation": "Pronounced sun-dah (سندة); in Sudanese slang it means a light snack, and in Arabic it means support. We bring both warmth and practical help.",
+      "description": "We’re a solidarity platform that blends grassroots care with a global vision. By combining human connection with smart technology, sNDa supports children in Sudan today and vulnerable communities worldwide tomorrow."
+    },
+    "whatWeDo": {
+      "title": "What we do",
+      "description": "sNDa connects families, volunteers, coordinators and donors so help reaches those who need it faster. The platform focuses on rapid referrals, coordinated triage, secure case tracking, and clear donor impact."
+    },
+    "wallOfLove": "Wall of Love",
+    "wallOfLoveDesc": "Curated public stories of impact",
+    "volunteerTools": "Volunteer tools",
+    "volunteerToolsDesc": "Dashboard, streaks, badges",
+    "donorPlatform": "Donor platform",
+    "donorPlatformDesc": "Transparent campaigns and outcomes",
+    "offlineFirst": "Offline first",
+    "offlineFirstDesc": "Works during outages, SMS support",
+    "boba": "Boba (bot)",
+    "bobaDesc": "Guidance, reminders, smart tips",
+    "howItWorks": {
+      "title": "How it works",
+      "description": "Our web app makes it simple to move from referral to real impact. Each case starts with documented details, moves through clear steps, and progress is tracked and shared so the whole community can see the difference."
+    },
+    "referralTriage": "Referral & triage",
+    "referralTriageDesc": "Collect and verify case details",
+    "coordinatorAssignment": "Coordinator assignment",
+    "coordinatorAssignmentDesc": "Match with the right coordinator",
+    "hospitalCare": "Hospital care",
+    "hospitalCareDesc": "Coordinate treatment logistics",
+    "donorSupport": "Donor support",
+    "donorSupportDesc": "Funding with transparent updates",
+    "storiesImpact": "Stories & impact",
+    "storiesImpactDesc": "Share progress with the community",
+    "ourBackbone": {
+      "title": "Our backbone",
+      "openSource": "Open source, privacy-first, multilingual (Arabic/English at launch)",
+      "tech": "Technology: <strong>Django, Next.js, PostgreSQL, PyTorch</strong> for reliability and speed."
     }
+  },
+  "userMenu": {
+    "myCases": "My Cases",
+    "volunteerHub": "Volunteer Hub",
+    "manageCases": "Manage Cases",
+    "supportFamilies": "Support Families",
+    "profile": "Profile",
+    "logout": "Log out"
+  }
+  ,
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of your activity"
+  },
+  "signup": {
+    "title": "Join Our Community of Care",
+    "subtitle": "Every person has a role to play in helping children in need. Choose how you'd like to contribute.",
+    "howHelp": "How would you like to help?",
+    "roles": {
+      "volunteer": { "label": "Volunteer", "desc": "Help children directly by taking on cases and providing support" },
+      "coordinator": { "label": "Coordinator", "desc": "Manage cases, assign volunteers, and oversee operations" },
+      "donor": { "label": "Donor", "desc": "Support our mission through financial contributions" }
+    },
+    "fields": {
+      "firstName": { "label": "First Name", "placeholder": "Your first name" },
+      "lastName": { "label": "Last Name", "placeholder": "Your last name" },
+      "username": { "label": "Username", "placeholder": "Choose a unique username" },
+      "email": { "label": "Email Address", "placeholder": "your.email@example.com" },
+      "password": { "label": "Password", "placeholder": "Create a strong password" },
+      "confirmPassword": { "label": "Confirm Password", "placeholder": "Confirm your password" }
+    },
+    "agreeToTermsPrefix": "I agree to the",
+    "termsOfService": "Terms of Service",
+    "agreeToTermsDesc": "By checking this box, you agree to our terms of service and community guidelines.",
+    "agreeToPrivacyPrefix": "I agree to the",
+    "privacyPolicy": "Privacy Policy",
+    "agreeToPrivacyDesc": "I understand how my data will be used and protected according to our privacy policy.",
+    "button": { "creating": "Creating account...", "join": "Join sNDa Community" },
+    "alreadyHaveAccountPrefix": "Already have an account?",
+    "signInHere": "Sign in here",
+    "toast": { "success": "Welcome to sNDa! Your account has been created successfully.", "error": "Failed to create account" }
+  }
+,
+  "donate": {
+    "title": "🌱 Make a Difference Today",
+    "subtitle": "Your generosity directly supports families in need, providing essential care and hope during their most challenging times.",
+    "stats": {
+      "familiesHelped": "Families Helped",
+      "totalRaised": "Total Raised",
+      "activeDonors": "Active Donors",
+      "successRate": "Success Rate"
+    },
+    "activeCampaigns": "Active Campaigns",
+    "campaigns": {
+      "emergencyMedical": {
+        "title": "Emergency Medical Support",
+        "description": "Urgent medical care for children and families facing health crises"
+      },
+      "transportation": {
+        "title": "Safe Transportation",
+        "description": "Reliable transport for families to access essential services and care"
+      },
+      "familyPackages": {
+        "title": "Family Care Packages",
+        "description": "Essential supplies and care packages for families in crisis"
+      },
+      "educationSupport": {
+        "title": "Education Support",
+        "description": "School supplies, fees, and educational resources for children in need"
+      },
+      "basicNeeds": {
+        "title": "Basic Living Needs",
+        "description": "Food, shelter, and essential supplies for families experiencing hardship"
+      }
+    },
+    "categories": {
+      "medical": "Medical",
+      "transportation": "Transportation",
+      "support": "Support"
+    },
+    "progress": "Progress",
+    "of": "of",
+    "donors": "donors",
+    "daysLeft": "days left",
+    "makeDonation": "Make Your Donation",
+    "chooseAmount": "Choose Amount",
+    "impacts": {
+      "25": "Provides basic medical supplies",
+      "50": "Covers transportation for one family",
+      "100": "Funds emergency assistance package",
+      "250": "Supports a family for one month",
+      "500": "Provides comprehensive care support",
+      "1000": "Sponsors multiple families in need"
+    },
+    "customAmountLabel": "Or Enter Custom Amount",
+    "recurringLabel": "Make this a monthly recurring donation",
+    "processing": "Processing",
+    "button": { "donate": "Donate", "monthly": "Monthly" },
+    "securePayment": "Secure payment powered by Stripe",
+    "taxDeductible": "Your donation is tax-deductible. Receipt will be emailed.",
+    "paymentFailed": "Payment failed. Please try again.",
+    "recentSupporters": "Recent Supporters",
+    "anonymousDonor": "Anonymous Donor",
+    "timeAgo": {
+      "hoursAgo": "{hours} hours ago",
+      "hourAgo": "1 hour ago",
+      "dayAgo": "1 day ago",
+      "daysAgo": "{days} days ago"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "How we collect, use, and protect your information.",
+    "sections": {
+      "information": {
+        "title": "1. Information We Collect",
+        "personalTitle": "Personal Information:",
+        "personal": {
+          "item1": "Name, email address, and username",
+          "item2": "Contact information for volunteers and coordinators",
+          "item3": "Profile information and preferences"
+        },
+        "caseTitle": "Case Information:",
+        "case": {
+          "item1": "Information about children in need (with consent)",
+          "item2": "Case descriptions and media files",
+          "item3": "Communication records between users"
+        },
+        "technicalTitle": "Technical Information:",
+        "technical": {
+          "item1": "IP addresses and device information",
+          "item2": "Usage analytics and platform interactions",
+          "item3": "Cookies and session data"
+        }
+      },
+      "use": {
+        "title": "2. How We Use Your Information",
+        "item1": "To provide and maintain our platform services",
+        "item2": "To connect volunteers with children in need",
+        "item3": "To facilitate communication between users",
+        "item4": "To ensure platform security and prevent abuse",
+        "item5": "To improve our services and user experience",
+        "item6": "To comply with legal obligations"
+      },
+      "sharing": {
+        "title": "3. Information Sharing",
+        "intro": "We are committed to protecting your privacy and do not sell, trade, or rent your personal information to third parties.",
+        "note": "Information may be shared only in the following circumstances:",
+        "item1": "With your explicit consent",
+        "item2": "To facilitate case management between authorized users",
+        "item3": "When required by law or to protect rights and safety",
+        "item4": "With trusted service providers who assist our operations"
+      },
+      "security": { "title": "4. Data Security", "desc": "We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. This includes encryption, secure servers, and regular security assessments." },
+      "children": { "title": "5. Children's Privacy", "desc": "We take special care to protect the privacy of children. Information about children is only collected with proper consent from parents or guardians, and is used solely for the purpose of providing assistance. We never knowingly collect personal information from children under 13 without parental consent." },
+      "rights": { "title": "6. Your Rights", "intro": "You have the right to:", "item1": "Access your personal information", "item2": "Correct inaccurate information", "item3": "Request deletion of your data", "item4": "Withdraw consent for data processing", "item5": "Export your data in a portable format", "item6": "Lodge a complaint with supervisory authorities" },
+      "retention": { "title": "7. Data Retention", "desc": "We retain your personal information only as long as necessary to provide our services and fulfill the purposes outlined in this policy. Case information may be retained longer for legal and safety purposes, but is anonymized when possible." },
+      "transfers": { "title": "8. International Transfers", "desc": "Your information may be transferred to and processed in countries other than your own. We ensure that such transfers comply with applicable data protection laws and implement appropriate safeguards." },
+      "changes": { "title": "9. Changes to This Policy", "desc": "We may update this privacy policy from time to time. We will notify you of any material changes by posting the new policy on our platform and updating the Last Updated date." },
+      "contact": { "title": "10. Contact Us", "desc": "If you have questions about this privacy policy or our data practices, please contact us at snda@hey.me" }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "subtitle": "The rules and responsibilities for using sNDa",
+    "sections": {
+      "acceptance": { "title": "1. Acceptance of Terms", "desc": "By accessing and using sNDa (Solidarity Network for Development and Aid), you accept and agree to be bound by the terms and provision of this agreement." },
+      "description": { "title": "2. Description of Service", "desc": "sNDa is a platform that connects volunteers, coordinators, and donors to help children in need. Our service facilitates the submission, management, and resolution of cases involving children requiring assistance." },
+      "responsibilities": { "title": "3. User Responsibilities", "item1": "Provide accurate and truthful information", "item2": "Respect the privacy and dignity of children and families", "item3": "Maintain confidentiality of sensitive information", "item4": "Act in the best interest of children at all times", "item5": "Report any concerns or violations immediately" },
+      "privacy": { "title": "4. Privacy and Data Protection", "desc": "We are committed to protecting the privacy of all users, especially children. All personal information is collected, used, and stored in accordance with our Privacy Policy and applicable data protection laws." },
+      "prohibited": { "title": "5. Prohibited Activities", "item1": "Sharing false or misleading information", "item2": "Using the platform for commercial purposes without authorization", "item3": "Harassing or intimidating other users", "item4": "Attempting to gain unauthorized access to the system", "item5": "Violating any applicable laws or regulations" },
+      "liability": { "title": "6. Limitation of Liability", "desc": "sNDa provides this platform as a service to facilitate community support. We are not responsible for the actions of individual users or the outcomes of cases. Users participate at their own risk and discretion." },
+      "changes": { "title": "7. Changes to Terms", "desc": "We reserve the right to modify these terms at any time. Users will be notified of significant changes, and continued use of the platform constitutes acceptance of updated terms." },
+      "contact": { "title": "8. Contact Information", "desc": "For questions about these terms, please contact us at snda@hey.me" }
+    }
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "tagline": "Solidarity Network for Development & Action",
+    "allRightsReserved": "All rights reserved.",
+    "madeWith": "Made with 💖 for children everywhere"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "search": "Search"
   }
 }

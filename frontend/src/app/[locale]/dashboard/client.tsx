@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { authFetch } from "@/lib/api/client";
 import type { Case } from "@/lib/types";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function DashboardClient() {
@@ -17,8 +17,9 @@ export default function DashboardClient() {
   const prefix = `/${locale}`;
 
   const displayName = user?.first_name
-    ? `${user.first_name} ${user.last_name || ""}`
-    : user?.username;
+  ? `${user.first_name} ${user.last_name || ""}`
+  : (user?.username ?? "");
+  const t = useTranslations();
 
   useEffect(() => {
     const load = async () => {
@@ -43,14 +44,14 @@ export default function DashboardClient() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Volunteer Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back, {displayName}!</p>
+        <h1 className="text-3xl font-bold tracking-tight">{t("volunteer.title")}</h1>
+        <p className="text-muted-foreground">{t('volunteer.dashboard.welcomeBack', { name: displayName })}</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader>
-            <CardTitle>Pending Referrals</CardTitle>
+            <CardTitle>{t('volunteer.dashboard.pendingReferrals')}</CardTitle>
           </CardHeader>
           <CardContent>
             {loading ? (
@@ -65,7 +66,7 @@ export default function DashboardClient() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Active Cases</CardTitle>
+            <CardTitle>{t('volunteer.dashboard.activeCases')}</CardTitle>
           </CardHeader>
           <CardContent>
             {loading ? (
@@ -80,7 +81,7 @@ export default function DashboardClient() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Total Cases</CardTitle>
+            <CardTitle>{t('volunteer.dashboard.totalCases')}</CardTitle>
           </CardHeader>
           <CardContent>
             {loading ? (
@@ -111,7 +112,7 @@ export default function DashboardClient() {
         </div>
       ) : cases && cases.length > 0 ? (
         <div className="space-y-2">
-          <h2 className="text-xl font-semibold">Recent Cases</h2>
+          <h2 className="text-xl font-semibold">{t('volunteer.dashboard.recentCases')}</h2>
           <ul className="space-y-2">
             {cases.slice(0, 5).map((k) => (
               <li key={k.id} className="rounded border p-3">
@@ -131,8 +132,8 @@ export default function DashboardClient() {
             ))}
           </ul>
         </div>
-      ) : (
-        <div className="text-sm text-muted-foreground">No cases yet.</div>
+        ) : (
+        <div className="text-sm text-muted-foreground">{t('volunteer.dashboard.noCasesYet')}</div>
       )}
     </div>
   );

@@ -11,7 +11,6 @@ import { useAuth } from "@/contexts/auth-context";
 import type { User } from "../lib/types";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { LanguageSwitcher } from "./language-switcher";
@@ -48,8 +47,6 @@ export function Header() {
     router.push(`/${locale}/`);
   };
 
-  // Mobile menu state removed in favor of DropdownMenu popover
-
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -59,20 +56,22 @@ export function Header() {
     { href: "/community", label: t("nav.community") },
     { href: "/contact", label: t("nav.contact") },
     { href: "/donate", label: t("nav.donate") },
+    { href: "/referrals", label: t("nav.referrals") },
     { href: "/volunteer", label: t("nav.volunteer") },
     { href: "/wall-of-love", label: t("nav.wallOfLove") },
   ];
 
+  // Normalize the pathname by removing the locale prefix
   const normalize = (p: string) => p.replace(/^\/(en|ar)(?=\/|$)/, "");
 
   const localePrefix = `/${locale}`;
   return (
-    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/60 bg-background/80 border-b">
-      <div className="w-full mx-auto px-4">
-        <div className="h-14 flex items-center">
-          {/* Left: Mobile menu button (md:hidden) + Logo */}
-          <div className="flex items-center gap-2 md:flex-1">
-            <div className="md:hidden">
+    <header className="sticky top-0 z-50 bg-white/80 dark:bg-card/80 backdrop-blur-md border-b border-beige-100 dark:border-beige-800">
+      <div className="w-full px-4">
+        <div className="h-14 flex items-center justify-between">
+          {/* Left Section: Mobile menu + Logo - Far Left */}
+          <div className="flex items-center gap-2">
+            <div className="xl:hidden">
               {mounted ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -108,8 +107,8 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Center: Primary Nav (md+) - Absolutely centered */}
-          <nav className="hidden md:flex items-center justify-center gap-1 absolute left-1/2 transform -translate-x-1/2">
+          {/* Center Navigation - Absolutely Centered */}
+          <nav className="hidden xl:flex items-center justify-center gap-1 absolute left-1/2 transform -translate-x-1/2">
             {links.map((l) => {
               const current = normalize(pathname || "");
               const active = mounted && (current === l.href || current.startsWith(`${l.href}/`));
@@ -130,8 +129,8 @@ export function Header() {
             })}
           </nav>
 
-          {/* Right: Language, Theme, Auth */}
-          <div className="flex items-center gap-1 ml-auto md:flex-1 md:justify-end">
+          {/* Right Section: Language, Theme, Auth - Far Right */}
+          <div className="flex items-center gap-1">
             <LanguageSwitcher />
             <DarkModeToggle />
 
@@ -148,7 +147,7 @@ export function Header() {
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">{getFullName(user)}</p>
@@ -156,13 +155,13 @@ export function Header() {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => router.push(`/${locale}/dashboard`)}>My Cases</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push(`/${locale}/volunteer`)}>Volunteer Hub</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push(`/${locale}/coordinator`)}>Manage Cases</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push(`/${locale}/donate`)}>Support Families</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push(`/${locale}/profile`)}>Profile</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/dashboard`)}>{t('userMenu.myCases')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/volunteer`)}>{t('userMenu.volunteerHub')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/coordinator`)}>{t('userMenu.manageCases')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/donate`)}>{t('userMenu.supportFamilies')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push(`/${locale}/profile`)}>{t('userMenu.profile')}</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>{t('userMenu.logout')}</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -174,6 +173,7 @@ export function Header() {
                   variant="ghost"
                   size="sm"
                   data-join-us
+                  data-signup
                   className="hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   onClick={() => setShowSignupForm(true)}
                 >
@@ -186,11 +186,11 @@ export function Header() {
       </div>
 
       <Dialog open={showLoginForm} onOpenChange={setShowLoginForm}>
-        <LoginFormContent onOpenChange={setShowLoginForm} />
+        <LoginFormContent onOpenChangeAction={setShowLoginForm} />
       </Dialog>
 
       <Dialog open={showSignupForm} onOpenChange={setShowSignupForm}>
-        <SignupFormContent onOpenChange={setShowSignupForm} />
+        <SignupFormContent onOpenChangeAction={setShowSignupForm} />
       </Dialog>
     </header>
   );

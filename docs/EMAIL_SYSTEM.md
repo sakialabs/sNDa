@@ -8,7 +8,7 @@ The sNDa platform features a comprehensive, automated email system designed to c
 
 ## 🏗️ Architecture
 
-### Core Components 
+### Core Components
 
 1. **EmailService** (`api/email_system.py`) - Central service for all email operations
 2. **Email Templates** (`templates/emails/`) - Responsive HTML templates with sNDa branding
@@ -19,23 +19,27 @@ The sNDa platform features a comprehensive, automated email system designed to c
 ### 📬 Email Types
 
 #### Onboarding Sequence (3-Step)
+
 - **Day 0: Welcome Email** (`welcome.html`) - Platform introduction and first steps
 - **Day 2-3: Layer Up Email** (`layer_up.html`) - Skills and engagement building
 - **Day 5-7: Engagement Email** (`engagement.html`) - First actions and community stats
 
 #### Transactional Emails
+
 - **Assignment Notification** (`assignment_notification.html`) - New case assignments
 - **Story Published** (`story_published.html`) - Story approval notifications
 - **Donation Confirmation** (`donation_confirmation.html`) - Payment receipts
 - **Case Status Update** (`case_status_update.html`) - Progress notifications
 
 #### Motivational Emails
+
 - **Streak Reminder** (`streak_reminder.html`) - Activity streak maintenance
 - **Boba Weekly Motivation** (`boba_weekly_motivation.html`) - Personalized weekly check-ins
 
 ## Email Templates
 
 ### Base Template Structure
+
 All emails extend `base_email.html` which provides:
 - Consistent sNDa branding and colors
 - Responsive design for mobile/desktop
@@ -44,6 +48,7 @@ All emails extend `base_email.html` which provides:
 - Boba AI signature styling
 
 ### Template Features
+
 - **Inline CSS** for email client compatibility
 - **Responsive design** with mobile-first approach
 - **Emoji integration** for visual appeal
@@ -67,6 +72,7 @@ DEFAULT_FROM_EMAIL = 'snda@hey.com'
 ```
 
 ### Environment Variables
+
 ```bash
 SENDGRID_API_KEY=your_sendgrid_api_key
 MAILGUN_API_KEY=your_mailgun_api_key
@@ -122,6 +128,7 @@ onboarding_email_sequence_task.delay(user.id, is_volunteer=True)
 ## Management Commands
 
 ### Send Scheduled Emails
+
 ```bash
 # Send all due emails
 python manage.py send_scheduled_emails
@@ -137,6 +144,7 @@ python manage.py send_scheduled_emails --setup-automation
 ```
 
 ### Schedule Recurring Emails
+
 ```bash
 # Schedule weekly motivation emails
 python manage.py send_scheduled_emails --schedule-weekly
@@ -148,6 +156,7 @@ python manage.py send_scheduled_emails --schedule-streaks
 ## Celery Integration
 
 ### Celery Beat Schedule
+
 ```python
 CELERY_BEAT_SCHEDULE = {
     'send-scheduled-emails': {
@@ -166,6 +175,7 @@ CELERY_BEAT_SCHEDULE = {
 ```
 
 ### Starting Celery
+
 ```bash
 # Start Celery worker
 celery -A config worker -l info
@@ -177,6 +187,7 @@ celery -A config beat -l info
 ## 📝 Email Content Guidelines
 
 ### 🤖 Boba AI Personality
+
 - **Friendly and warm** - Use conversational tone
 - **Sandwich metaphor** - Layer building, ingredients, flavors
 - **Motivational** - Encourage and celebrate achievements
@@ -184,12 +195,14 @@ celery -A config beat -l info
 - **Consistent emojis** - 🥪 🌟 🤖 for branding
 
 ### Subject Line Patterns
+
 - Welcome: "🥪 Welcome to sNDa - Your First Bite of Solidarity"
 - Assignment: "🌟 A New Case Needs Your Touch, [Name]!"
 - Story: "🎉 Your Story is Live on the Wall of Love!"
 - Motivation: "🤖 Boba's Weekly Check-in: You're on Fire, [Name]!"
 
 ### Content Structure
+
 1. **Boba Introduction** - Personal greeting from AI assistant
 2. **Main Content** - Key information or call-to-action
 3. **Visual Elements** - Progress bars, stats, emojis
@@ -199,12 +212,14 @@ celery -A config beat -l info
 ## Monitoring and Analytics
 
 ### Email Tracking
+
 - **Delivery Status** - Success/failure logging
 - **Schedule Tracking** - EmailSchedule model records
 - **Error Handling** - Failed email retry logic
 - **Performance Metrics** - Send time and success rates
 
 ### Logging
+
 ```python
 import logging
 logger = logging.getLogger('email_system')
@@ -239,6 +254,7 @@ logger.error(f"Email failed: {error_message}")
    - Avoid external CSS references
 
 ### 🐛 Debugging Commands
+
 ```bash
 # Check scheduled emails
 python manage.py send_scheduled_emails --dry-run
@@ -271,6 +287,7 @@ tail -f logs/email.log
 ## 📲 API Integration
 
 ### 🌐 REST Endpoints
+
 ```python
 # Send immediate email
 POST /api/emails/send/
@@ -291,11 +308,12 @@ POST /api/emails/schedule/
 
 This email system provides a robust foundation for engaging sNDa community members through personalized, automated communication that scales with platform growth.
 
-# Email System Testing Guide
+## Email System Testing Guide
 
 ## 🧪 Pre-Deployment Testing Checklist
 
 ### 1. Environment Setup
+
 ```bash
 # Install new dependencies
 pip install -r requirements.txt
@@ -309,6 +327,7 @@ python manage.py createsuperuser
 ```
 
 ### 2. Email Backend Configuration Test
+
 ```python
 # Test in Django shell
 python manage.py shell
@@ -325,6 +344,7 @@ python manage.py shell
 ```
 
 ### 3. Email Service Unit Tests
+
 ```bash
 # Run email system tests
 python manage.py test api.tests.test_email_system
@@ -345,6 +365,7 @@ python manage.py shell
 ```
 
 ### 4. Email Scheduling Tests
+
 ```bash
 # Test onboarding sequence
 python manage.py shell
@@ -358,6 +379,7 @@ python manage.py shell
 ```
 
 ### 5. Management Command Tests
+
 ```bash
 # Dry run to see what would be sent
 python manage.py send_scheduled_emails --dry-run
@@ -373,6 +395,7 @@ python manage.py send_scheduled_emails --schedule-streaks
 ```
 
 ### 6. Celery Integration Tests
+
 ```bash
 # Start Redis (if using Redis broker)
 redis-server
@@ -391,6 +414,7 @@ python manage.py shell
 ```
 
 ### 7. Template Rendering Tests
+
 ```bash
 # Test template rendering
 python manage.py shell
@@ -405,6 +429,7 @@ python manage.py shell
 ```
 
 ### 8. Email Analytics Tests
+
 ```bash
 # Check analytics model
 python manage.py shell
@@ -423,12 +448,14 @@ python manage.py shell
 ## 🔍 Integration Testing Scenarios
 
 ### Scenario 1: New Volunteer Registration
+
 1. Create new user account
 2. Verify welcome email is sent immediately
 3. Check that onboarding sequence is scheduled
 4. Verify volunteer profile is created
 
 ### Scenario 2: Assignment Workflow
+
 1. Create new case
 2. Assign to volunteer
 3. Verify assignment notification email
@@ -436,12 +463,14 @@ python manage.py shell
 5. Check completion email and streak update
 
 ### Scenario 3: Story Publication
+
 1. Create volunteer story
 2. Publish story
 3. Verify publication notification
 4. Check community stats update
 
 ### Scenario 4: Weekly Motivation Flow
+
 1. Run weekly motivation scheduler
 2. Verify emails are scheduled for active volunteers
 3. Process scheduled emails
@@ -450,21 +479,25 @@ python manage.py shell
 ## 🐛 Common Issues & Solutions
 
 ### Email Not Sending
+
 - Check email backend configuration
 - Verify API keys in environment variables
 - Test SMTP connection manually
 
 ### Templates Not Rendering
+
 - Ensure templates directory is in TEMPLATES setting
 - Check template syntax and inheritance
 - Verify context variables are passed correctly
 
 ### Celery Tasks Failing
+
 - Ensure Redis/RabbitMQ is running
 - Check Celery worker logs
 - Verify task imports are correct
 
 ### Scheduled Emails Not Processing
+
 - Run management command manually
 - Check EmailSchedule records in database
 - Verify scheduled_for dates are correct
@@ -472,6 +505,7 @@ python manage.py shell
 ## 📊 Performance Testing
 
 ### Load Testing Email System
+
 ```python
 # Test bulk email sending
 python manage.py shell
@@ -483,6 +517,7 @@ python manage.py shell
 ```
 
 ### Database Performance
+
 ```sql
 -- Check email schedule query performance
 EXPLAIN ANALYZE SELECT * FROM api_emailschedule 
@@ -510,6 +545,7 @@ GROUP BY email_type;
 ## 🚀 Production Deployment Steps
 
 1. **Environment Variables**
+
    ```bash
    export SENDGRID_API_KEY=your_production_key
    export REDIS_URL=redis://localhost:6379/0
@@ -517,16 +553,19 @@ GROUP BY email_type;
    ```
 
 2. **Database Migration**
+
    ```bash
    python manage.py migrate --settings=config.settings.production
    ```
 
 3. **Static Files**
+
    ```bash
    python manage.py collectstatic --noinput
    ```
 
 4. **Start Services**
+
    ```bash
    # Start web server
    gunicorn config.wsgi:application
@@ -539,9 +578,9 @@ GROUP BY email_type;
    ```
 
 5. **Setup Automation**
+
    ```bash
    python manage.py send_scheduled_emails --setup-automation
    ```
 
 This comprehensive testing approach ensures your email system is bulletproof before deployment! 🎯
-

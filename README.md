@@ -1,10 +1,10 @@
 # 🥪 sNDa - Solidarity Network for Development & Action
 
-> Pronounced **sun-dah (سندة)** - Arabic for "support" and Sudanese slang for "a little snack"
+> Pronounced **sun-dah (سندة)** - Arabic for "support" and Sudanese slang for "a light snack"
 
 A platform that **wraps children and communities in care**, connecting volunteers, donors, and coordinators to support vulnerable kids in Sudan and beyond. Built with Django, React, and AI-powered features.
 
-**🌐 Live Demo:** https://snda.netlify.app
+**🌐 Live Demo:** <https://snda.netlify.app>
 
 ## 📚 Table of Contents
 
@@ -41,22 +41,26 @@ Every child deserves dignity, care, and opportunity. sNDa connects **kids, famil
 ## ✨ Core Features
 
 ### 🎯 Case Management
+
 - **Smart Intake Forms** (Arabic/English) with photo consent and offline support
 - **Coordinator Dashboard** with real-time filtering and case assignment
 - **Progress Tracking** with status updates and outcome reporting
 
 ### 👥 Volunteer Experience
+
 - **Personal Dashboard** with assignment tracking and impact metrics
 - **Story Sharing Platform** with rich media uploads and community engagement
 - **Gamification System** with badges, streaks, and leaderboards
-- ** Boba AI Assistant** for personalized recommendations
+- **Boba AI Assistant** for personalized recommendations
 
 ### 🌟 Community & Engagement
+
 - **Wall of Love** showcasing volunteer stories and impact
 - **Community Goals** with shared milestones and progress tracking
 - **Email Automation** with 3-step onboarding and motivational content
 
 ### 💰 Donor Platform
+
 - **Campaign Management** with Stripe integration and recurring donations
 - **Impact Visualization** with real-time progress and transparency
 - **Donor Recognition** with public appreciation and supporter highlights
@@ -80,7 +84,7 @@ pip install -r requirements.txt && python manage.py migrate && python manage.py 
 cd frontend && npm install && npm run dev
 ```
 
-**🌐 Access:** http://localhost:3000  
+**🌐 Access:** <http://localhost:3000>  
 **📖 Full Guide:** [Quick Start Documentation](./docs/QUICK_START.md)
 
 ## 🤝 Contributing
@@ -88,6 +92,7 @@ cd frontend && npm install && npm run dev
 We welcome **coders, designers, researchers, and changemakers**!
 
 **Areas to Help:**
+
 - 🐛 Bug fixes and improvements
 - ✨ New features and enhancements
 - 📚 Documentation and guides
@@ -95,22 +100,24 @@ We welcome **coders, designers, researchers, and changemakers**!
 - 🧪 Testing and quality assurance
 
 **Get Started:**
+
 1. Fork & clone the repository
 2. Follow the [Quick Start Guide](./docs/QUICK_START.md)
 3. Check [Contributing Guidelines](./docs/CONTRIBUTING.md)
 4. Submit PRs with clear descriptions
 
-**Contact:** snda@hey.com
+**Contact:** <snda@hey.com>
 
 ## 🌟 Recent Updates
 
-### v0.4.0 - Production-Ready Platform
-- 🧪 **100% API Coverage** - All 27 endpoints tested and verified
-- 🚀 **Full Deployment** - Live on Netlify (frontend) and Render (backend)
-- 🏆 **Advanced Gamification** - Complete badge system with automated awarding
-- 📖 **Rich Story Platform** - Media uploads with community engagement
-- 📧 **Smart Email System** - Automated onboarding and motivational content
-- 🤖 **Boba AI Integration** - Personalized recommendations and notifications
+### v0.5.0 - Professional UI & Social Authentication
+
+- 🎨 **Unified Design System** - Consistent UI/UX across all components with Shadcn/UI integration
+- � **Social Authentication** - Complete Google & Facebook OAuth with graceful error handling
+- � **Arabic Finalization** - Production-ready RTL support with cultural adaptations
+- � **Professional Styling** - Enhanced buttons, dialogs, and forms with app color scheme
+- 🧪 **Comprehensive Testing** - Full test coverage for authentication and component integrity
+- 📚 **Documentation Updates** - Streamlined guides and implementation checklists
 
 **📦 Full History:** [CHANGELOG.md](./docs/CHANGELOG.md)
 

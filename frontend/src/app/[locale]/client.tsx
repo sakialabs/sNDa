@@ -20,6 +20,11 @@ export default function HomeClient() {
   const t = useTranslations();
   const prefix = `/${locale}`;
   const isAR = locale === "ar";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [featured, setFeatured] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,6 +64,17 @@ export default function HomeClient() {
         likes_count: 18,
         published_at: "2024-01-05",
       },
+      {
+        id: "h4",
+        title: "حلم يصبح حقيقة",
+        content:
+          "بالدعم المستمر، تمكنت فاطمة من التسجيل في الجامعة وتحقيق حلمها في الطب.",
+        author_name: "دينا صالح",
+        case_title: "الدعم الأكاديمي - فاطمة ي.",
+        tags: ["جامعة", "طب"],
+        likes_count: 42,
+        published_at: "2024-01-12",
+      },
     ] : [
       {
         id: "h1",
@@ -93,6 +109,17 @@ export default function HomeClient() {
         likes_count: 18,
         published_at: "2024-01-05",
       },
+      {
+        id: "h4",
+        title: "Dreams Becoming Reality",
+        content:
+          "With consistent support, Fatima enrolled in university and is pursuing her dream of becoming a doctor.",
+        author_name: "Dina Saleh",
+        case_title: "Academic Support - Fatima Y.",
+        tags: ["university", "medicine"],
+        likes_count: 42,
+        published_at: "2024-01-12",
+      },
     ] as const
   );
 
@@ -122,6 +149,24 @@ export default function HomeClient() {
     };
     load();
   }, []);
+
+  if (!mounted) {
+    return <div className="flex flex-col text-center py-12 min-h-[calc(100vh-12rem)]">
+      <div className="space-y-4 w-full">
+        <div className="h-12 bg-muted rounded-lg w-96 mx-auto animate-pulse"></div>
+        <div className="h-6 bg-muted rounded-lg w-64 mx-auto animate-pulse"></div>
+        <div className="h-10 bg-muted rounded-lg w-32 mx-auto animate-pulse mt-8"></div>
+        <div className="mt-12 space-y-4">
+          <div className="h-8 bg-muted rounded-lg w-48 animate-pulse"></div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-48 bg-muted rounded-lg animate-pulse"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>;
+  }
 
   return (
     <div className="flex flex-col text-center py-12 min-h-[calc(100vh-12rem)]">
@@ -185,10 +230,10 @@ export default function HomeClient() {
         </motion.div>
 
         <div className="mt-12 space-y-4">
-          <div className={`flex items-center justify-between ${isAR ? "flex-row-reverse" : ""}`}>
+          <div className={`flex items-center justify-between ${isAR ? "" : ""}`} dir={isAR ? "rtl" : "ltr"}>
             <h2 className="text-2xl font-semibold">{t("home.urgentReferrals")}</h2>
             <Link
-              href={`${prefix}/dashboard`}
+              href={`${prefix}/referrals`}
               className="text-sm underline underline-offset-4"
             >
               {t("home.seeMore")}
@@ -262,7 +307,7 @@ export default function HomeClient() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-14 space-y-4"
         >
-          <div className={`flex items-center justify-between ${isAR ? "flex-row-reverse" : ""}`}>
+          <div className={`flex items-center justify-between ${isAR ? "" : ""}`} dir={isAR ? "rtl" : "ltr"}>
             <h2 className="text-2xl font-semibold">{t("home.latestStories")}</h2>
             <Link href={`${prefix}/wall-of-love`} className="text-sm underline underline-offset-4">
               {t("home.seeAllStories")}
@@ -271,7 +316,7 @@ export default function HomeClient() {
           <Card>
             <CardContent className="pt-6">
               <div className="grid gap-6 md:grid-cols-2">
-                {stories.slice(0, 3).map((s, i) => (
+                {stories.map((s, i) => (
                   <motion.div
                     key={s.id}
                     initial={{ opacity: 0, y: 12 }}

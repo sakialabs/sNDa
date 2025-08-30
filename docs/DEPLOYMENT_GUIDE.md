@@ -1,8 +1,10 @@
 # 🚀 sNDa Production Deployment Guide
+
 ## Complete Full-Stack Deployment on Free Tier
 
 ### 🎯 **Deployment Strategy: Render + Netlify**
-- **Frontend:** Netlify (Next.js) - already deployed at https://snda.netlify.app
+
+- **Frontend:** Netlify (Next.js) - already deployed at <https://snda.netlify.app>
 - **Backend:** Render (Django) - completely FREE with 750 hours/month
 - **Database:** PostgreSQL included free
 - **Cache:** Redis included free
@@ -16,6 +18,7 @@
 Your frontend is already live! But here's how to redeploy or update:
 
 ### **Quick Redeploy**
+
 ```bash
 cd frontend
 npm run build
@@ -24,12 +27,14 @@ git add . && git commit -m "Frontend update" && git push
 ```
 
 ### **Environment Variables (Netlify Dashboard)**
+
 ```env
 NEXT_PUBLIC_API_URL=https://snda-backend.onrender.com
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_key
 ```
 
 ### **Custom Domain (Optional)**
+
 1. In Netlify dashboard → Domain settings
 2. Add custom domain: `snda.org`
 3. Update DNS records with your provider
@@ -38,6 +43,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_key
 ---
 
 ## 🎯 Why Render?
+
 - ✅ **Completely FREE** - 750 hours/month (24/7 coverage)
 - ✅ **PostgreSQL included** - Free database tier
 - ✅ **Auto-deploy** from GitHub
@@ -47,6 +53,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_key
 ## 📋 Pre-Deployment Setup
 
 ### 1. Push to GitHub
+
 ```bash
 # Make sure your code is pushed to GitHub
 git add .
@@ -55,6 +62,7 @@ git push origin main
 ```
 
 ### 2. Create Render Account
+
 1. Go to [render.com](https://render.com)
 2. Sign up with GitHub (free)
 3. Connect your GitHub account
@@ -62,6 +70,7 @@ git push origin main
 ## 🚀 Deployment Steps
 
 ### Step 1: Create PostgreSQL Database
+
 1. In Render dashboard, click **"New +"**
 2. Select **"PostgreSQL"**
 3. Configure:
@@ -74,6 +83,7 @@ git push origin main
 5. **Save the connection details** (you'll need them)
 
 ### Step 2: Create Redis Instance
+
 1. Click **"New +"** → **"Redis"**
 2. Configure:
    - **Name:** `snda-redis`
@@ -81,6 +91,7 @@ git push origin main
 3. Click **"Create Redis"**
 
 ### Step 3: Deploy Main Web Service
+
 1. Click **"New +"** → **"Web Service"**
 2. Connect your GitHub repository: `sNDa`
 3. Configure:
@@ -91,6 +102,7 @@ git push origin main
    - **Start Command:** `gunicorn config.wsgi:application --bind 0.0.0.0:$PORT`
 
 ### Step 4: Environment Variables
+
 Add these in the **Environment** tab:
 
 ```env
@@ -128,6 +140,7 @@ SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_PROTO,https
 ```
 
 ### Step 5: Deploy Celery Workers (Optional for MVP)
+
 1. **Celery Worker:**
    - Click **"New +"** → **"Background Worker"**
    - Same repo, `backend` directory
@@ -143,9 +156,11 @@ SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_PROTO,https
 ## 🔧 Post-Deployment Setup
 
 ### Run Database Migrations
+
 1. Go to your web service dashboard
 2. Click **"Shell"** tab
 3. Run these commands:
+
 ```bash
 python manage.py migrate
 python manage.py collectstatic --noinput
@@ -153,6 +168,7 @@ python manage.py createsuperuser
 ```
 
 ### Test Your Deployment
+
 ```bash
 # Health check
 curl https://snda-backend.onrender.com/api/health/
@@ -164,6 +180,7 @@ curl https://snda-backend.onrender.com/api/cases/
 ## 🔄 Update Frontend Configuration
 
 Update your frontend environment variables in Netlify:
+
 ```env
 NEXT_PUBLIC_API_URL=https://snda-backend.onrender.com
 ```
@@ -171,13 +188,16 @@ NEXT_PUBLIC_API_URL=https://snda-backend.onrender.com
 ## ⚠️ Important Notes
 
 ### Free Tier Limitations
+
 - **Sleep after 15 minutes** of inactivity (cold starts ~30 seconds)
 - **750 hours/month** total (enough for 24/7)
 - **PostgreSQL:** 1GB storage, 97 connections
 - **Redis:** 25MB storage
 
 ### Keeping Service Awake (Optional)
+
 For production, you can use a simple ping service:
+
 ```javascript
 // Add to your frontend (runs every 10 minutes)
 setInterval(() => {
@@ -188,6 +208,7 @@ setInterval(() => {
 ## 🚨 Troubleshooting
 
 ### Build Failures
+
 ```bash
 # Check build logs in Render dashboard
 # Common issues:
@@ -197,6 +218,7 @@ setInterval(() => {
 ```
 
 ### Database Connection Issues
+
 ```bash
 # Verify DATABASE_URL format:
 postgresql://user:password@host:port/database
@@ -206,6 +228,7 @@ python manage.py dbshell
 ```
 
 ### Static Files Not Loading
+
 ```bash
 # Run in shell:
 python manage.py collectstatic --noinput
@@ -216,6 +239,7 @@ python manage.py collectstatic --noinput
 ## ✅ **Complete Deployment Checklist**
 
 ### 🔧 **Pre-Deployment (Local)**
+
 - [ ] All tests passing: `python manage.py test`
 - [ ] No Django warnings: `python manage.py check --deploy`
 - [ ] Static files collect: `python manage.py collectstatic --noinput`
@@ -223,6 +247,7 @@ python manage.py collectstatic --noinput
 - [ ] `requirements.txt` up to date
 
 ### 🚀 **Render Deployment**
+
 - [ ] PostgreSQL database created and connected
 - [ ] Redis instance created
 - [ ] Web service deployed successfully
@@ -231,6 +256,7 @@ python manage.py collectstatic --noinput
 - [ ] Health check path: `/api/health/`
 
 ### 🔄 **Post-Deployment**
+
 - [ ] Database migrations completed: `python manage.py migrate`
 - [ ] Superuser created: `python manage.py createsuperuser`
 - [ ] Health check responding: `curl https://snda-backend.onrender.com/api/health/`
@@ -238,6 +264,7 @@ python manage.py collectstatic --noinput
 - [ ] API endpoints working: `/api/cases/`, `/api/users/`
 
 ### 🌐 **Frontend Integration**
+
 - [ ] Netlify environment updated: `NEXT_PUBLIC_API_URL=https://snda-backend.onrender.com`
 - [ ] Frontend build and deploy successful
 - [ ] Login/logout flow working
@@ -245,6 +272,7 @@ python manage.py collectstatic --noinput
 - [ ] CORS headers present in responses
 
 ### 🧪 **End-to-End Testing**
+
 - [ ] User registration and login
 - [ ] Coordinator dashboard loads with data
 - [ ] Volunteer hub displays assignments
@@ -256,10 +284,12 @@ python manage.py collectstatic --noinput
 ## 🎯 **Email System Setup (Optional for MVP)**
 
 ### **SendGrid Configuration**
-1. Create SendGrid account: https://sendgrid.com
+
+1. Create SendGrid account: <https://sendgrid.com>
 2. Generate API key with full access
 3. Verify sender identity: `snda@hey.com`
 4. Add to Render environment variables:
+
 ```env
 EMAIL_BACKEND=sendgrid_backend.SendgridBackend
 SENDGRID_API_KEY=your_sendgrid_api_key_here
@@ -268,14 +298,16 @@ DEFAULT_FROM_EMAIL=sNDa Platform <snda@hey.com>
 ```
 
 ### **Email Templates Ready**
+
 - ✅ Welcome email (Day 0)
-- ✅ Layer up email (Day 2-3) 
+- ✅ Layer up email (Day 2-3)
 - ✅ Engagement email (Day 5-7)
 - ✅ Assignment notifications
 - ✅ Story published confirmations
 - ✅ **Boba weekly motivation**
 
 ## 🎮 **Gamification System**
+
 - ✅ Badge awarding on case completion
 - ✅ Streak tracking with visual progress
 - ✅ Points accumulation system
@@ -284,13 +316,16 @@ DEFAULT_FROM_EMAIL=sNDa Platform <snda@hey.com>
 - ✅ **Boba AI Integration with sandwich metaphor**
 
 ## 🚨 **Emergency Rollback**
+
 **If deployment fails:**
+
 1. Check Render build logs
 2. Verify environment variables
 3. Test database connectivity
 4. Check CORS configuration
 
 **Quick rollback:**
+
 1. Revert to previous GitHub commit
 2. Trigger new Render deployment
 3. Update frontend API URL if needed
@@ -298,11 +333,14 @@ DEFAULT_FROM_EMAIL=sNDa Platform <snda@hey.com>
 ## 🌟 **You're Live!**
 
 Your complete sNDa platform will be available at:
-- **Frontend:** https://snda.netlify.app ✅ (Already deployed)
-- **Backend API:** https://snda-backend.onrender.com (Deploy following steps above)
+
+- **Frontend:** <https://snda.netlify.app> ✅ (Already deployed)
+- **Backend API:** <https://snda-backend.onrender.com> (Deploy following steps above)
 
 ### **Final Integration Step**
+
 After backend deployment, update Netlify environment:
+
 ```bash
 # In Netlify dashboard, update:
 NEXT_PUBLIC_API_URL=https://snda-backend.onrender.com
@@ -311,6 +349,7 @@ NEXT_PUBLIC_API_URL=https://snda-backend.onrender.com
 **🎯 Complete full-stack platform ready to serve communities worldwide!**
 
 ### **What You Get**
+
 - ✅ **Volunteer Management** - Assignment tracking, story sharing, gamification
 - ✅ **Donor Platform** - Stripe integration, campaign management, impact tracking  
 - ✅ **Community Features** - Wall of Love, leaderboards, badges, streaks

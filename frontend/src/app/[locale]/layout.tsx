@@ -7,7 +7,6 @@ import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/contexts/auth-context";
 import { Toaster } from "sonner";
-import { notFound } from "next/navigation";
 import { assertLocale, type Locale } from "../../../next-intl.config";
 import "../globals.css";
 
@@ -22,8 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   // Simple localized strings; can be moved to messages later
   const titles: Record<string, string> = {
-    en: "sNDa | Wrapping Support Around Every Life",
-    ar: "سندة | نُحيط الدَّعم بكل حياة",
+    en: "sNDa | a Sandwich of Support",
+    ar: "سندة | شطيرة الدعم",
   };
   const descriptions: Record<string, string> = {
     en: "A community platform empowering volunteers and donors to wrap support around every life.",
@@ -79,7 +78,18 @@ export default async function LocaleLayout({
           </div>
         </AuthProvider>
       </ThemeProvider>
-      <Toaster position="top-center" richColors expand visibleToasts={3} />
+      <Toaster 
+        position="top-center" 
+        expand 
+        visibleToasts={3}
+        toastOptions={{
+          style: {
+            background: 'hsl(var(--card))',
+            color: 'hsl(var(--card-foreground))',
+            border: '1px solid hsl(var(--border))'
+          }
+        }}
+      />
     </NextIntlClientProvider>
   );
 }

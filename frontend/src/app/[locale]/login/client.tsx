@@ -17,9 +17,14 @@ function LoginContent() {
     }
   }, [isAuthenticated, router, from])
 
+  const handleClose = () => {
+    // Navigate back to the page they came from when closing the login form
+    router.push(from)
+  }
+
   return (
     <div className="container mx-auto flex items-center justify-center min-h-screen">
-      <LoginForm isOpen={true} onOpenChange={() => {}} />
+      <LoginForm isOpen={true} onOpenChangeAction={handleClose} />
     </div>
   )
 }

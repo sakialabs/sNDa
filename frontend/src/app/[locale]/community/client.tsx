@@ -9,20 +9,8 @@ import { Button } from '@/components/ui/button'
 import { Heart, Trophy, Target, Users, BookOpen, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useFormatter, useLocale } from 'next-intl'
-
-interface PublicStory {
-  id: string
-  title: string
-  content: string
-  author_name: string
-  case_title: string
-  story_type: string
-  tags: string[]
-  likes_count: number
-  published_at: string
-  media: any[]
-}
+import { useFormatter, useLocale, useTranslations } from 'next-intl'
+import { SHARED_STORIES, PublicStory } from '@/lib/shared-stories'
 
 interface CommunityGoal {
   id: string
@@ -85,6 +73,7 @@ export default function CommunityClient() {
   const f = useFormatter()
   const prefix = `/${locale}`
   const isAR = locale === 'ar'
+  const t = useTranslations();
   const [stories, setStories] = useState<PublicStory[]>([])
   const [goals, setGoals] = useState<CommunityGoal[]>([])
   const [stats, setStats] = useState<CommunityStats | null>(null)
@@ -97,8 +86,8 @@ export default function CommunityClient() {
   // Live updates via WebSocket
   useEffect(() => {
     // Connect once component is mounted
-    const disconnect = connectWS<any>("/ws/stories/", (msg) => {
-      const story: PublicStory | undefined = msg?.story ?? msg
+    const disconnect = connectWS<{ story?: PublicStory }>("/ws/stories/", (msg) => {
+      const story: PublicStory | undefined = msg?.story ? msg.story : undefined;
       if (!story || !story.id || !story.title) return
       setStories((prev) => [story, ...prev])
     })
@@ -167,48 +156,9 @@ export default function CommunityClient() {
         }
       ]
 
-      const mockStories: PublicStory[] = [
-        {
-          id: "1",
-          title: "A New Beginning for Amira",
-          content: "When I first met Amira, she was struggling with her studies and feeling isolated. Through our mentorship program, we worked together on building her confidence. Today, she's excelling in school and has made wonderful friends. Seeing her smile and enthusiasm for learning reminds me why I volunteer.",
-          author_name: "Sarah Ahmed",
-          case_title: "Educational Support - Amira K.",
-          story_type: "success",
-          tags: ["education", "mentorship", "confidence"],
-          likes_count: 24,
-          published_at: "2024-01-10",
-          media: []
-        },
-        {
-          id: "2",
-          title: "Building Bridges Through Art",
-          content: "Omar came to us withdrawn and struggling to express himself. We introduced him to art therapy, and the transformation has been incredible. His paintings now tell stories of hope and resilience. Art became his voice when words failed him.",
-          author_name: "Layla Mahmoud", 
-          case_title: "Emotional Support - Omar T.",
-          story_type: "breakthrough",
-          tags: ["art therapy", "emotional support", "creativity"],
-          likes_count: 31,
-          published_at: "2024-01-08",
-          media: []
-        },
-        {
-          id: "3",
-          title: "From Fear to Friendship",
-          content: "Nour was afraid to interact with other children due to past trauma. Through patient support and group activities, she slowly opened up. Last week, she organized a small party for her new friends. Her journey from isolation to leadership inspires us all.",
-          author_name: "Omar Hassan",
-          case_title: "Social Integration - Nour M.",
-          story_type: "progress",
-          tags: ["social skills", "trauma recovery", "leadership"],
-          likes_count: 18,
-          published_at: "2024-01-05",
-          media: []
-        }
-      ]
-
       setStats(mockStats)
       setGoals(mockGoals)
-      setStories(mockStories)
+      setStories(SHARED_STORIES)
     } catch (error) {
       console.error('Error fetching community data:', error)
     } finally {
@@ -300,13 +250,8 @@ export default function CommunityClient() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold text-foreground mb-4">
-          🌍 Our Community Impact
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Together, we're creating lasting change in the lives of children and families. 
-            Every volunteer contribution, every story shared, and every goal achieved brings us closer to our mission.
-          </p>
+          <h1 className="text-4xl font-bold text-foreground mb-4">{t('community.title')}</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{t('community.subtitle')}</p>
         </motion.div>
 
         {/* Community Stats */}
@@ -322,7 +267,7 @@ export default function CommunityClient() {
                 <CardContent className="pt-6">
                   <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <div className="text-3xl font-bold text-foreground">{f.number(stats.total_cases_resolved)}</div>
-                  <p className="text-sm text-muted-foreground">Cases Resolved</p>
+                  <p className="text-sm text-muted-foreground">{t('community.stats.casesResolved')}</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -332,7 +277,7 @@ export default function CommunityClient() {
                 <CardContent className="pt-6">
                   <Users className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <div className="text-3xl font-bold text-foreground">{f.number(stats.total_volunteers)}</div>
-                  <p className="text-sm text-muted-foreground">Active Volunteers</p>
+                  <p className="text-sm text-muted-foreground">{t('community.stats.activeVolunteers')}</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -342,7 +287,7 @@ export default function CommunityClient() {
                 <CardContent className="pt-6">
                   <BookOpen className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <div className="text-3xl font-bold text-foreground">{f.number(stats.total_stories)}</div>
-                  <p className="text-sm text-muted-foreground">Stories Shared</p>
+                  <p className="text-sm text-muted-foreground">{t('community.stats.storiesShared')}</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -352,7 +297,7 @@ export default function CommunityClient() {
                 <CardContent className="pt-6">
                   <Trophy className="h-6 w-6 mx-auto mb-2 text-primary" />
                   <div className="text-3xl font-bold text-foreground">{f.number(stats.active_goals)}</div>
-                  <p className="text-sm text-muted-foreground">Active Goals</p>
+                  <p className="text-sm text-muted-foreground">{t('community.stats.activeGoals')}</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -369,9 +314,9 @@ export default function CommunityClient() {
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2">
                   <Target className="h-5 w-5 text-primary" />
-                  Community Goals
+                  {t('community.goalsTitle')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -396,7 +341,7 @@ export default function CommunityClient() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="h-5 w-5 text-primary" />
-                    Top Contributors
+                    {t('community.topContributors')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -409,7 +354,7 @@ export default function CommunityClient() {
                         <div>
                           <div className="font-medium">{volunteer.name}</div>
                           <div className="text-xs text-muted-foreground">
-                            {f.number(volunteer.cases_completed)} cases • {f.number(volunteer.current_streak)} day streak
+                            {t('community.topVolunteers.stats', { cases: f.number(volunteer.cases_completed), streak: f.number(volunteer.current_streak) })}
                           </div>
                         </div>
                       </div>
@@ -427,10 +372,10 @@ export default function CommunityClient() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Heart className="h-5 w-5 text-primary" />
-                  Wall of Love
+                  {t('community.wallOfLoveTitle')}
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Real stories from our volunteers making a difference
+                  {t('wallOfLove.subtitle')}
                 </p>
               </CardHeader>
               <CardContent>
@@ -438,8 +383,8 @@ export default function CommunityClient() {
                   {stories.map((story, idx) => (
                     <motion.div
                       key={story.id}
-                      initial={{ opacity: 0, y: 12, backgroundColor: 'rgba(var(--primary), 0.04)' as any }}
-                      animate={{ opacity: 1, y: 0, backgroundColor: 'rgba(0,0,0,0)' as any }}
+                      initial={{ opacity: 0, y: 12, backgroundColor: 'rgba(var(--primary), 0.04)' }}
+                      animate={{ opacity: 1, y: 0, backgroundColor: 'rgba(0,0,0,0)' }}
                       transition={{ duration: 0.5, delay: Math.min(idx * 0.02, 0.2) }}
                       className={`${isAR ? 'border-r-4 pr-4' : 'border-l-4 pl-4'} border-primary/20 py-2 rounded`}
                       layout
@@ -448,7 +393,7 @@ export default function CommunityClient() {
                         <div>
                           <h3 className="font-semibold text-foreground">{story.title}</h3>
                           <p className="text-sm text-muted-foreground">
-                            by {story.author_name} • {story.case_title}
+                            {t('wallOfLove.by')} {story.author_name} • {story.case_title}
                           </p>
                         </div>
                         <div className="flex items-center gap-1 text-primary">
@@ -471,19 +416,6 @@ export default function CommunityClient() {
                       </div>
                     </motion.div>
                   ))}
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className={`${isAR ? 'border-r-4 pr-4' : 'border-l-4 pl-4'} border-primary/20 py-2`}>
-                      <div className="h-4 w-1/2 bg-muted animate-pulse rounded mb-2" />
-                      <div className="h-3 w-2/3 bg-muted animate-pulse rounded mb-3" />
-                      <div className="flex items-center justify-between">
-                        <div className="flex gap-2">
-                          <div className="h-5 w-16 bg-muted animate-pulse rounded" />
-                          <div className="h-5 w-16 bg-muted animate-pulse rounded" />
-                        </div>
-                        <div className="h-3 w-24 bg-muted animate-pulse rounded" />
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -501,7 +433,7 @@ export default function CommunityClient() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Sparkles className="h-5 w-5 text-primary" />
-                  Recent Achievements
+                  {t('community.recentAchievements')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -511,7 +443,7 @@ export default function CommunityClient() {
                       <div className="text-2xl">{achievement.badge_icon}</div>
                       <div>
                         <div className="font-medium">{achievement.volunteer_name}</div>
-                        <div className="text-sm text-muted-foreground">earned {achievement.badge_name}</div>
+                        <div className="text-sm text-muted-foreground">{t('community.earned')} {achievement.badge_name}</div>
                         <div className="text-xs text-muted-foreground">
                           {f.dateTime(new Date(achievement.earned_at), { dateStyle: 'medium' })}
                         </div>
@@ -533,19 +465,19 @@ export default function CommunityClient() {
         >
           <Card>
             <CardContent className="text-center py-8">
-              <h2 className="text-2xl font-bold mb-4 text-foreground">Join Our Community</h2>
+              <h2 className="text-2xl font-bold mb-4 text-foreground">{t('community.cta.title')}</h2>
               <p className="text-lg mb-6 text-muted-foreground">
-                Be part of the change. Every volunteer makes a difference in a child's life.
+                {t('community.cta.subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link href={`${prefix}/login`}>
                   <Button size="lg" className="w-full sm:w-auto">
-                    Become a Volunteer
+                    {t('community.cta.becomeVolunteer')}
                   </Button>
                 </Link>
                 <Link href={`${prefix}/volunteer`}>
                   <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                    Learn More
+                    {t('community.cta.learnMore')}
                   </Button>
                 </Link>
               </div>

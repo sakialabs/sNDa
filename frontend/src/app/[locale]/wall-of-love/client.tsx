@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,24 +8,23 @@ import { Heart, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { connectWS } from "@/lib/ws";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useFormatter, useLocale } from "next-intl";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
+import { SHARED_STORIES, PublicStory, MediaItem } from "@/lib/shared-stories";
+import { useAuth } from "@/contexts/auth-context";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-interface PublicStory {
-  id: string;
-  title: string;
-  content: string;
-  author_name: string;
-  case_title: string;
-  story_type: string;
-  tags: string[];
-  likes_count: number;
-  published_at: string;
-  media: any[];
+interface WebSocketMessage {
+  story?: PublicStory;
+  [key: string]: unknown;
 }
 
 export default function WallOfLoveClient() {
   const locale = useLocale();
   const f = useFormatter();
+  const t = useTranslations();
+  const router = useRouter();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const isAR = locale === "ar";
   const [stories, setStories] = useState<PublicStory[]>([]);
   const [filter, setFilter] = useState<"all" | "success" | "progress" | "breakthrough">("all");
@@ -44,6 +43,99 @@ export default function WallOfLoveClient() {
       return new Set();
     }
   });
+  const [likingStories, setLikingStories] = useState<Set<string>>(new Set());
+
+  // Process pending likes after authentication
+  useEffect(() => {
+    if (isAuthenticated && typeof window !== "undefined") {
+      try {
+        const pendingLikes = sessionStorage.getItem("snda-pending-likes");
+        if (pendingLikes) {
+          const storyIds = JSON.parse(pendingLikes) as string[];
+          // Process each pending like
+          storyIds.forEach(storyId => {
+            setLiked((prev: Set<string>) => {
+              const next = new Set(prev);
+              if (!next.has(storyId)) {
+                next.add(storyId);
+                setStories((curr: PublicStory[]) =>
+                  curr.map((s: PublicStory) => (s.id === storyId ? { ...s, likes_count: s.likes_count + 1 } : s))
+                );
+                // Update sessionStorage with liked stories
+                try {
+                  sessionStorage.setItem("snda-liked-stories", JSON.stringify(Array.from(next)));
+                } catch {}
+              }
+              return next;
+            });
+          });
+          // Clear pending likes
+          sessionStorage.removeItem("snda-pending-likes");
+          toast.success(t("wallOfLove.likesProcessed", { count: storyIds.length }));
+        }
+      } catch {
+        // Ignore errors
+      }
+    }
+  }, [isAuthenticated, t]);
+
+  // Debounced like function to prevent double-clicking
+  const toggleLike = useCallback((id: string): void => {
+    // Don't do anything if auth is still loading
+    if (authLoading) {
+      return;
+    }
+
+    // Prevent multiple clicks on the same story
+    if (likingStories.has(id)) {
+      return;
+    }
+
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      // Store the intended like for after login
+      try {
+        const pending = sessionStorage.getItem("snda-pending-likes");
+        const pendingLikes = pending ? JSON.parse(pending) : [];
+        if (!pendingLikes.includes(id)) {
+          pendingLikes.push(id);
+          sessionStorage.setItem("snda-pending-likes", JSON.stringify(pendingLikes));
+        }
+      } catch {}
+      
+      // Redirect to login with current page as return destination
+      const currentPath = `/${locale}/wall-of-love`;
+      router.push(`/${locale}/login?from=${encodeURIComponent(currentPath)}`);
+      toast.info(t("wallOfLove.redirectingToLogin"));
+      return;
+    }
+
+    setLikingStories(prev => new Set(prev).add(id));
+
+    setLiked((prev: Set<string>) => {
+      const next = new Set(prev);
+      const isLiked = next.has(id);
+      if (isLiked) next.delete(id);
+      else next.add(id);
+      try {
+        sessionStorage.setItem("snda-liked-stories", JSON.stringify(Array.from(next)));
+      } catch {}
+      setStories((curr: PublicStory[]) =>
+        curr.map((s: PublicStory) => (s.id === id ? { ...s, likes_count: s.likes_count + (isLiked ? -1 : 1) } : s))
+      );
+      
+      // Remove from liking set after a short delay
+      setTimeout(() => {
+        setLikingStories(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(id);
+          return newSet;
+        });
+      }, 500);
+      
+      return next;
+    });
+  }, [isAuthenticated, authLoading, t, likingStories, locale, router]);
 
   useEffect(() => {
     if (!lightbox) return;
@@ -61,74 +153,29 @@ export default function WallOfLoveClient() {
   }, [lightbox]);
 
   useEffect(() => {
-    const seed = [
-      {
-        id: "seed-1",
-        title: "Smiles After Surgery",
-        content:
-          "Thanks to quick coordination and donor support, Amal received urgent surgery and is recovering well.",
-        author_name: "Hussein",
-        case_title: "Post-op Care - Amal",
-        story_type: "success",
-        tags: ["health", "surgery", "recovery"],
-        likes_count: 12,
-        published_at: new Date().toISOString(),
-        media: [],
-      },
-      {
-        id: "seed-2",
-        title: "School Supplies Delivered",
-        content:
-          "Volunteer team delivered backpacks and books to 20 students starting the new term with confidence.",
-        author_name: "Mona",
-        case_title: "Education Support",
-        story_type: "progress",
-        tags: ["education", "supplies"],
-        likes_count: 9,
-        published_at: new Date().toISOString(),
-        media: [],
-      },
-    ];
-    setStories(seed);
-    const t = setTimeout(() => setLoading(false), 300);
-    return () => clearTimeout(t);
+    setStories(SHARED_STORIES);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    const disconnect = connectWS<any>("/ws/stories/", (msg) => {
-      const story: PublicStory | undefined = msg?.story ?? msg;
+    const disconnect = connectWS<WebSocketMessage>("/ws/stories/", (msg: WebSocketMessage) => {
+      const story: PublicStory | undefined = msg?.story ?? (msg && 'id' in msg && 'title' in msg && 'content' in msg ? msg as unknown as PublicStory : undefined);
       if (!story || !story.id || !story.title) return;
-      setStories((prev) => [story, ...prev]);
+      setStories((prev: PublicStory[]) => [story, ...prev]);
     });
     return () => disconnect();
   }, []);
 
-  const filteredStories = useMemo(() => {
+  const filteredStories = useMemo((): PublicStory[] => {
     if (filter === "all") return stories;
-    return stories.filter((s) => s.story_type?.toLowerCase() === filter);
+    return stories.filter((s: PublicStory) => s.story_type?.toLowerCase() === filter);
   }, [stories, filter]);
 
-  const toggleExpanded = (id: string) => {
-    setExpanded((prev) => {
+  const toggleExpanded = (id: string): void => {
+    setExpanded((prev: Set<string>) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
-      return next;
-    });
-  };
-
-  const toggleLike = (id: string) => {
-    setLiked((prev) => {
-      const next = new Set(prev);
-      const isLiked = next.has(id);
-      if (isLiked) next.delete(id);
-      else next.add(id);
-      try {
-        sessionStorage.setItem("snda-liked-stories", JSON.stringify(Array.from(next)));
-      } catch {}
-      setStories((curr) =>
-        curr.map((s) => (s.id === id ? { ...s, likes_count: s.likes_count + (isLiked ? -1 : 1) } : s))
-      );
       return next;
     });
   };
@@ -141,8 +188,8 @@ export default function WallOfLoveClient() {
         transition={{ duration: 0.6 }}
         className="text-center mb-10"
       >
-        <h1 className="text-4xl font-bold text-foreground">💖 Wall of Love</h1>
-        <p className="text-muted-foreground mt-2">A living feed of community impact stories.</p>
+        <h1 className="text-4xl font-bold text-foreground">{t('wallOfLove.title')}</h1>
+        <p className="text-muted-foreground mt-2">{t('wallOfLove.subtitle')}</p>
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
@@ -150,16 +197,16 @@ export default function WallOfLoveClient() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Heart className="h-5 w-5 text-primary" />
-              Latest Stories
+              {t('wallOfLove.latestStories')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2 mb-4">
               {([
-                { key: "all", label: "All" },
-                { key: "success", label: "Success" },
-                { key: "progress", label: "Progress" },
-                { key: "breakthrough", label: "Breakthrough" },
+                { key: "all", label: t('wallOfLove.filters.all') },
+                { key: "success", label: t('wallOfLove.filters.success') },
+                { key: "progress", label: t('wallOfLove.filters.progress') },
+                { key: "breakthrough", label: t('wallOfLove.filters.breakthrough') },
               ] as const).map((f) => (
                 <Button key={f.key} size="sm" variant={filter === f.key ? "default" : "outline"} onClick={() => setFilter(f.key)}>
                   {f.label}
@@ -184,7 +231,7 @@ export default function WallOfLoveClient() {
                 ))}
               </div>
             ) : filteredStories.length === 0 ? (
-              <div className="text-sm text-muted-foreground">No stories yet. Be the first to share a sandwich of support 🥪</div>
+              <div className="text-sm text-muted-foreground">{t('wallOfLove.noStories')}</div>
             ) : (
               <div className="space-y-6">
                 <AnimatePresence initial={false}>
@@ -201,16 +248,36 @@ export default function WallOfLoveClient() {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h3 className="font-semibold text-foreground">{story.title}</h3>
-                          <p className="text-sm text-muted-foreground">by {story.author_name} • {story.case_title}</p>
+                          <p className="text-sm text-muted-foreground">{t('wallOfLove.by')} {story.author_name} • {story.case_title}</p>
                         </div>
                         <button
                           type="button"
                           onClick={() => toggleLike(story.id)}
-                          className="flex items-center gap-1 text-primary hover:text-primary/90 transition-colors"
+                          disabled={likingStories.has(story.id) || authLoading}
+                          className={`flex items-center gap-1 transition-colors ${
+                            likingStories.has(story.id) || authLoading
+                              ? "text-muted-foreground cursor-wait opacity-80"
+                              : "text-primary hover:text-primary/90 cursor-pointer"
+                          }`}
                           aria-pressed={liked.has(story.id)}
-                          aria-label={liked.has(story.id) ? "Unlike" : "Like"}
+                          aria-label={
+                            authLoading
+                              ? t('common.loading')
+                              : !isAuthenticated 
+                              ? t('wallOfLove.clickToLogin')
+                              : liked.has(story.id) 
+                              ? t('wallOfLove.unlike') 
+                              : t('wallOfLove.like')
+                          }
+                          title={
+                            authLoading 
+                              ? t('common.loading')
+                              : !isAuthenticated 
+                              ? t('wallOfLove.clickToLogin') 
+                              : undefined
+                          }
                         >
-                          <Heart className={`h-4 w-4 ${liked.has(story.id) ? "fill-primary" : ""}`} />
+                          <Heart className={`h-4 w-4 ${liked.has(story.id) ? "fill-current" : ""}`} />
                           <span className="text-sm">{f.number(story.likes_count)}</span>
                         </button>
                       </div>
@@ -219,13 +286,13 @@ export default function WallOfLoveClient() {
                       </div>
                       <div className="-mt-2 mb-2">
                         <Button size="sm" variant="ghost" onClick={() => toggleExpanded(story.id)}>
-                          {expanded.has(story.id) ? "Show less" : "Show more"}
+                          {expanded.has(story.id) ? t('wallOfLove.showLess') : t('wallOfLove.showMore')}
                         </Button>
                       </div>
 
                       {Array.isArray(story.media) && story.media.length > 0 && (
                         <div className="mt-2 grid grid-cols-3 gap-2">
-                          {story.media.slice(0, 3).map((m: any, i: number) => {
+                          {story.media.slice(0, 3).map((m: string | MediaItem, i: number) => {
                             const url: string = typeof m === "string" ? m : m?.url ?? "";
                             const type: string | undefined = typeof m === "string" ? undefined : m?.type;
                             const isVideo = type?.startsWith("video") || /\.(mp4|webm|ogg)$/i.test(url);
@@ -237,8 +304,8 @@ export default function WallOfLoveClient() {
                                 onClick={() =>
                                   setLightbox({
                                     items: story.media
-                                      .map((mm: any) => ({ url: typeof mm === "string" ? mm : mm?.url ?? "", type: typeof mm === "string" ? undefined : mm?.type }))
-                                      .filter((it: any) => it.url),
+                                      .map((mm: string | MediaItem) => ({ url: typeof mm === "string" ? mm : mm?.url ?? "", type: typeof mm === "string" ? undefined : mm?.type }))
+                                      .filter((it: { url: string; type?: string }) => it.url),
                                     index: i,
                                   })
                                 }
@@ -248,7 +315,7 @@ export default function WallOfLoveClient() {
                                 className="aspect-video overflow-hidden rounded bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                               >
                                 {isVideo ? (
-                                  // eslint-disable-next-line jsx-a11y/media-has-caption
+                                   
                                   <video src={url} className="h-full w-full object-cover" muted preload="metadata" />
                                 ) : (
                                   // eslint-disable-next-line @next/next/no-img-element
@@ -289,7 +356,7 @@ export default function WallOfLoveClient() {
                 type="button"
                 className={`absolute top-3 ${isAR ? "left-3" : "right-3"} z-10 p-2 rounded-md bg-white/10 hover:bg-white/20 text-white`}
                 onClick={() => setLightbox(null)}
-                aria-label="Close"
+                aria-label={t('wallOfLove.close')}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -298,7 +365,7 @@ export default function WallOfLoveClient() {
                 type="button"
                 className={`absolute ${isAR ? "right-3" : "left-3"} top-1/2 -translate-y-1/2 z-10 p-2 rounded-md bg-white/10 hover:bg-white/20 text-white`}
                 onClick={() => setLightbox((lb) => lb && { ...lb, index: Math.max(0, lb.index - 1) })}
-                aria-label="Previous"
+                aria-label={t('wallOfLove.previous')}
                 disabled={lightbox.index === 0}
               >
                 <ChevronLeft className="h-5 w-5" />
@@ -317,7 +384,7 @@ export default function WallOfLoveClient() {
                 const current = lightbox.items[lightbox.index];
                 const isVideo = current.type?.startsWith("video") || /\.(mp4|webm|ogg)$/i.test(current.url);
                 return isVideo ? (
-                  // eslint-disable-next-line jsx-a11y/media-has-caption
+                   
                   <video src={current.url} className="w-full h-full" controls autoPlay />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element

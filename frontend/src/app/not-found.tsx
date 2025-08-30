@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Home, Compass, HeartHandshake, MessageCircle, LayoutDashboard } from "lucide-react";
+import { Home, Compass, HeartHandshake, LayoutDashboard } from "lucide-react";
 
 export default function NotFoundRoot() {
   const pathname = usePathname();

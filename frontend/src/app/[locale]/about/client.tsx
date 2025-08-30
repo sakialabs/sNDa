@@ -47,7 +47,7 @@ export default function AboutClient() {
           <motion.div variants={itemVariants}>
             <Card>
               <CardHeader>
-                <CardTitle className={`flex items-center gap-2 justify-start ${isAR ? "flex-row-reverse" : ""}`}>
+                <CardTitle className="flex items-center gap-2 justify-start" dir={isAR ? "rtl" : "ltr"}>
                   <Heart className="h-5 w-5 text-primary" />
                   {t("about.whoWeAre.title")}
                 </CardTitle>
@@ -55,10 +55,8 @@ export default function AboutClient() {
               <CardContent className="space-y-3">
                 {/* Intro copy */}
                 <p className={`${isAR ? "text-right" : "text-left"}`}>{t.rich("about.whoWeAre.intro", { strong: (chunk) => <strong>{chunk}</strong> })}</p>
-                <p className={`text-muted-foreground ${isAR ? "text-right" : "text-left"}`}>
-                  {isAR ? "تُنطق سُن-دة (سندة)؛ في اللهجة السودانية تعني وجبة خفيفة، وفي العربية تعني الدعم. نحن نجلب الدفء والمساعدة العملية معًا." : "Pronounced sun-dah (سندة); in Sudanese slang it means a light snack, and in Arabic it means support. We bring both warmth and practical help."}
-                </p>
-                <p className={`text-foreground ${isAR ? "text-right" : "text-left"}`}>We’re a solidarity platform that blends grassroots care with a global vision. By combining human connection with smart technology, sNDa supports children in Sudan today and vulnerable communities worldwide tomorrow.</p>
+                <p className={`text-muted-foreground ${isAR ? "text-right" : "text-left"}`}>{t("about.whoWeAre.pronunciation")}</p>
+                <p className={`text-foreground ${isAR ? "text-right" : "text-left"}`}>{t("about.whoWeAre.description")}</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -67,47 +65,47 @@ export default function AboutClient() {
           <motion.div variants={itemVariants}>
             <Card>
               <CardHeader>
-                <CardTitle className={`flex items-center gap-2 justify-start ${isAR ? "flex-row-reverse" : ""}`}>
+                <CardTitle className="flex items-center gap-2 justify-start" dir={isAR ? "rtl" : "ltr"}>
                   <Sparkles className="h-5 w-5 text-primary" />
-                  What we do
+                  {t("about.whatWeDo.title")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className={`text-foreground ${isAR ? "text-right" : "text-left"}`}>sNDa connects families, volunteers, coordinators, donors, and hospitals so help arrives faster and outcomes remain transparent. The platform focuses on fast referrals, coordinated triage, secure case tracking, and clear donor impact.</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                <p className={`text-foreground ${isAR ? "text-right" : "text-left"}`}>{t("about.whatWeDo.description")}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" dir={isAR ? "rtl" : "ltr"}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <Heart className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Wall of Love</div>
-                      <div className="text-xs text-muted-foreground">Curated, public impact stories</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.wallOfLove")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.wallOfLoveDesc")}</div>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <Users className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Volunteer Tools</div>
-                      <div className="text-xs text-muted-foreground">Dashboard, streaks, badges</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.volunteerTools")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.volunteerToolsDesc")}</div>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <HandCoins className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Donor Platform</div>
-                      <div className="text-xs text-muted-foreground">Clear campaigns, outcomes</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.donorPlatform")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.donorPlatformDesc")}</div>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <Wifi className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Offline-first</div>
-                      <div className="text-xs text-muted-foreground">Works through outages, SMS</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.offlineFirst")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.offlineFirstDesc")}</div>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <Sparkles className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Boba (our bot)</div>
-                      <div className="text-xs text-muted-foreground">Guidance, reminders, smart tips</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.boba")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.bobaDesc")}</div>
                     </div>
                   </div>
                 </div>
@@ -119,48 +117,47 @@ export default function AboutClient() {
           <motion.div variants={itemVariants}>
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2" dir={isAR ? "rtl" : "ltr"}>
                   <ClipboardList className="h-5 w-5 text-primary" />
-                  How it works
+                  {t("about.howItWorks.title")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className={`text-foreground mb-3 ${isAR ? "text-right" : "text-left"}`}>
-                  Our web app makes it simple to go from a referral to real impact. Each case starts with verified details, then moves through clear steps. Along the way, progress is tracked and shared so the whole community can see the difference they’re making.     </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                <p className={`text-foreground mb-3 ${isAR ? "text-right" : "text-left"}`}>{t("about.howItWorks.description")}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" dir={isAR ? "rtl" : "ltr"}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <ClipboardList className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Referral & triage</div>
-                      <div className="text-xs text-muted-foreground">Collect and verify case details</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.referralTriage")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.referralTriageDesc")}</div>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <UserCheck className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Coordinator assignment</div>
-                      <div className="text-xs text-muted-foreground">Match to the right coordinator</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.coordinatorAssignment")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.coordinatorAssignmentDesc")}</div>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <Stethoscope className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Hospital care</div>
-                      <div className="text-xs text-muted-foreground">Coordinate treatment logistics</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.hospitalCare")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.hospitalCareDesc")}</div>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <HandCoins className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Donor support & tracking</div>
-                      <div className="text-xs text-muted-foreground">Fund transparently with updates</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.donorSupport")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.donorSupportDesc")}</div>
                     </div>
                   </div>
-                  <div className={`flex items-center gap-3 p-3 bg-muted/50 rounded-lg ${isAR ? "flex-row-reverse text-right" : ""}`}>
+                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
                     <Sparkles className="h-5 w-5 text-primary" />
-                    <div>
-                      <div className="font-medium">Stories & impact</div>
-                      <div className="text-xs text-muted-foreground">Share progress with the community</div>
+                    <div className={isAR ? "text-right" : "text-left"}>
+                      <div className="font-medium">{t("about.storiesImpact")}</div>
+                      <div className="text-xs text-muted-foreground">{t("about.storiesImpactDesc")}</div>
                     </div>
                   </div>
                 </div>
@@ -172,14 +169,14 @@ export default function AboutClient() {
           <motion.div variants={itemVariants}>
             <Card>
               <CardHeader>
-                <CardTitle className={`flex items-center gap-2 justify-start ${isAR ? "flex-row-reverse" : ""}`}>
+                  <CardTitle className="flex items-center gap-2 justify-start" dir={isAR ? "rtl" : "ltr"}>
                   <Users className="h-5 w-5 text-primary" />
-                  Our backbone
+                  {t("about.ourBackbone.title")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-foreground">Open-source, privacy-first, multilingual (AR/EN at launch)</p>
-                <p className="text-muted-foreground">Tech: <strong>Django, Next.js, PostgreSQL, PyTorch</strong> for reliability, speed, and inclusivity.</p>
+                <p className={`text-foreground ${isAR ? "text-right" : "text-left"}`}>{t("about.ourBackbone.openSource")}</p>
+                <p className={`text-muted-foreground ${isAR ? "text-right" : "text-left"}`}>{t.rich("about.ourBackbone.tech", { strong: (chunk) => <strong>{chunk}</strong> })}</p>
               </CardContent>
             </Card>
           </motion.div>

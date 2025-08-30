@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "sNDa App",
-  description: "Wrapping Support Around Every Life",
+  title: "sNDa",
+  description: "🥪 a Sandwich of Support 🥪",
 };
 
 export default function RootLayout({

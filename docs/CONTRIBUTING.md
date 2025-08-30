@@ -3,12 +3,14 @@
 ## Quick Start
 
 1. **Fork & Clone**
+
    ```bash
    git clone https://github.com/your-username/sNDa.git
    cd sNDa
    ```
 
 2. **Setup Development**
+
    ```bash
    # Follow the complete setup guide
    # See: docs/QUICK_START.md for detailed instructions
@@ -27,12 +29,14 @@
 ## Code Style
 
 ### Backend (Python)
+
 - Follow PEP 8
 - Use type hints
 - Write docstrings
 - Add tests for new features
 
 ### Frontend (TypeScript)
+
 - Use TypeScript strictly
 - Follow existing component patterns
 - Add proper error handling
@@ -48,7 +52,7 @@
 
 ## Getting Help
 
-- **Questions**: snda@hey.com
+- **Questions**: <snda@hey.com>
 - **Issues**: GitHub Issues
 - **Discussions**: GitHub Discussions
 
@@ -58,4 +62,4 @@ Be respectful, inclusive, and collaborative. We're building technology to help c
 
 ---
 
-**Built with ❤️ for communities worldwide**
+Made with 💖 for children everywhere

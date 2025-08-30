@@ -6,20 +6,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { 
   Heart, 
   CreditCard, 
   DollarSign, 
   Users, 
-  Target,
   TrendingUp,
   Calendar,
   Gift,
   Star
 } from "lucide-react";
 import { toast } from "sonner";
-import { useFormatter, useLocale } from "next-intl";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
 
 interface Campaign {
   id: string;
@@ -50,13 +48,14 @@ const DONATION_AMOUNTS: DonationAmount[] = [
 
 export function DonationPlatform() {
   const locale = useLocale();
+  const t = useTranslations();
   const f = useFormatter();
   const isAR = locale === "ar";
   const [campaigns, setCampaigns] = useState<Campaign[]>([
     {
       id: '1',
-      title: 'Emergency Medical Fund',
-      description: 'Supporting families facing unexpected medical emergencies with immediate financial assistance.',
+      title: t('donate.campaigns.emergencyMedical.title'),
+      description: t('donate.campaigns.emergencyMedical.description'),
       goal: 50000,
       raised: 32500,
       donors: 127,
@@ -66,8 +65,8 @@ export function DonationPlatform() {
     },
     {
       id: '2',
-      title: 'Transportation Support Program',
-      description: 'Helping families get to medical appointments and essential services.',
+      title: t('donate.campaigns.transportation.title'),
+      description: t('donate.campaigns.transportation.description'),
       goal: 25000,
       raised: 18750,
       donors: 89,
@@ -77,8 +76,8 @@ export function DonationPlatform() {
     },
     {
       id: '3',
-      title: 'Family Care Packages',
-      description: 'Providing essential supplies and care packages to families in crisis.',
+      title: t('donate.campaigns.familyPackages.title'),
+      description: t('donate.campaigns.familyPackages.description'),
       goal: 15000,
       raised: 12300,
       donors: 156,
@@ -132,8 +131,8 @@ export function DonationPlatform() {
       setSelectedCampaign(null);
       setRecurringDonation(false);
       
-    } catch (error) {
-      toast.error("Payment failed. Please try again.");
+    } catch {
+      toast.error(t("donate.paymentFailed"));
     } finally {
       setIsProcessing(false);
     }
@@ -144,6 +143,16 @@ export function DonationPlatform() {
   };
 
   const formatCurrency = (amount: number, opts?: Intl.NumberFormatOptions) => {
+    if (isAR) {
+      // For Arabic, format numbers in Arabic script with clean currency display
+      const formattedNumber = new Intl.NumberFormat('ar', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        ...opts
+      }).format(amount);
+      return `${formattedNumber} دولار`;
+    }
+    
     return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: 'USD',
@@ -156,49 +165,45 @@ export function DonationPlatform() {
   return (
     <div className="space-y-6">
       <div className="text-center animate-fade-in">
-        <h1 className="text-4xl font-bold tracking-tight mb-4">
-        🌱 Make a Difference Today
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Your generosity directly supports families in need, providing essential care and hope during their most challenging times.
-        </p>
+        <h1 className="text-4xl font-bold tracking-tight mb-4">{t("donate.title")}</h1>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{t("donate.subtitle")}</p>
       </div>
 
       {/* Impact Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in">
-        <Card>
+    <Card>
           <CardContent className="p-6 text-center">
             <Heart className="w-8 h-8 mx-auto mb-2 text-primary" />
             <div className="text-2xl font-bold">{f.number(2847)}</div>
-            <p className="text-sm text-muted-foreground">Families Helped</p>
+      <p className="text-sm text-muted-foreground">{t("donate.stats.familiesHelped")}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
             <DollarSign className="w-8 h-8 mx-auto mb-2 text-primary" />
             <div className="text-2xl font-bold">{formatCurrency(485000, { notation: 'compact', maximumFractionDigits: 1 })}</div>
-            <p className="text-sm text-muted-foreground">Total Raised</p>
+            <p className="text-sm text-muted-foreground">{t("donate.stats.totalRaised")}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
             <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
             <div className="text-2xl font-bold">{f.number(1234)}</div>
-            <p className="text-sm text-muted-foreground">Active Donors</p>
+            <p className="text-sm text-muted-foreground">{t("donate.stats.activeDonors")}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
             <TrendingUp className="w-8 h-8 mx-auto mb-2 text-primary" />
             <div className="text-2xl font-bold">94%</div>
-            <p className="text-sm text-muted-foreground">Success Rate</p>
+            <p className="text-sm text-muted-foreground">{t("donate.stats.successRate")}</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Active Campaigns */}
       <div className="animate-fade-in">
-        <h2 className="text-2xl font-bold mb-6">Active Campaigns</h2>
+  <h2 className="text-2xl font-bold mb-6">{t("donate.activeCampaigns")}</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {campaigns.map((campaign) => (
             <Card 
@@ -208,10 +213,10 @@ export function DonationPlatform() {
               } ${campaign.featured ? 'border-primary' : ''}`}
               onClick={() => setSelectedCampaign(selectedCampaign === campaign.id ? null : campaign.id)}
             >
-              <CardHeader>
+        <CardHeader>
                 <div className="flex items-center justify-between">
                   <Badge variant={campaign.featured ? "default" : "secondary"}>
-                    {campaign.category}
+          {t(`donate.categories.${campaign.category.toLowerCase()}`) || campaign.category}
                   </Badge>
                   {campaign.featured && <Star className="w-4 h-4 text-primary" />}
                 </div>
@@ -224,7 +229,7 @@ export function DonationPlatform() {
                 
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-sm">
-                    <span>Progress</span>
+                    <span>{t("donate.progress")}</span>
                     <span>{f.number(Math.round(getProgressPercentage(campaign.raised, campaign.goal)))}%</span>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2">
@@ -235,18 +240,18 @@ export function DonationPlatform() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="font-semibold">{formatCurrency(campaign.raised)}</span>
-                    <span className="text-muted-foreground">of {formatCurrency(campaign.goal)}</span>
+                    <span className="text-muted-foreground">{t("donate.of")} {formatCurrency(campaign.goal)}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Users className="w-3 h-3" />
-                    {f.number(campaign.donors)} donors
+                    {f.number(campaign.donors)} {t("donate.donors")}
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
-                    {f.number(campaign.daysLeft)} days left
+                    {f.number(campaign.daysLeft)} {t("donate.daysLeft")}
                   </div>
                 </div>
               </CardContent>
@@ -258,16 +263,16 @@ export function DonationPlatform() {
       {/* Donation Form */}
       {selectedCampaign && (
         <Card className="animate-slide-in-from-top">
-          <CardHeader>
+            <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Gift className="w-5 h-5" />
-              Make Your Donation
+              {t("donate.makeDonation")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Preset Amounts */}
             <div>
-              <Label className="text-base font-semibold">Choose Amount</Label>
+              <Label className="text-base font-semibold">{t("donate.chooseAmount")}</Label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3">
                 {DONATION_AMOUNTS.map((amount) => (
                   <Button
@@ -280,9 +285,7 @@ export function DonationPlatform() {
                     }}
                   >
                     <span className="text-lg font-bold">{formatCurrency(amount.value)}</span>
-                    <span className="text-xs text-center mt-1 opacity-75">
-                      {amount.impact}
-                    </span>
+                    <span className="text-xs text-center mt-1 opacity-75">{t(`donate.impacts.${amount.value}`) || amount.impact}</span>
                   </Button>
                 ))}
               </div>
@@ -290,7 +293,7 @@ export function DonationPlatform() {
 
             {/* Custom Amount */}
             <div>
-              <Label htmlFor="custom-amount">Or Enter Custom Amount</Label>
+              <Label htmlFor="custom-amount">{t("donate.customAmountLabel")}</Label>
               <div className="relative mt-2">
                 <DollarSign className={`absolute ${isAR ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground`} />
                 <Input
@@ -318,9 +321,7 @@ export function DonationPlatform() {
                 onChange={(e) => setRecurringDonation(e.target.checked)}
                 className="rounded border-gray-300"
               />
-              <Label htmlFor="recurring" className="text-sm">
-                Make this a monthly recurring donation
-              </Label>
+                <Label htmlFor="recurring" className="text-sm">{t("donate.recurringLabel")}</Label>
             </div>
 
             {/* Payment Button */}
@@ -329,22 +330,22 @@ export function DonationPlatform() {
               disabled={isProcessing || (!selectedAmount && !customAmount)}
               className="w-full h-12 text-lg"
             >
-              {isProcessing ? (
+        {isProcessing ? (
                 <div className="flex items-center gap-2">
-                  <div className="loading-dots">Processing</div>
+          <div className="loading-dots">{t("donate.processing")}</div>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-5 h-5" />
-                  Donate {selectedAmount ? formatCurrency(selectedAmount) : customAmount ? formatCurrency(parseFloat(customAmount)) : ''}
-                  {recurringDonation && ' Monthly'}
+          {t("donate.button.donate")} {selectedAmount ? formatCurrency(selectedAmount) : customAmount ? formatCurrency(parseFloat(customAmount)) : ''}
+          {recurringDonation && ` ${t("donate.button.monthly")}`}
                 </div>
               )}
             </Button>
 
             <div className="text-center text-sm text-muted-foreground">
-              <p>🔒 Secure payment powered by Stripe</p>
-              <p>Your donation is tax-deductible. Receipt will be emailed.</p>
+              <p>🔒 {t("donate.securePayment")}</p>
+              <p>{t("donate.taxDeductible")}</p>
             </div>
           </CardContent>
         </Card>
@@ -353,16 +354,19 @@ export function DonationPlatform() {
       {/* Donor Recognition */}
       <Card className="animate-fade-in">
         <CardHeader>
-          <CardTitle>Recent Supporters</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <Users className="w-5 h-5 text-primary" />
+            {t('donate.recentSupporters')}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             {[
-              { name: "Anonymous Donor", amount: 500, time: "2 hours ago" },
-              { name: "Sarah M.", amount: 100, time: "5 hours ago" },
-              { name: "Michael K.", amount: 250, time: "1 day ago" },
-              { name: "Jennifer L.", amount: 75, time: "1 day ago" },
-              { name: "Anonymous Donor", amount: 1000, time: "2 days ago" }
+              { name: t('donate.anonymousDonor'), amount: 500, time: t('donate.timeAgo.hoursAgo', { hours: 2 }) },
+              { name: "Sarah M.", amount: 100, time: t('donate.timeAgo.hoursAgo', { hours: 5 }) },
+              { name: "Michael K.", amount: 250, time: t('donate.timeAgo.dayAgo') },
+              { name: "Jennifer L.", amount: 75, time: t('donate.timeAgo.dayAgo') },
+              { name: t('donate.anonymousDonor'), amount: 1000, time: t('donate.timeAgo.daysAgo', { days: 2 }) }
             ].map((donor, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                 <div className="flex items-center gap-3">

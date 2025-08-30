@@ -1,9 +1,11 @@
 # 🤖 sNDa Gamification & Boba AI Plan
 
 ## 1️⃣ Overview
+
 **Goal:** Make volunteer engagement fun, motivating, and community-driven with streaks, badges, highlights, mini challenges, and friendly notifications powered by Boba AI.
 
 **Core Components:**  
+
 - **Boba Bot:** "Small sips of support" assistant delivering streak updates, badge awards, and personalized suggestions.  
 - **VolunteerProfile & Case Models:** Track activity, streaks, and completed cases.  
 - **Badge / UserBadge Models:** Store volunteer achievements.  
@@ -14,6 +16,7 @@
 ## 2️⃣ Current Implementation Status
 
 ### ✅ **Backend - Fully Implemented**
+
 - **Boba AI System** (`backend/api/boba_ai.py`):
   - Rule-based recommendation engine
   - Personality traits and sandwich metaphors
@@ -33,6 +36,7 @@
   - Story publication confirmations
 
 ### ✅ **Frontend - Partially Implemented**
+
 - **Volunteer Dashboard** (`frontend/src/app/volunteer/dashboard/page.tsx`):
   - Streak visualization with progress bars
   - Badge display grid
@@ -46,6 +50,7 @@
   - Recent achievements showcase
 
 ### ❌ **Missing Boba UI Integration**
+
 - No direct Boba chat interface in frontend
 - No real-time Boba notifications
 - No personalized Boba suggestions display
@@ -76,6 +81,7 @@
 ## 4️⃣ Boba ML Enhancement Plan
 
 ### **Phase 1: UI Integration (High Priority)**
+
 - [ ] **Boba Chat Widget**
   - Floating chat bubble in bottom-right corner
   - Real-time suggestions based on user activity
@@ -95,6 +101,7 @@
   - Weekly check-ins and motivation
 
 ### **Phase 2: Advanced ML Features (Medium Priority)**
+
 - [ ] **Predictive Analytics**
   - Volunteer engagement prediction models
   - Optimal assignment matching algorithms
@@ -114,6 +121,7 @@
   - Dynamic difficulty adjustment
 
 ### **Phase 3: Community Intelligence (Low Priority)**
+
 - [ ] **Social Network Analysis**
   - Volunteer collaboration patterns
   - Community influence mapping
@@ -131,6 +139,7 @@
 ## 5️⃣ Technical Implementation
 
 ### **Frontend Boba Integration**
+
 ```typescript
 // Boba Chat Component
 interface BobaMessage {
@@ -150,6 +159,7 @@ class BobaService {
 ```
 
 ### **Backend ML Pipeline**
+
 ```python
 # Enhanced Boba AI with ML
 class BobaMLEngine:
@@ -172,6 +182,7 @@ class BobaMLEngine:
 ```
 
 ### **Real-time Features**
+
 - WebSocket integration for live Boba interactions
 - Server-sent events for notifications
 - Redis caching for ML model predictions
@@ -182,6 +193,7 @@ class BobaMLEngine:
 ## 6️⃣ Quick Wins Implementation
 
 ### **Immediate (Next Session)**
+
 1. **Boba Chat Widget**
    - Add floating chat component to volunteer dashboard
    - Connect to existing Boba AI backend endpoints
@@ -198,6 +210,7 @@ class BobaMLEngine:
    - Badge award celebrations
 
 ### **Short Term (1-2 Weeks)**
+
 1. **ML Model Training**
    - Collect volunteer activity data
    - Train engagement prediction models
@@ -209,6 +222,7 @@ class BobaMLEngine:
    - Personalized email optimization
 
 ### **Long Term (1-2 Months)**
+
 1. **Full ML Pipeline**
    - Real-time model inference
    - A/B testing for recommendations
@@ -224,24 +238,28 @@ class BobaMLEngine:
 ## 7️⃣ Success Metrics
 
 ### **Engagement Metrics**
+
 - Daily/Weekly active volunteers
 - Average session duration
 - Case completion rates
 - Story sharing frequency
 
 ### **Gamification Metrics**
+
 - Badge earning rates
 - Streak maintenance
 - Leaderboard participation
 - Community interaction levels
 
 ### **ML Performance Metrics**
+
 - Recommendation click-through rates
 - Prediction accuracy (engagement, churn)
 - Assignment satisfaction scores
 - Model inference latency
 
 ### **Business Impact**
+
 - Volunteer retention rates
 - Case resolution efficiency
 - Community growth metrics
@@ -260,4 +278,4 @@ class BobaMLEngine:
 
 ---
 
-**🎯 Next Immediate Action: Implement Boba Chat Widget in Frontend Dashboard**
+🎯 Next Immediate Action: Implement Boba Chat Widget in Frontend Dashboard
